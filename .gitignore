@@ -39,6 +39,14 @@ saved_models/
 *.pth
 *.bin
 
+# ========================
+# Log Files 
+# ========================
+nohup.out
+log.out
+log_gpu*.out
+my_print_output.txt
+
 
 # ========================
 # Operating System Files
