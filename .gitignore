@@ -1,0 +1,47 @@
+# ========================
+# Python
+# ========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+
+# ========================
+# Virtual Environments
+# ========================
+venv/
+.venv/
+env/
+.env/
+
+
+# ========================
+# IDE / Editor Files
+# ========================
+.vscode/
+.idea/
+.ipynb_checkpoints/
+
+
+# ========================
+# Project Specific 
+# ========================
+# Large dataset folders (e.g., CIFAR-10)
+data/
+
+# Experiment results (trained models, logs, tables, etc.)
+results/
+saved_models/
+
+# Model file extensions 
+*.pt
+*.pth
+*.bin
+
+
+# ========================
+# Operating System Files
+# ========================
+.DS_Store
+Thumbs.db
