@@ -1,0 +1,220 @@
+nohup: ignoring input
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+
+================ Run 1/1 ================
+
+[TRAIN] Step 1/5: train original
+    Epoch 1/30  30.96s
+    Epoch 2/30  30.31s
+    Epoch 3/30  30.63s
+    Epoch 4/30  29.74s
+    Epoch 5/30  28.49s
+    Epoch 6/30  29.73s
+    Epoch 7/30  30.28s
+    Epoch 8/30  30.13s
+    Epoch 9/30  30.07s
+    Epoch 10/30  29.94s
+    Epoch 11/30  29.56s
+    Epoch 12/30  29.73s
+    Epoch 13/30  29.44s
+    Epoch 14/30  29.95s
+    Epoch 15/30  29.80s
+    Epoch 16/30  29.14s
+    Epoch 17/30  29.50s
+    Epoch 18/30  29.60s
+    Epoch 19/30  29.70s
+    Epoch 20/30  29.74s
+    Epoch 21/30  29.38s
+    Epoch 22/30  29.11s
+    Epoch 23/30  29.18s
+    Epoch 24/30  29.09s
+    Epoch 25/30  29.29s
+    Epoch 26/30  29.17s
+    Epoch 27/30  29.41s
+    Epoch 28/30  29.83s
+    Epoch 29/30  29.63s
+    Epoch 30/30  29.32s
+
+--- ES Level: Low ES ---
+[Low ES / retain_eval (orig)] n=49000  Acc=92.74  loss=0.213  entr=0.249  margin=5.061
+[Low ES / forget_eval (orig)] n=1000  Acc=84.70  loss=0.474  entr=0.567  margin=2.537
+[TRAIN] Step 2/5: retrain on retain (augment O)
+    Epoch 1/30  29.15s
+    Epoch 2/30  28.65s
+    Epoch 3/30  28.55s
+    Epoch 4/30  28.27s
+    Epoch 5/30  28.56s
+    Epoch 6/30  28.94s
+    Epoch 7/30  29.12s
+    Epoch 8/30  28.93s
+    Epoch 9/30  29.55s
+    Epoch 10/30  29.40s
+    Epoch 11/30  29.70s
+    Epoch 12/30  29.28s
+    Epoch 13/30  29.01s
+    Epoch 14/30  28.92s
+    Epoch 15/30  28.40s
+    Epoch 16/30  28.70s
+    Epoch 17/30  28.40s
+    Epoch 18/30  28.78s
+    Epoch 19/30  28.86s
+    Epoch 20/30  28.32s
+    Epoch 21/30  28.94s
+    Epoch 22/30  28.79s
+    Epoch 23/30  28.35s
+    Epoch 24/30  28.48s
+    Epoch 25/30  29.25s
+    Epoch 26/30  28.71s
+    Epoch 27/30  28.44s
+    Epoch 28/30  28.86s
+    Epoch 29/30  29.05s
+    Epoch 30/30  29.13s
+[Low ES / retain_eval (retrain)] n=49000  Acc=93.27  loss=0.196  entr=0.227  margin=5.236
+[Low ES / forget_eval (retrain)] n=1000  Acc=68.60  loss=0.967  entr=0.563  margin=2.663
+
+[Step 3/5] Eval retrained (augment X for eval)...
+  Retrain -> F:68.60 R:93.27 T:84.62 M:0.659
+
+[Step 4/5] Apply & eval unlearning...
+    - Original     F:84.70 R:92.74 T:84.36 M:0.563
+    - Fine-tune    F:70.60 R:94.49 T:83.52 M:0.645
+    - L1-sparse    F:69.10 R:94.50 T:83.14 M:0.651
+    - NegGrad      F:77.50 R:90.44 T:82.48 M:0.574
+    - NegGrad+     F:70.90 R:90.05 T:81.85 M:0.599
+    - SalUn        F:7.60 R:19.01 T:18.03 M:0.548
+    - Random-label F:7.60 R:17.78 T:16.86 M:0.552
+
+--- ES Level: Medium ES ---
+[Medium ES / retain_eval (orig)] n=49000  Acc=92.51  loss=0.220  entr=0.257  margin=5.012
+[Medium ES / forget_eval (orig)] n=1000  Acc=95.70  loss=0.135  entr=0.160  margin=4.946
+[TRAIN] Step 2/5: retrain on retain (augment O)
+    Epoch 1/30  29.24s
+    Epoch 2/30  29.36s
+    Epoch 3/30  30.06s
+    Epoch 4/30  29.70s
+    Epoch 5/30  29.31s
+    Epoch 6/30  29.06s
+    Epoch 7/30  29.30s
+    Epoch 8/30  29.53s
+    Epoch 9/30  29.76s
+    Epoch 10/30  29.86s
+    Epoch 11/30  29.77s
+    Epoch 12/30  29.49s
+    Epoch 13/30  29.71s
+    Epoch 14/30  29.42s
+    Epoch 15/30  29.47s
+    Epoch 16/30  29.76s
+    Epoch 17/30  29.46s
+    Epoch 18/30  29.24s
+    Epoch 19/30  29.25s
+    Epoch 20/30  29.44s
+    Epoch 21/30  29.61s
+    Epoch 22/30  29.61s
+    Epoch 23/30  29.35s
+    Epoch 24/30  29.36s
+    Epoch 25/30  29.72s
+    Epoch 26/30  29.52s
+    Epoch 27/30  29.88s
+    Epoch 28/30  29.76s
+    Epoch 29/30  29.58s
+    Epoch 30/30  28.97s
+[Medium ES / retain_eval (retrain)] n=49000  Acc=92.48  loss=0.216  entr=0.257  margin=4.972
+[Medium ES / forget_eval (retrain)] n=1000  Acc=90.50  loss=0.296  entr=0.244  margin=4.610
+
+[Step 3/5] Eval retrained (augment X for eval)...
+  Retrain -> F:90.50 R:92.48 T:84.51 M:0.516
+
+[Step 4/5] Apply & eval unlearning...
+    - Original     F:95.70 R:92.51 T:84.36 M:0.485
+    - Fine-tune    F:91.10 R:94.14 T:83.73 M:0.513
+    - L1-sparse    F:91.20 R:93.98 T:82.96 M:0.508
+    - NegGrad      F:95.00 R:92.23 T:83.98 M:0.483
+    - NegGrad+     F:93.80 R:92.41 T:83.99 M:0.489
+    - SalUn        F:7.20 R:11.52 T:11.04 M:0.526
+    - Random-label F:7.80 R:13.01 T:11.89 M:0.522
+
+--- ES Level: High ES ---
+[High ES / retain_eval (orig)] n=49000  Acc=92.44  loss=0.222  entr=0.260  margin=4.959
+[High ES / forget_eval (orig)] n=1000  Acc=99.10  loss=0.030  entr=0.042  margin=7.548
+[TRAIN] Step 2/5: retrain on retain (augment O)
+    Epoch 1/30  29.61s
+    Epoch 2/30  29.41s
+    Epoch 3/30  29.36s
+    Epoch 4/30  29.55s
+    Epoch 5/30  29.46s
+    Epoch 6/30  29.58s
+    Epoch 7/30  29.33s
+    Epoch 8/30  29.00s
+    Epoch 9/30  29.40s
+    Epoch 10/30  29.36s
+    Epoch 11/30  29.00s
+    Epoch 12/30  28.92s
+    Epoch 13/30  29.42s
+    Epoch 14/30  29.53s
+    Epoch 15/30  29.35s
+    Epoch 16/30  29.45s
+    Epoch 17/30  28.83s
+    Epoch 18/30  29.37s
+    Epoch 19/30  29.88s
+    Epoch 20/30  29.57s
+    Epoch 21/30  29.66s
+    Epoch 22/30  29.59s
+    Epoch 23/30  29.36s
+    Epoch 24/30  29.16s
+    Epoch 25/30  29.53s
+    Epoch 26/30  28.83s
+    Epoch 27/30  29.29s
+    Epoch 28/30  29.24s
+    Epoch 29/30  29.36s
+    Epoch 30/30  29.60s
+[High ES / retain_eval (retrain)] n=49000  Acc=92.56  loss=0.215  entr=0.250  margin=5.029
+[High ES / forget_eval (retrain)] n=1000  Acc=98.10  loss=0.072  entr=0.065  margin=7.116
+
+[Step 3/5] Eval retrained (augment X for eval)...
+  Retrain -> F:98.10 R:92.56 T:83.14 M:0.461
+
+[Step 4/5] Apply & eval unlearning...
+    - Original     F:99.10 R:92.44 T:84.36 M:0.461
+    - Fine-tune    F:97.90 R:93.91 T:82.55 M:0.473
+    - L1-sparse    F:98.10 R:94.33 T:83.11 M:0.474
+    - NegGrad      F:99.00 R:90.29 T:82.62 M:0.453
+    - NegGrad+     F:98.70 R:91.79 T:83.63 M:0.463
+    - SalUn        F:6.70 R:12.08 T:11.82 M:0.553
+    - Random-label F:7.10 R:12.22 T:11.40 M:0.515
+
+================ Final Results (MIA) ================
+
+--- Low ES ---
+      Method Forget Acc Retain Acc Test Acc   MIA
+     Retrain     68.600     93.265   84.620 0.659
+    Original     84.700     92.739   84.360 0.563
+   Fine-tune     70.600     94.494   83.520 0.645
+   L1-sparse     69.100     94.502   83.140 0.651
+     NegGrad     77.500     90.437   82.480 0.574
+    NegGrad+     70.900     90.049   81.850 0.599
+       SalUn      7.600     19.010   18.030 0.548
+Random-label      7.600     17.784   16.860 0.552
+
+--- Medium ES ---
+      Method Forget Acc Retain Acc Test Acc   MIA
+     Retrain     90.500     92.476   84.510 0.516
+    Original     95.700     92.514   84.360 0.485
+   Fine-tune     91.100     94.139   83.730 0.513
+   L1-sparse     91.200     93.976   82.960 0.508
+     NegGrad     95.000     92.233   83.980 0.483
+    NegGrad+     93.800     92.406   83.990 0.489
+       SalUn      7.200     11.516   11.040 0.526
+Random-label      7.800     13.010   11.890 0.522
+
+--- High ES ---
+      Method Forget Acc Retain Acc Test Acc   MIA
+     Retrain     98.100     92.561   83.140 0.461
+    Original     99.100     92.445   84.360 0.461
+   Fine-tune     97.900     93.914   82.550 0.473
+   L1-sparse     98.100     94.335   83.110 0.474
+     NegGrad     99.000     90.292   82.620 0.453
+    NegGrad+     98.700     91.786   83.630 0.463
+       SalUn      6.700     12.078   11.820 0.553
+Random-label      7.100     12.222   11.400 0.515
