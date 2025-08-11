@@ -3,17 +3,18 @@ from scipy import stats
 import torch
 
 from config import CONFIG
-from data_es import load_cifar10_with_train_eval, split_retain_forget, create_es_partitions, create_es_partitions_balanced, create_loss_partitions
+from data_es import load_cifar10_with_train_eval, split_retain_forget, create_es_partitions, create_es_partitions_balanced, create_loss_partitions, create_es_partitions_paper
 from model_train import get_model, train_model, evaluate_model
 from methods import (
     unlearn_finetune, unlearn_l1_sparse, unlearn_neggrad,
     unlearn_neggrad_plus, unlearn_salun, unlearn_random_label
 )
-from mia import calculate_mia_score  # ★ MIA 전용
-from diagnostics import print_split_stats
+from mia import calculate_mia_score  
+from diagnostics import print_split_stats, _print_partition_set_es
 
 
 def ci95_str(xs):
+    """결과 리스트(xs)의 평균과 95% 신뢰구간을 문자열로 포맷팅"""
     xs = np.array(xs); mu = xs.mean() if len(xs) else 0.0
     if len(xs) < 2: return f"{mu:.3f}"
     sem = stats.sem(xs); ci = sem * stats.t.ppf(0.975, len(xs)-1)
@@ -47,15 +48,15 @@ def main():
             torch.save(orig.state_dict(), orig_pth)
 
             # parts = create_es_partitions(orig, train_eval_ds, CONFIG["device"], CONFIG["batch_size"], CONFIG["forget_set_size"])
-            # 변경:
-            parts = create_es_partitions_balanced(
-                original_model=orig,
-                dataset_for_es=train_eval_ds,
-                device=CONFIG["device"],
-                batch_size=CONFIG["batch_size"],
-                forget_set_size=CONFIG["forget_set_size"],
-                bins=5,  # 3~10 권장
-            )
+            # # 변경:
+            # parts = create_es_partitions_balanced(
+            #     original_model=orig,
+            #     dataset_for_es=train_eval_ds,
+            #     device=CONFIG["device"],
+            #     batch_size=CONFIG["batch_size"],
+            #     forget_set_size=CONFIG["forget_set_size"],
+            #     bins=5,  # 3~10 권장
+            # )
             # parts = create_loss_partitions(
             #     model=orig,
             #     dataset_eval=train_eval_ds,         # augment X 평가 변환
@@ -64,11 +65,20 @@ def main():
             #     num_classes=10,
             #     batch_size=CONFIG["batch_size"]
             # )
+            parts = create_es_partitions_paper(
+                original_model=orig,
+                dataset_for_es=train_eval_ds,      # augment X
+                device=CONFIG["device"],
+                batch_size=CONFIG["batch_size"],
+                forget_set_size=CONFIG["forget_set_size"]
+            )
             torch.save(parts, part_pth)
+            _print_partition_set_es(orig, train_eval_ds, parts, CONFIG["device"], CONFIG["batch_size"])
         else:
             print("\n[LOAD] original & ES partitions")
             orig.load_state_dict(torch.load(orig_pth, map_location=CONFIG["device"]))
             parts = torch.load(part_pth)
+            _print_partition_set_es(orig, train_eval_ds, parts, CONFIG["device"], CONFIG["batch_size"])
 
         # 3) ES 레벨별 실험
         for es, forget_idx in parts.items():
@@ -89,11 +99,11 @@ def main():
             retain_eval_loader = torch.utils.data.DataLoader(retain_eval_set, batch_size=CONFIG["batch_size"], shuffle=False)
             forget_eval_loader = torch.utils.data.DataLoader(forget_eval_set, batch_size=CONFIG["batch_size"], shuffle=False)
 
-            # ★ 여기에서 원모델/혹은 retr로 진단 찍기 (둘 다 보고 싶으면 둘 다)
+            # 진단: 원본 모델과 재학습 모델의 Retain/Forget 성능 확인
             print_split_stats(orig, retain_eval_loader,  CONFIG["device"], f"{es} / retain_eval (orig)")
             print_split_stats(orig, forget_eval_loader,  CONFIG["device"], f"{es} / forget_eval (orig)")
 
-            # Retrain (retain only)
+            # Retrain 모델 학습 및 평가 (언러닝의 이상적인 상한선)
             retr = get_model(CONFIG["device"])
             retr_pth = os.path.join(CONFIG["model_save_dir"], f"run_{run}_{es.replace(' ','')}_retrained.pth")
             if CONFIG["run_training"] or not os.path.exists(retr_pth):
@@ -116,8 +126,9 @@ def main():
             res["Retrain"][es]["F"].append(rF); res["Retrain"][es]["R"].append(rR)
             res["Retrain"][es]["T"].append(rT); res["Retrain"][es]["M"].append(rM)
 
-            # 4) 언러닝 기법 (학습은 학습로더, 평가는 평가로더)
+            # 4) 모든 언러닝 기법 적용 및 평가
             def eval_and_log(name, model):
+                """주어진 모델을 평가하고 결과를 res 딕셔너리에 기록"""
                 uF = evaluate_model(model, forget_eval_loader, CONFIG["device"])
                 uR = evaluate_model(model, retain_eval_loader, CONFIG["device"])
                 uT = evaluate_model(model, test_loader,            CONFIG["device"])
