@@ -1,19 +1,24 @@
+# metrics.py: 성능 지표 계산 함수.
+
 import numpy as np, torch, torch.nn.functional as F
 
 @torch.no_grad()
 def calculate_prediction_diff(model_a, model_b, loader, device):
+    """두 모델(a, b)의 예측값이 다른 샘플의 비율을 계산
+    언러닝된 모델이 재학습 모델과 얼마나 유사하게 동작하는지 측정하는 지표임"""
     model_a.eval(); model_b.eval()
     total = diff = 0
     for x, _ in loader:
         x = x.to(device)
-        pa = model_a(x).argmax(1)
-        pb = model_b(x).argmax(1)
-        diff += (pa != pb).sum().item()
+        pa = model_a(x).argmax(1) # 모델 a의 예측
+        pb = model_b(x).argmax(1) # 모델 b의 예측
+        diff += (pa != pb).sum().item() # 예측이 다른 샘플 수 누적
         total += x.size(0)
     return 100.0 * diff / total
 
 # ------- MIA (black-box, confidence) -------
 class BlackBoxBench:
+    """블랙박스 MIA 공격을 수행하는 클래스. 신뢰도 점수를 특징으로 사용함"""
     def __init__(self, s_tr, s_te, t_tr, t_te, k=10):
         self.k = k
         self.s_tr_out, self.s_tr_lab = s_tr
@@ -62,6 +67,7 @@ def _collect_probs_labels(loader, model, device):
     return torch.cat(outs).numpy(), torch.cat(labs).numpy()
 
 def calculate_mia_score(model, retain_loader_train, retain_loader_eval, forget_loader_eval, test_loader_eval, device):
+    """MIA 점수 계산 과정 총괄"""
     s_tr = _collect_probs_labels(retain_loader_train, model, device)  # src train
     s_te = _collect_probs_labels(test_loader_eval,   model, device)  # src test
     t_tr = _collect_probs_labels(retain_loader_eval, model, device)  # tgt train

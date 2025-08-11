@@ -1,12 +1,14 @@
+# config.py: 하이퍼파라미터, 경로, 시드 등 설정.
+
 import torch
 
 CONFIG = {
-    # I/O
+    # --- 입출력(I/O) 및 시드 설정 ---
     "data_root": "./data",
     "model_save_dir": "saved_models",   # 자동 생성
     "seed": 42,
 
-    # Training
+    # --- 학습 관련 설정 ---
     "run_training": True,               # 캐시가 있더라도 다시 학습할지 여부
     "num_runs": 1,                      # 빠른 스모크 테스트 후 3으로
     "epochs": 30,                       # 원모델/재학습(retrain) 에폭
@@ -18,11 +20,11 @@ CONFIG = {
     "momentum": 0.9,
     "weight_decay": 5e-4,
 
-    # Partition
+    # --- 데이터 파티션(분할) 설정 ---
     "forget_set_size": 3000,            # 한 스테이지당 제거 수 (총 3스테이지 = 9000)
     "use_paper_es": True,               # True: paper-like ES 파티션, False: balanced 변형
     "balanced_bins": 5,                 # balanced 모드에서 confidence bins
 
-    # Device
+    # --- 장치 설정 ---
     "device": "cuda" if torch.cuda.is_available() else "cpu",
 }
