@@ -1,8 +1,11 @@
+# diagnostics.py: 모델 상태 진단 출력.
+
 import torch, numpy as np
+import torch.nn.functional as F
 
 @torch.no_grad()
 def print_split_stats(model, loader, device, name):
-    import torch.nn.functional as F
+    """주어진 데이터셋에 대한 모델의 상세 통계(정확도, 손실, 엔트로피, 마진) 출력"""
     model.eval(); losses=[]; entrs=[]; margins=[]; labs=[]; preds=[]
     for x,y in loader:
         x=x.to(device); y=y.to(device)
