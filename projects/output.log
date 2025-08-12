@@ -1,0 +1,2 @@
+nohup: ignoring input
+/root/miniconda3/envs/myenv/bin/python: can't open file '/workspace/machine-unlearning/projects/run_curriculum.py': [Errno 2] No such file or directory
