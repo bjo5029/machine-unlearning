@@ -6,6 +6,7 @@ from torch.utils.data import Subset
 import torch.nn as nn
 import torch, numpy as np
 import torch.nn.functional as F
+from torch.utils.data import DataLoader
 
 def get_transforms():
     """데이터 증강 및 정규화 정의"""
@@ -76,11 +77,6 @@ def create_es_partitions_balanced(original_model, dataset_for_es, device, batch_
     클래스/난이도(confidence) 균형 유지 + '클래스-상대 ES'로 파티션 생성.
     ES(x) = d_self(x) - min_{c≠y} d_other(x)  (값이 클수록 harder/entangled)
     """
-    import torch, numpy as np
-    from torch.utils.data import DataLoader
-    import torch.nn.functional as F
-    import torch.nn as nn
-
     model = original_model.to(device).eval()
     extractor = nn.Sequential(*list(model.children())[:-1]).to(device).eval()
 
@@ -238,23 +234,54 @@ def create_loss_partitions(model, dataset_eval, device, forget_set_size, num_cla
         "High ES":   np.array(high_idx),  # 가장 어려운 쪽
     }
 
-# --- data_es.py ---
-
-import numpy as np, torch
-import torch.nn.functional as F
-import torch.nn as nn
-
+@torch.no_grad()
 def _embed_all(original_model, dataset_eval, device, batch_size):
+    """모델의 특징 추출기를 사용해 모든 데이터의 임베딩(특징 벡터)을 추출합니다."""
     loader = torch.utils.data.DataLoader(dataset_eval, batch_size=batch_size, shuffle=False)
     model = original_model.to(device).eval()
+    # 마지막 FC 레이어를 제외한 특징 추출기
     extractor = nn.Sequential(*list(model.children())[:-1]).to(device).eval()
     embs = []
-    with torch.no_grad():
-        for x, _ in loader:
-            x = x.to(device)
-            e = extractor(x).squeeze()  # [B, D]
-            embs.append(e.detach().cpu())
+    for x, _ in loader:
+        x = x.to(device)
+        e = extractor(x).squeeze()  # [B, D]
+        embs.append(e.detach().cpu())
     return torch.cat(embs, 0)  # [N, D] (cpu)
+
+def create_es_partitions_paper(original_model, dataset_for_es, device, batch_size, forget_set_size):
+    """
+    논문 부록 A.3의 절차 재현:
+      1) 전체 데이터의 중심점(global centroid)으로부터 각 데이터까지의 거리 계산
+      2) 거리가 먼 순서대로 데이터 정렬
+      3) 정렬된 순서에 따라 직접 Low, Medium, High ES 
+         - Low ES: 가장 먼(highest distance) 데이터 그룹
+         - High ES: 점차 가까워지는(progressively lower distance) 데이터 그룹
+    """
+    print("Creating ES partitions (Paper Appendix A.3 method)...")
+    t0 = time.time()
+
+    # 1) 모든 데이터의 임베딩 및 중심점으로부터의 거리 계산
+    embs = _embed_all(original_model, dataset_for_es, device, batch_size)
+    mu = embs.mean(0)
+    dists = ((embs - mu)**2).sum(1).numpy()
+
+    # 2) 거리가 '먼' 순서대로 인덱스를 정렬 (내림차순)
+    order = np.argsort(-dists)
+
+    # 3) 정렬된 순서에 따라 직접 그룹 명명
+    F = forget_set_size
+    if 3 * F > len(order):
+        raise ValueError(f"3 * forget_set_size ({3*F}) is larger than the dataset size ({len(order)}). Please reduce forget_set_size.")
+
+    parts = {
+        "Low ES":    order[:F],          # 가장 먼 3000개
+        "Medium ES": order[F : 2*F],     # 그 다음 3000개
+        "High ES":   order[2*F : 3*F],   # 그 다음 3000개 (가장 가까운 그룹에 속함)
+    }
+
+    print(f"ES partitions created in {time.time()-t0:.2f}s")
+    # ES 점수를 직접 계산하지 않으므로, 관련 로그는 제거합니다.
+    return parts
 
 def _set_es(embs: torch.Tensor, idx_R: np.ndarray, idx_F: np.ndarray, eps=1e-12) -> float:
     """
@@ -270,52 +297,3 @@ def _set_es(embs: torch.Tensor, idx_R: np.ndarray, idx_F: np.ndarray, eps=1e-12)
     within_F = ((F - muF)**2).sum(1).mean().item()
     between  = 0.5 * (((muR - mu)**2).sum().item() + ((muF - mu)**2).sum().item())
     return (within_R + within_F) / (between + eps)
-
-def create_es_partitions_paper(original_model, dataset_for_es, device, batch_size, forget_set_size):
-    """
-    논문 프로시저 재현:
-      1) 전역 센트로이드 거리로 정렬 → 3개의 서로 다른 후보 블록(B1,B2,B3) 만들기
-      2) 각 블록을 Forget으로, 나머지를 Retain으로 두고 집합 ES 계산
-      3) ES 오름차순 = Low ES, 중간 = Medium ES, 내림차순 = High ES 로 라벨링
-    """
-    print("Creating ES partitions (paper-accurate)...")
-    embs = _embed_all(original_model, dataset_for_es, device, batch_size)  # [N, D]
-    mu = embs.mean(0)
-    dists = ((embs - mu)**2).sum(1).numpy()  # 전역 센트로이드까지의 제곱거리 (프록시)
-
-    order = np.argsort(dists)  # 가까움→멀어짐
-    N = len(order)
-
-    # 3개 후보 블록 만들기(서로 겹치지 않도록 연속 구간에서 추출)
-    F = forget_set_size
-    if 3*F > N:
-        raise ValueError(f"3*forget_set_size ({3*F}) > N ({N}). 줄이세요.")
-    cand_low   = order[:F]           # 가까운 쪽
-    cand_mid   = order[F:2*F]
-    cand_high  = order[2*F:3*F]      # 먼 쪽
-
-    # 각 블록에 대해 집합 ES 계산 (Forget=cand, Retain=나머지)
-    all_idx = np.arange(N)
-    def block_es(cand):
-        idx_F = cand
-        idx_R = np.setdiff1d(all_idx, idx_F, assume_unique=False)
-        return _set_es(embs, idx_R, idx_F)
-
-    es_low  = block_es(cand_low)
-    es_mid  = block_es(cand_mid)
-    es_high = block_es(cand_high)
-
-    # ES 오름차순으로 라벨 부여
-    blocks = [
-        ("cand_low",  cand_low,  es_low),
-        ("cand_mid",  cand_mid,  es_mid),
-        ("cand_high", cand_high, es_high),
-    ]
-    blocks_sorted = sorted(blocks, key=lambda t: t[2])  # ES 작은→큰
-    parts = {
-        "Low ES":    np.array(blocks_sorted[0][1]),
-        "Medium ES": np.array(blocks_sorted[1][1]),
-        "High ES":   np.array(blocks_sorted[2][1]),
-    }
-    print(f"ES scores (ascending): {[round(b[2],6) for b in blocks_sorted]}")
-    return parts

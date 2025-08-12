@@ -76,38 +76,38 @@ def _set_es(embs, idx_R, idx_F):
     return dF - dR # 이 값이 클수록 Forget 데이터가 Retain 분포에서 더 이질적임을 의미
 
 def create_es_partitions_paper(original_model, dataset_for_es, device, batch_size, forget_set_size):
-    """논문 방식과 유사하게 ES 파티션을 생성"""
-    print("Creating ES partitions (paper-accurate)...")
-    embs = _embed_all(original_model, dataset_for_es, device, batch_size)  # 모든 데이터의 임베딩 추출
-    mu = embs.mean(0) # 전체 데이터의 중심점
-    dists = ((embs - mu)**2).sum(1).numpy() # 각 데이터와 전체 중심점 간의 거리 계산
+    """
+    논문 부록 A.3의 절차 재현:
+      1) 전체 데이터의 중심점(global centroid)으로부터 각 데이터까지의 거리 계산
+      2) 거리가 먼 순서대로 데이터 정렬
+      3) 정렬된 순서에 따라 직접 Low, Medium, High ES 
+         - Low ES: 가장 먼(highest distance) 데이터 그룹
+         - High ES: 점차 가까워지는(progressively lower distance) 데이터 그룹
+    """
+    print("Creating ES partitions (Paper Appendix A.3 method)...")
+    t0 = time.time()
 
-    order = np.argsort(dists)  # 거리가 가까운 순서대로 데이터 인덱스 정렬
-    N = len(order); F = forget_set_size
-    if 3*F > N:
-        raise ValueError(f"3*forget_set_size ({3*F}) > N ({N}). Reduce forget_set_size.")
+    # 1) 모든 데이터의 임베딩 및 중심점으로부터의 거리 계산
+    embs = _embed_all(original_model, dataset_for_es, device, batch_size)
+    mu = embs.mean(0)
+    dists = ((embs - mu)**2).sum(1).numpy()
 
-    # 3개의 후보 블록(가까운 그룹, 중간 그룹, 먼 그룹) 생성
-    cand1 = order[:F]
-    cand2 = order[F:2*F]
-    cand3 = order[2*F:3*F]
+    # 2) 거리가 '먼' 순서대로 인덱스를 정렬 (내림차순)
+    order = np.argsort(-dists)
 
-    all_idx = np.arange(N)
-    def block_es(cand):
-        idx_F = cand
-        idx_R = np.setdiff1d(all_idx, idx_F, assume_unique=False)
-        return _set_es(embs, idx_R, idx_F)
+    # 3) 정렬된 순서에 따라 직접 그룹 명명
+    F = forget_set_size
+    N = len(order)
+    if 3 * F > N:
+        raise ValueError(f"3 * forget_set_size ({3*F}) is larger than the dataset size ({N}). Please reduce forget_set_size.")
 
-    # 각 블록의 '집합 ES' 점수 계산
-    es1, es2, es3 = block_es(cand1), block_es(cand2), block_es(cand3)
-    blocks = [("B1", cand1, es1), ("B2", cand2, es2), ("B3", cand3, es3)]
+    parts = {
+        "Low ES":    order[:F],          # 가장 먼 3000개
+        "Medium ES": order[F : 2*F],     # 그 다음으로 먼 3000개
+        "High ES":   order[2*F : 3*F],   # 그 다음으로 먼 3000개 (즉, 상대적으로 가까운 그룹)
+    }
 
-    # ES 점수가 낮은 순서대로 정렬하여 Low, Medium, High 라벨 부여
-    blocks_sorted = sorted(blocks, key=lambda t: t[2])  # ascending
-    parts = {"Low ES": np.array(blocks_sorted[0][1]),
-             "Medium ES": np.array(blocks_sorted[1][1]),
-             "High ES": np.array(blocks_sorted[2][1])}
-    print(f"ES scores (ascending): {[round(b[2],6) for b in blocks_sorted]}")
+    print(f"ES partitions created in {time.time()-t0:.2f}s")
     return parts
 
 # -------- Optional: balanced variant (class/conf bins) --------

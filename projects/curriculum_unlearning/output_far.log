@@ -1,0 +1,422 @@
+nohup: ignoring input
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Creating ES partitions (Paper Appendix A.3 method)...
+ES partitions created in 18.85s
+
+===== Run 1/1 | Order=HML =====
+[TRAIN] Original
+    Epoch 1/30  31.55s
+    Epoch 2/30  31.24s
+    Epoch 3/30  30.43s
+    Epoch 4/30  30.55s
+    Epoch 5/30  31.01s
+    Epoch 6/30  30.97s
+    Epoch 7/30  31.13s
+    Epoch 8/30  31.64s
+    Epoch 9/30  30.36s
+    Epoch 10/30  30.28s
+    Epoch 11/30  30.93s
+    Epoch 12/30  30.80s
+    Epoch 13/30  31.14s
+    Epoch 14/30  30.85s
+    Epoch 15/30  30.69s
+    Epoch 16/30  31.05s
+    Epoch 17/30  31.00s
+    Epoch 18/30  31.84s
+    Epoch 19/30  31.46s
+    Epoch 20/30  31.52s
+    Epoch 21/30  31.88s
+    Epoch 22/30  31.66s
+    Epoch 23/30  31.20s
+    Epoch 24/30  30.60s
+    Epoch 25/30  30.79s
+    Epoch 26/30  31.19s
+    Epoch 27/30  31.11s
+    Epoch 28/30  31.86s
+    Epoch 29/30  31.31s
+    Epoch 30/30  30.90s
+[TRAIN] Retrain stage1 on retain-only (|retain|=47000)
+    Epoch 1/30  29.21s
+    Epoch 2/30  29.49s
+    Epoch 3/30  29.51s
+    Epoch 4/30  29.45s
+    Epoch 5/30  29.54s
+    Epoch 6/30  29.45s
+    Epoch 7/30  29.45s
+    Epoch 8/30  28.98s
+    Epoch 9/30  28.89s
+    Epoch 10/30  29.53s
+    Epoch 11/30  29.09s
+    Epoch 12/30  29.55s
+    Epoch 13/30  29.08s
+    Epoch 14/30  29.32s
+    Epoch 15/30  29.71s
+    Epoch 16/30  29.65s
+    Epoch 17/30  29.57s
+    Epoch 18/30  29.82s
+    Epoch 19/30  29.87s
+    Epoch 20/30  29.03s
+    Epoch 21/30  29.27s
+    Epoch 22/30  29.29s
+    Epoch 23/30  30.08s
+    Epoch 24/30  29.71s
+    Epoch 25/30  29.92s
+    Epoch 26/30  29.58s
+    Epoch 27/30  30.16s
+    Epoch 28/30  29.94s
+    Epoch 29/30  29.84s
+    Epoch 30/30  29.99s
+[UNLEARN] NegGrad+ stage1 (|forget_added|=3000, |forget_total|=3000)
+ HML | stage 1 | Ftot=3000  Ret:84.93/92.47/83.91  Unl:92.17/92.48/84.43  ΔF: +7.23  ΔR:  0.02  ΔT:  0.52  MIA:0.499387  PredDiff:8.990
+[TRAIN] Retrain stage2 on retain-only (|retain|=44000)
+    Epoch 1/30  27.96s
+    Epoch 2/30  28.25s
+    Epoch 3/30  27.95s
+    Epoch 4/30  27.78s
+    Epoch 5/30  28.28s
+    Epoch 6/30  28.05s
+    Epoch 7/30  27.48s
+    Epoch 8/30  27.63s
+    Epoch 9/30  27.61s
+    Epoch 10/30  27.40s
+    Epoch 11/30  27.69s
+    Epoch 12/30  27.65s
+    Epoch 13/30  27.21s
+    Epoch 14/30  27.45s
+    Epoch 15/30  26.93s
+    Epoch 16/30  27.97s
+    Epoch 17/30  27.85s
+    Epoch 18/30  27.84s
+    Epoch 19/30  27.92s
+    Epoch 20/30  28.16s
+    Epoch 21/30  28.16s
+    Epoch 22/30  26.97s
+    Epoch 23/30  28.06s
+    Epoch 24/30  27.64s
+    Epoch 25/30  28.18s
+    Epoch 26/30  28.04s
+    Epoch 27/30  28.35s
+    Epoch 28/30  27.41s
+    Epoch 29/30  26.94s
+    Epoch 30/30  27.90s
+[UNLEARN] NegGrad+ stage2 (|forget_added|=3000, |forget_total|=6000)
+ HML | stage 2 | Ftot=6000  Ret:84.13/91.97/82.42  Unl:92.25/92.33/84.20  ΔF: +8.12  ΔR:  0.36  ΔT:  1.78  MIA:0.498773  PredDiff:9.534
+[TRAIN] Retrain stage3 on retain-only (|retain|=41000)
+    Epoch 1/30  26.18s
+    Epoch 2/30  26.48s
+    Epoch 3/30  26.08s
+    Epoch 4/30  25.92s
+    Epoch 5/30  26.13s
+    Epoch 6/30  26.64s
+    Epoch 7/30  26.43s
+    Epoch 8/30  25.95s
+    Epoch 9/30  26.23s
+    Epoch 10/30  27.25s
+    Epoch 11/30  27.12s
+    Epoch 12/30  26.48s
+    Epoch 13/30  26.62s
+    Epoch 14/30  26.07s
+    Epoch 15/30  26.35s
+    Epoch 16/30  26.18s
+    Epoch 17/30  26.05s
+    Epoch 18/30  26.21s
+    Epoch 19/30  25.98s
+    Epoch 20/30  25.93s
+    Epoch 21/30  25.89s
+    Epoch 22/30  26.22s
+    Epoch 23/30  26.12s
+    Epoch 24/30  25.76s
+    Epoch 25/30  25.82s
+    Epoch 26/30  25.81s
+    Epoch 27/30  25.79s
+    Epoch 28/30  27.06s
+    Epoch 29/30  26.11s
+    Epoch 30/30  26.32s
+[UNLEARN] NegGrad+ stage3 (|forget_added|=3000, |forget_total|=9000)
+ HML | stage 3 | Ftot=9000  Ret:83.28/92.20/83.53  Unl:90.16/91.56/83.19  ΔF: +6.88  ΔR:  0.64  ΔT:  0.34  MIA:0.506507  PredDiff:10.772
+
+===== Run 1/1 | Order=LMH =====
+[TRAIN] Original
+    Epoch 1/30  31.87s
+    Epoch 2/30  31.24s
+    Epoch 3/30  32.50s
+    Epoch 4/30  31.49s
+    Epoch 5/30  30.81s
+    Epoch 6/30  31.16s
+    Epoch 7/30  30.53s
+    Epoch 8/30  30.62s
+    Epoch 9/30  31.14s
+    Epoch 10/30  31.30s
+    Epoch 11/30  30.27s
+    Epoch 12/30  30.55s
+    Epoch 13/30  30.45s
+    Epoch 14/30  31.05s
+    Epoch 15/30  32.29s
+    Epoch 16/30  31.56s
+    Epoch 17/30  31.79s
+    Epoch 18/30  31.53s
+    Epoch 19/30  31.62s
+    Epoch 20/30  32.10s
+    Epoch 21/30  32.08s
+    Epoch 22/30  33.02s
+    Epoch 23/30  32.03s
+    Epoch 24/30  31.78s
+    Epoch 25/30  32.43s
+    Epoch 26/30  32.34s
+    Epoch 27/30  32.43s
+    Epoch 28/30  31.05s
+    Epoch 29/30  30.52s
+    Epoch 30/30  31.43s
+[TRAIN] Retrain stage1 on retain-only (|retain|=47000)
+    Epoch 1/30  30.94s
+    Epoch 2/30  30.01s
+    Epoch 3/30  30.24s
+    Epoch 4/30  30.03s
+    Epoch 5/30  29.84s
+    Epoch 6/30  29.91s
+    Epoch 7/30  30.27s
+    Epoch 8/30  29.21s
+    Epoch 9/30  29.79s
+    Epoch 10/30  29.13s
+    Epoch 11/30  29.26s
+    Epoch 12/30  28.87s
+    Epoch 13/30  29.90s
+    Epoch 14/30  29.76s
+    Epoch 15/30  30.04s
+    Epoch 16/30  30.02s
+    Epoch 17/30  29.58s
+    Epoch 18/30  29.21s
+    Epoch 19/30  29.92s
+    Epoch 20/30  29.89s
+    Epoch 21/30  29.34s
+    Epoch 22/30  29.87s
+    Epoch 23/30  30.12s
+    Epoch 24/30  29.50s
+    Epoch 25/30  30.23s
+    Epoch 26/30  30.18s
+    Epoch 27/30  30.27s
+    Epoch 28/30  29.86s
+    Epoch 29/30  29.84s
+    Epoch 30/30  28.89s
+[UNLEARN] NegGrad+ stage1 (|forget_added|=3000, |forget_total|=3000)
+ LMH | stage 1 | Ftot=3000  Ret:83.93/92.39/83.83  Unl:89.40/90.98/82.63  ΔF: +5.47  ΔR:  1.41  ΔT:  1.20  MIA:0.504624  PredDiff:10.486
+[TRAIN] Retrain stage2 on retain-only (|retain|=44000)
+    Epoch 1/30  28.02s
+    Epoch 2/30  28.15s
+    Epoch 3/30  27.78s
+    Epoch 4/30  28.17s
+    Epoch 5/30  28.43s
+    Epoch 6/30  28.21s
+    Epoch 7/30  27.81s
+    Epoch 8/30  28.29s
+    Epoch 9/30  28.04s
+    Epoch 10/30  28.20s
+    Epoch 11/30  27.59s
+    Epoch 12/30  29.92s
+    Epoch 13/30  27.96s
+    Epoch 14/30  27.96s
+    Epoch 15/30  27.92s
+    Epoch 16/30  28.40s
+    Epoch 17/30  28.02s
+    Epoch 18/30  28.23s
+    Epoch 19/30  27.59s
+    Epoch 20/30  26.48s
+    Epoch 21/30  27.66s
+    Epoch 22/30  28.29s
+    Epoch 23/30  27.89s
+    Epoch 24/30  27.56s
+    Epoch 25/30  27.24s
+    Epoch 26/30  28.97s
+    Epoch 27/30  29.11s
+    Epoch 28/30  29.05s
+    Epoch 29/30  28.36s
+    Epoch 30/30  27.58s
+[UNLEARN] NegGrad+ stage2 (|forget_added|=3000, |forget_total|=6000)
+ LMH | stage 2 | Ftot=6000  Ret:83.63/92.74/83.67  Unl:84.42/90.25/81.68  ΔF: +0.78  ΔR:  2.49  ΔT:  1.99  MIA:0.528629  PredDiff:11.884
+[TRAIN] Retrain stage3 on retain-only (|retain|=41000)
+    Epoch 1/30  26.92s
+    Epoch 2/30  27.05s
+    Epoch 3/30  27.15s
+    Epoch 4/30  26.50s
+    Epoch 5/30  27.00s
+    Epoch 6/30  26.59s
+    Epoch 7/30  27.12s
+    Epoch 8/30  26.88s
+    Epoch 9/30  26.95s
+    Epoch 10/30  27.24s
+    Epoch 11/30  26.94s
+    Epoch 12/30  26.70s
+    Epoch 13/30  26.57s
+    Epoch 14/30  26.86s
+    Epoch 15/30  26.64s
+    Epoch 16/30  26.79s
+    Epoch 17/30  26.61s
+    Epoch 18/30  26.60s
+    Epoch 19/30  26.77s
+    Epoch 20/30  26.86s
+    Epoch 21/30  26.55s
+    Epoch 22/30  26.53s
+    Epoch 23/30  27.17s
+    Epoch 24/30  26.78s
+    Epoch 25/30  26.90s
+    Epoch 26/30  26.72s
+    Epoch 27/30  26.81s
+    Epoch 28/30  26.73s
+    Epoch 29/30  25.98s
+    Epoch 30/30  26.32s
+[UNLEARN] NegGrad+ stage3 (|forget_added|=3000, |forget_total|=9000)
+ LMH | stage 3 | Ftot=9000  Ret:82.67/91.66/82.92  Unl:79.18/89.36/79.45  ΔF: -3.49  ΔR:  2.30  ΔT:  3.47  MIA:0.550629  PredDiff:14.298
+
+===== Run 1/1 | Order=RND =====
+[TRAIN] Original
+    Epoch 1/30  31.88s
+    Epoch 2/30  31.18s
+    Epoch 3/30  31.52s
+    Epoch 4/30  31.45s
+    Epoch 5/30  31.44s
+    Epoch 6/30  31.47s
+    Epoch 7/30  31.15s
+    Epoch 8/30  30.98s
+    Epoch 9/30  31.33s
+    Epoch 10/30  30.75s
+    Epoch 11/30  31.31s
+    Epoch 12/30  30.92s
+    Epoch 13/30  31.43s
+    Epoch 14/30  31.13s
+    Epoch 15/30  31.60s
+    Epoch 16/30  31.49s
+    Epoch 17/30  30.75s
+    Epoch 18/30  31.38s
+    Epoch 19/30  30.62s
+    Epoch 20/30  31.25s
+    Epoch 21/30  32.05s
+    Epoch 22/30  31.71s
+    Epoch 23/30  31.49s
+    Epoch 24/30  31.31s
+    Epoch 25/30  31.88s
+    Epoch 26/30  31.81s
+    Epoch 27/30  32.08s
+    Epoch 28/30  32.49s
+    Epoch 29/30  32.55s
+    Epoch 30/30  31.45s
+[TRAIN] Retrain stage1 on retain-only (|retain|=47000)
+    Epoch 1/30  29.35s
+    Epoch 2/30  29.19s
+    Epoch 3/30  29.27s
+    Epoch 4/30  29.41s
+    Epoch 5/30  29.86s
+    Epoch 6/30  29.88s
+    Epoch 7/30  29.73s
+    Epoch 8/30  29.62s
+    Epoch 9/30  29.66s
+    Epoch 10/30  29.69s
+    Epoch 11/30  29.67s
+    Epoch 12/30  29.12s
+    Epoch 13/30  29.28s
+    Epoch 14/30  30.13s
+    Epoch 15/30  29.14s
+    Epoch 16/30  29.01s
+    Epoch 17/30  29.25s
+    Epoch 18/30  28.88s
+    Epoch 19/30  29.85s
+    Epoch 20/30  29.20s
+    Epoch 21/30  29.53s
+    Epoch 22/30  29.36s
+    Epoch 23/30  29.29s
+    Epoch 24/30  29.58s
+    Epoch 25/30  29.66s
+    Epoch 26/30  30.24s
+    Epoch 27/30  29.75s
+    Epoch 28/30  30.08s
+    Epoch 29/30  30.04s
+    Epoch 30/30  30.58s
+[UNLEARN] NegGrad+ stage1 (|forget_added|=3000, |forget_total|=3000)
+ RND | stage 1 | Ftot=3000  Ret:84.10/92.44/84.17  Unl:91.67/91.74/83.44  ΔF: +7.57  ΔR:  0.71  ΔT:  0.73  MIA:0.498681  PredDiff:9.612
+[TRAIN] Retrain stage2 on retain-only (|retain|=44000)
+    Epoch 1/30  27.08s
+    Epoch 2/30  27.04s
+    Epoch 3/30  27.14s
+    Epoch 4/30  27.62s
+    Epoch 5/30  27.80s
+    Epoch 6/30  27.46s
+    Epoch 7/30  27.68s
+    Epoch 8/30  27.97s
+    Epoch 9/30  27.60s
+    Epoch 10/30  27.30s
+    Epoch 11/30  27.11s
+    Epoch 12/30  27.67s
+    Epoch 13/30  27.28s
+    Epoch 14/30  26.93s
+    Epoch 15/30  26.57s
+    Epoch 16/30  27.39s
+    Epoch 17/30  27.39s
+    Epoch 18/30  26.91s
+    Epoch 19/30  27.93s
+    Epoch 20/30  27.57s
+    Epoch 21/30  27.49s
+    Epoch 22/30  27.21s
+    Epoch 23/30  27.11s
+    Epoch 24/30  26.58s
+    Epoch 25/30  27.71s
+    Epoch 26/30  28.04s
+    Epoch 27/30  27.91s
+    Epoch 28/30  27.79s
+    Epoch 29/30  27.70s
+    Epoch 30/30  27.51s
+[UNLEARN] NegGrad+ stage2 (|forget_added|=3000, |forget_total|=6000)
+ RND | stage 2 | Ftot=6000  Ret:84.17/92.56/83.80  Unl:90.87/91.51/83.19  ΔF: +6.70  ΔR:  1.06  ΔT:  0.61  MIA:0.502943  PredDiff:10.146
+[TRAIN] Retrain stage3 on retain-only (|retain|=41000)
+    Epoch 1/30  27.96s
+    Epoch 2/30  26.25s
+    Epoch 3/30  25.62s
+    Epoch 4/30  26.19s
+    Epoch 5/30  26.10s
+    Epoch 6/30  26.23s
+    Epoch 7/30  26.32s
+    Epoch 8/30  26.27s
+    Epoch 9/30  26.09s
+    Epoch 10/30  26.98s
+    Epoch 11/30  26.81s
+    Epoch 12/30  26.17s
+    Epoch 13/30  26.63s
+    Epoch 14/30  26.34s
+    Epoch 15/30  25.79s
+    Epoch 16/30  26.16s
+    Epoch 17/30  25.98s
+    Epoch 18/30  26.21s
+    Epoch 19/30  25.70s
+    Epoch 20/30  25.99s
+    Epoch 21/30  26.09s
+    Epoch 22/30  26.33s
+    Epoch 23/30  26.56s
+    Epoch 24/30  25.90s
+    Epoch 25/30  25.73s
+    Epoch 26/30  25.99s
+    Epoch 27/30  25.91s
+    Epoch 28/30  25.92s
+    Epoch 29/30  25.87s
+    Epoch 30/30  26.00s
+[UNLEARN] NegGrad+ stage3 (|forget_added|=3000, |forget_total|=9000)
+ RND | stage 3 | Ftot=9000  Ret:82.62/91.51/82.45  Unl:84.70/90.01/81.34  ΔF: +2.08  ΔR:  1.50  ΔT:  1.11  MIA:0.519783  PredDiff:12.838
+
+===== Stage-wise results =====
+order  stage  forget_total  Retrain_F  Retrain_R  Retrain_T  Unlearn_F  Unlearn_R  Unlearn_T        ΔF       ΔR   ΔT      MIA  PredDiff(%)
+  HML      1          3000  84.933333  92.465957      83.91  92.166667  92.482979      84.43  7.233333 0.017021 0.52 0.499387        8.990
+  HML      2          6000  84.133333  91.972727      82.42  92.250000  92.329545      84.20  8.116667 0.356818 1.78 0.498773        9.534
+  HML      3          9000  83.277778  92.204878      83.53  90.155556  91.563415      83.19  6.877778 0.641463 0.34 0.506507       10.772
+  LMH      1          3000  83.933333  92.387234      83.83  89.400000  90.978723      82.63  5.466667 1.408511 1.20 0.504624       10.486
+  LMH      2          6000  83.633333  92.740909      83.67  84.416667  90.247727      81.68  0.783333 2.493182 1.99 0.528629       11.884
+  LMH      3          9000  82.666667  91.656098      82.92  79.177778  89.360976      79.45 -3.488889 2.295122 3.47 0.550629       14.298
+  RND      1          3000  84.100000  92.444681      84.17  91.666667  91.738298      83.44  7.566667 0.706383 0.73 0.498681        9.612
+  RND      2          6000  84.166667  92.563636      83.80  90.866667  91.506818      83.19  6.700000 1.056818 0.61 0.502943       10.146
+  RND      3          9000  82.622222  91.509756      82.45  84.700000  90.009756      81.34  2.077778 1.500000 1.11 0.519783       12.838
+
+===== Final (after last stage) =====
+order  Unlearn_F  Unlearn_R  Unlearn_T        ΔF       ΔR   ΔT      MIA  PredDiff(%)
+  HML  90.155556  91.563415      83.19  6.877778 0.641463 0.34 0.506507       10.772
+  LMH  79.177778  89.360976      79.45 -3.488889 2.295122 3.47 0.550629       14.298
+  RND  84.700000  90.009756      81.34  2.077778 1.500000 1.11 0.519783       12.838
+
+Saved: saved_models/curriculum_results.csv
