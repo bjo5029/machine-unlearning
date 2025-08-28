@@ -40,13 +40,14 @@ saved_models1/
 *.pth
 *.bin
 
+# Large precomputed experiment results (memorization/influence scores)
+estimates_results.npz
+
+
 # ========================
 # Log Files 
 # ========================
-nohup.out
-log.out
-log_gpu*.out
-my_print_output.txt
+output_*.log
 
 
 # ========================
@@ -54,3 +55,6 @@ my_print_output.txt
 # ========================
 .DS_Store
 Thumbs.db
+
+
+gpu_test.ipynb
