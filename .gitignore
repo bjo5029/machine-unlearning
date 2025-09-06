@@ -59,3 +59,15 @@ Thumbs.db
 
 
 gpu_test.ipynb
+# large/binary
+*.npz
+*.tar.gz
+*.pt
+*.pth
+*.ckpt
+# large/binary
+*.npz
+*.tar.gz
+*.pt
+*.pth
+*.ckpt
