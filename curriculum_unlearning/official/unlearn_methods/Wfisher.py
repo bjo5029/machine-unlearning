@@ -1,7 +1,6 @@
 import torch
 from imagenet import get_x_y_from_data_dict
 from torch.autograd import grad
-from tqdm import tqdm
 
 
 def get_require_grad_params(model: torch.nn.Module, named=False):
@@ -25,14 +24,12 @@ def sam_grad(model, loss, args):
             if any(surgical_choice in name for surgical_choice in surgical_choices):
                 params.append(param)
                 names.append(name)
-
     else:
         for param in get_require_grad_params(model, named=False):
             params.append(param)
 
     sample_grad = grad(loss, params)
     sample_grad = [x.view(-1) for x in sample_grad]
-
     return torch.cat(sample_grad)
 
 
@@ -44,19 +41,19 @@ def apply_perturb(model, v, args, mask=None):
         for name, param in get_require_grad_params(model, named=True):
             if any(surgical_choice in name for surgical_choice in surgical_choices):
                 length = param.view(-1).shape[0]
-                param.view(-1).data += v[curr : curr + length].data
+                param.view(-1).data += v[curr: curr + length].data
                 curr += length
 
     elif mask:
         for name, param in get_require_grad_params(model, named=True):
             length = param.view(-1).shape[0]
-            param.view(-1).data += v[curr : curr + length].data * mask[name].view(-1)
+            param.view(-1).data += v[curr: curr + length].data * mask[name].view(-1)
             curr += length
 
     else:
         for param in get_require_grad_params(model, named=False):
             length = param.view(-1).shape[0]
-            param.view(-1).data += v[curr : curr + length].data
+            param.view(-1).data += v[curr: curr + length].data
             curr += length
 
 
@@ -65,7 +62,7 @@ def woodfisher(model, train_dl, device, criterion, v, args, mask=None):
     k_vec = torch.clone(v)
     N = 1000
     o_vec = None
-    for idx, (data, label) in enumerate(tqdm(train_dl)):
+    for idx, (data, label) in enumerate(train_dl):
         model.zero_grad()
         data = data.to(device)
         label = label.to(device)
@@ -93,7 +90,7 @@ def woodfisher_im(model, train_dl, device, criterion, v, args, mask=None):
     device = (
         torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
     )
-    for idx, data in enumerate(tqdm(train_dl)):
+    for idx, data in enumerate(train_dl):
         model.zero_grad()
         data, label = get_x_y_from_data_dict(data, device)
         output = model(data)
@@ -138,12 +135,11 @@ def Wfisher(data_loaders, model, criterion, args, mask=None):
 
     forget_grad = torch.zeros_like(torch.cat(params)).to(device)
     retain_grad = torch.zeros_like(torch.cat(params)).to(device)
-    # print(forget_grad)
 
     total = 0
     model.eval()
     if args.imagenet_arch:
-        for i, data in enumerate(tqdm(forget_loader)):
+        for i, data in enumerate(forget_loader):
             model.zero_grad()
             data, label = get_x_y_from_data_dict(data, device)
             real_num = data.shape[0]
@@ -155,8 +151,9 @@ def Wfisher(data_loaders, model, criterion, args, mask=None):
             f_grad = sam_grad(model, loss, args) * real_num
             forget_grad += f_grad
             total += real_num
+
         total_2 = 0
-        for i, data in enumerate(tqdm(forget_loader)):
+        for i, data in enumerate(forget_loader):  # 원 코드 유지(필요시 retain_grad_loader로 교체)
             model.zero_grad()
             data, label = get_x_y_from_data_dict(data, device)
             real_num = data.shape[0]
@@ -169,7 +166,7 @@ def Wfisher(data_loaders, model, criterion, args, mask=None):
             retain_grad += r_grad
             total_2 += real_num
     else:
-        for i, (data, label) in enumerate(tqdm(forget_loader)):
+        for i, (data, label) in enumerate(forget_loader):
             model.zero_grad()
             real_num = data.shape[0]
             data = data.to(device)
@@ -182,7 +179,7 @@ def Wfisher(data_loaders, model, criterion, args, mask=None):
             total += real_num
 
         total_2 = 0
-        for i, (data, label) in enumerate(tqdm(retain_grad_loader)):
+        for i, (data, label) in enumerate(retain_grad_loader):
             model.zero_grad()
             real_num = data.shape[0]
             data = data.to(device)
@@ -218,7 +215,6 @@ def Wfisher(data_loaders, model, criterion, args, mask=None):
             mask=mask,
         )
     apply_perturb(model, args.alpha * perturb, args, mask=mask)
-
     return model
 
 

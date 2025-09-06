@@ -33,6 +33,7 @@ data/
 # Experiment results (trained models, logs, tables, etc.)
 results/
 saved_models/
+saved_models_*/
 saved_models1/
 
 # Model file extensions 

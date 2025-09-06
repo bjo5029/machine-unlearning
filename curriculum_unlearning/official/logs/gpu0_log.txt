@@ -1,0 +1,2940 @@
+nohup: ignoring input
+Loading configuration from: config_gpu0.py
+============================================================
+Starting sequential experiments for 3 conditions on GPU...
+  - Target Definition Type: class
+  - Output Directory: saved_models_gpu0
+============================================================
+
+--- [1/3] Running Experiment ---
+  - Forget Set Definition: class
+  - Partition Ordering   : easy_first
+  - Results will be saved to: saved_models_gpu0/results_class_easy_first.csv
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+[TRAIN] Original Model
+    Epoch 1/30  30.06s
+    Epoch 2/30  28.50s
+    Epoch 3/30  28.82s
+    Epoch 4/30  28.95s
+    Epoch 5/30  28.99s
+    Epoch 6/30  28.69s
+    Epoch 7/30  28.43s
+    Epoch 8/30  28.61s
+    Epoch 9/30  28.69s
+    Epoch 10/30  28.69s
+    Epoch 11/30  28.53s
+    Epoch 12/30  28.35s
+    Epoch 13/30  28.23s
+    Epoch 14/30  28.23s
+    Epoch 15/30  28.41s
+    Epoch 16/30  28.20s
+    Epoch 17/30  28.28s
+    Epoch 18/30  28.15s
+    Epoch 19/30  28.09s
+    Epoch 20/30  28.24s
+    Epoch 21/30  28.30s
+    Epoch 22/30  28.19s
+    Epoch 23/30  28.29s
+    Epoch 24/30  28.27s
+    Epoch 25/30  28.94s
+    Epoch 26/30  28.91s
+    Epoch 27/30  28.80s
+    Epoch 28/30  28.82s
+    Epoch 29/30  28.90s
+    Epoch 30/30  28.83s
+[SAVE] saved_models_gpu0/original_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+Defining forget set: all samples from class 0.
+Partitioning 5000 forget samples using 'memorization' method...
+Partition sizes: [1666, 1666, 1668]
+[INFO] Unlearning order: Easy first (low memorization -> high)
+
+===== Running Method: FT =====
+[TRAIN] Retrain on 48334 samples
+    Epoch 1/30  27.68s
+    Epoch 2/30  27.44s
+    Epoch 3/30  27.46s
+    Epoch 4/30  27.45s
+    Epoch 5/30  27.50s
+    Epoch 6/30  27.53s
+    Epoch 7/30  27.46s
+    Epoch 8/30  27.51s
+    Epoch 9/30  27.44s
+    Epoch 10/30  27.31s
+    Epoch 11/30  27.35s
+    Epoch 12/30  27.56s
+    Epoch 13/30  27.52s
+    Epoch 14/30  27.42s
+    Epoch 15/30  27.41s
+    Epoch 16/30  27.60s
+    Epoch 17/30  27.86s
+    Epoch 18/30  28.01s
+    Epoch 19/30  28.08s
+    Epoch 20/30  28.21s
+    Epoch 21/30  28.10s
+    Epoch 22/30  28.08s
+    Epoch 23/30  28.24s
+    Epoch 24/30  27.97s
+    Epoch 25/30  28.12s
+    Epoch 26/30  28.19s
+    Epoch 27/30  28.06s
+    Epoch 28/30  28.10s
+    Epoch 29/30  28.25s
+    Epoch 30/30  27.36s
+[SAVE] saved_models_gpu0/retrain_eb65c94bf8c8677d69becf7235fc60f3a44af51e_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+[UNLEARN] FT stage 1 (|forget_total|=1666)
+  > Applied specific params for FT: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+/root/miniconda3/envs/myenv/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:138: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/189]	Loss 0.2610 (0.2783)	Accuracy 91.406 (90.152)	Time 16.08
+train_accuracy 90.214
+one epoch duration:30.34681534767151
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/189]	Loss 0.2369 (0.2811)	Accuracy 90.234 (90.145)	Time 16.08
+train_accuracy 90.216
+one epoch duration:30.382158517837524
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/189]	Loss 0.2624 (0.2754)	Accuracy 89.062 (90.336)	Time 16.12
+train_accuracy 90.458
+one epoch duration:30.403239250183105
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/189]	Loss 0.2865 (0.2658)	Accuracy 90.234 (90.824)	Time 16.14
+train_accuracy 90.773
+one epoch duration:30.41975426673889
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/189]	Loss 0.3016 (0.2634)	Accuracy 91.016 (90.836)	Time 16.04
+train_accuracy 90.657
+one epoch duration:30.316880702972412
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/189]	Loss 0.3197 (0.2567)	Accuracy 89.453 (90.918)	Time 16.06
+train_accuracy 90.737
+one epoch duration:30.324913501739502
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/189]	Loss 0.2904 (0.2729)	Accuracy 89.062 (90.340)	Time 16.15
+train_accuracy 90.646
+one epoch duration:30.469056367874146
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/189]	Loss 0.2622 (0.2594)	Accuracy 90.234 (90.898)	Time 16.19
+train_accuracy 90.746
+one epoch duration:30.56635069847107
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/189]	Loss 0.2782 (0.2656)	Accuracy 90.234 (91.043)	Time 16.17
+train_accuracy 90.928
+one epoch duration:30.449883699417114
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/189]	Loss 0.2190 (0.2610)	Accuracy 92.188 (90.688)	Time 16.08
+train_accuracy 90.661
+one epoch duration:30.389838695526123
+        FT | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 99.94/92.76/83.76 | ΔF:+0.72 ΔR: 1.03 ΔT: 0.04 | MIA:0.4554 PredDiff:8.71%
+[TRAIN] Retrain on 46668 samples
+    Epoch 1/30  26.59s
+    Epoch 2/30  26.51s
+    Epoch 3/30  26.55s
+    Epoch 4/30  26.61s
+    Epoch 5/30  26.52s
+    Epoch 6/30  26.72s
+    Epoch 7/30  26.51s
+    Epoch 8/30  26.47s
+    Epoch 9/30  26.55s
+    Epoch 10/30  26.76s
+    Epoch 11/30  27.09s
+    Epoch 12/30  27.03s
+    Epoch 13/30  27.03s
+    Epoch 14/30  27.07s
+    Epoch 15/30  27.20s
+    Epoch 16/30  26.96s
+    Epoch 17/30  26.95s
+    Epoch 18/30  27.16s
+    Epoch 19/30  27.09s
+    Epoch 20/30  28.31s
+    Epoch 21/30  28.14s
+    Epoch 22/30  28.07s
+    Epoch 23/30  27.90s
+    Epoch 24/30  28.14s
+    Epoch 25/30  28.40s
+    Epoch 26/30  27.89s
+    Epoch 27/30  27.70s
+    Epoch 28/30  27.89s
+    Epoch 29/30  28.01s
+    Epoch 30/30  27.65s
+[SAVE] saved_models_gpu0/retrain_3265bb8e47ab30b6eadbea506d6d63e72c54ea7d_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+[UNLEARN] FT stage 2 (|forget_total|=3332)
+  > Applied specific params for FT: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/183]	Loss 0.2311 (0.2706)	Accuracy 91.406 (90.609)	Time 16.85
+train_accuracy 90.516
+one epoch duration:30.50283718109131
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/183]	Loss 0.2343 (0.2647)	Accuracy 92.578 (90.809)	Time 16.57
+train_accuracy 90.683
+one epoch duration:30.290945053100586
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/183]	Loss 0.3069 (0.2715)	Accuracy 86.719 (90.621)	Time 16.74
+train_accuracy 90.527
+one epoch duration:30.750605583190918
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/183]	Loss 0.2636 (0.2686)	Accuracy 90.625 (90.480)	Time 16.75
+train_accuracy 90.709
+one epoch duration:30.410126447677612
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/183]	Loss 0.2476 (0.2596)	Accuracy 91.797 (90.863)	Time 17.05
+train_accuracy 90.812
+one epoch duration:30.962635040283203
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/183]	Loss 0.3479 (0.2625)	Accuracy 90.625 (90.875)	Time 16.78
+train_accuracy 90.762
+one epoch duration:30.926661491394043
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/183]	Loss 0.2740 (0.2576)	Accuracy 91.797 (90.938)	Time 17.10
+train_accuracy 90.865
+one epoch duration:30.91638684272766
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/183]	Loss 0.3226 (0.2613)	Accuracy 89.844 (90.906)	Time 16.56
+train_accuracy 90.825
+one epoch duration:30.310523986816406
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/183]	Loss 0.2521 (0.2607)	Accuracy 91.016 (91.094)	Time 16.67
+train_accuracy 90.994
+one epoch duration:30.412538528442383
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/183]	Loss 0.2782 (0.2623)	Accuracy 89.062 (90.762)	Time 16.57
+train_accuracy 90.840
+one epoch duration:30.2749662399292
+        FT | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 96.16/92.95/83.55 | ΔF:+13.09 ΔR: 1.13 ΔT: 0.42 | MIA:0.4569 PredDiff:9.40%
+[TRAIN] Retrain on 45000 samples
+    Epoch 1/30  26.91s
+    Epoch 2/30  26.64s
+    Epoch 3/30  26.75s
+    Epoch 4/30  26.70s
+    Epoch 5/30  26.93s
+    Epoch 6/30  26.54s
+    Epoch 7/30  26.79s
+    Epoch 8/30  27.06s
+    Epoch 9/30  27.03s
+    Epoch 10/30  26.51s
+    Epoch 11/30  26.87s
+    Epoch 12/30  26.20s
+    Epoch 13/30  26.38s
+    Epoch 14/30  26.58s
+    Epoch 15/30  26.55s
+    Epoch 16/30  26.47s
+    Epoch 17/30  26.82s
+    Epoch 18/30  26.76s
+    Epoch 19/30  26.74s
+    Epoch 20/30  26.77s
+    Epoch 21/30  26.40s
+    Epoch 22/30  27.06s
+    Epoch 23/30  26.55s
+    Epoch 24/30  26.63s
+    Epoch 25/30  26.79s
+    Epoch 26/30  26.63s
+    Epoch 27/30  26.75s
+    Epoch 28/30  26.73s
+    Epoch 29/30  26.82s
+    Epoch 30/30  26.89s
+[SAVE] saved_models_gpu0/retrain_a62f7f023205747846b1034cd18248029bb5c0bd_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+[UNLEARN] FT stage 3 (|forget_total|=5000)
+  > Applied specific params for FT: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/176]	Loss 0.2506 (0.2450)	Accuracy 91.016 (91.480)	Time 16.50
+train_accuracy 91.560
+one epoch duration:29.106399297714233
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/176]	Loss 0.2556 (0.2412)	Accuracy 91.016 (91.504)	Time 16.81
+train_accuracy 91.438
+one epoch duration:29.366204738616943
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/176]	Loss 0.1953 (0.2366)	Accuracy 93.359 (91.719)	Time 16.73
+train_accuracy 91.658
+one epoch duration:29.393182516098022
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/176]	Loss 0.1603 (0.2319)	Accuracy 93.750 (91.734)	Time 16.68
+train_accuracy 91.593
+one epoch duration:29.232229709625244
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/176]	Loss 0.2101 (0.2312)	Accuracy 91.406 (91.840)	Time 16.67
+train_accuracy 91.909
+one epoch duration:29.35222363471985
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/176]	Loss 0.2578 (0.2389)	Accuracy 90.234 (91.734)	Time 16.56
+train_accuracy 91.793
+one epoch duration:29.502622604370117
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/176]	Loss 0.2320 (0.2282)	Accuracy 92.578 (92.090)	Time 16.62
+train_accuracy 91.891
+one epoch duration:29.321766138076782
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/176]	Loss 0.1655 (0.2333)	Accuracy 95.312 (91.734)	Time 16.68
+train_accuracy 91.858
+one epoch duration:29.05599284172058
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/176]	Loss 0.2052 (0.2337)	Accuracy 92.969 (91.676)	Time 16.62
+train_accuracy 91.682
+one epoch duration:28.98150873184204
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/176]	Loss 0.2400 (0.2312)	Accuracy 92.188 (92.000)	Time 16.30
+train_accuracy 91.931
+one epoch duration:28.606508493423462
+        FT | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 55.46/93.70/80.72 | ΔF:+55.46 ΔR: 0.89 ΔT: 4.61 | MIA:0.4540 PredDiff:14.02%
+
+===== Running Method: FT_l1 =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] FT_l1 stage 1 (|forget_total|=1666)
+  > Applied specific params for FT_l1: {'unlearn_epochs': 10, 'unlearn_lr': 0.005, 'alpha': 1e-05, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0005
+Epoch: [0][99/189]	Loss 0.9758 (0.9435)	Accuracy 89.453 (90.477)	Time 16.72
+train_accuracy 90.272
+one epoch duration:31.76324963569641
+Epoch #1, Learning rate: 0.0005
+Epoch: [1][99/189]	Loss 0.7470 (0.8106)	Accuracy 92.969 (90.309)	Time 17.01
+train_accuracy 90.406
+one epoch duration:32.26278591156006
+Epoch #2, Learning rate: 0.0005
+Epoch: [2][99/189]	Loss 0.6629 (0.6717)	Accuracy 90.234 (90.496)	Time 17.04
+train_accuracy 90.493
+one epoch duration:32.213167905807495
+Epoch #3, Learning rate: 5e-05
+Epoch: [3][99/189]	Loss 0.5031 (0.5321)	Accuracy 93.359 (90.445)	Time 17.33
+train_accuracy 90.367
+one epoch duration:32.1464569568634
+Epoch #4, Learning rate: 5e-05
+Epoch: [4][99/189]	Loss 0.4182 (0.3973)	Accuracy 89.453 (90.762)	Time 16.97
+train_accuracy 90.684
+one epoch duration:32.72629404067993
+Epoch #5, Learning rate: 5e-05
+Epoch: [5][99/189]	Loss 0.3364 (0.2704)	Accuracy 88.672 (90.727)	Time 17.25
+train_accuracy 90.723
+one epoch duration:32.37457489967346
+Epoch #6, Learning rate: 5e-05
+Epoch: [6][99/189]	Loss 0.2990 (0.2715)	Accuracy 87.109 (90.477)	Time 17.32
+train_accuracy 90.557
+one epoch duration:32.32724380493164
+Epoch #7, Learning rate: 5e-05
+Epoch: [7][99/189]	Loss 0.2943 (0.2651)	Accuracy 88.281 (90.781)	Time 17.50
+train_accuracy 90.733
+one epoch duration:32.741639375686646
+Epoch #8, Learning rate: 5e-05
+Epoch: [8][99/189]	Loss 0.2307 (0.2650)	Accuracy 92.578 (90.938)	Time 16.70
+train_accuracy 90.706
+one epoch duration:31.88900089263916
+Epoch #9, Learning rate: 5e-05
+Epoch: [9][99/189]	Loss 0.2546 (0.2695)	Accuracy 91.797 (90.598)	Time 17.08
+train_accuracy 90.669
+one epoch duration:32.076966524124146
+     FT_l1 | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 99.94/92.69/83.75 | ΔF:+0.72 ΔR: 0.96 ΔT: 0.05 | MIA:0.4563 PredDiff:8.63%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] FT_l1 stage 2 (|forget_total|=3332)
+  > Applied specific params for FT_l1: {'unlearn_epochs': 10, 'unlearn_lr': 0.005, 'alpha': 1e-05, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0005
+Epoch: [0][99/183]	Loss 0.9524 (0.9446)	Accuracy 89.844 (90.266)	Time 16.96
+train_accuracy 90.370
+one epoch duration:30.770464181900024
+Epoch #1, Learning rate: 0.0005
+Epoch: [1][99/183]	Loss 0.7973 (0.7992)	Accuracy 91.016 (90.469)	Time 16.83
+train_accuracy 90.297
+one epoch duration:30.65740704536438
+Epoch #2, Learning rate: 0.0005
+Epoch: [2][99/183]	Loss 0.6559 (0.6697)	Accuracy 89.453 (90.379)	Time 16.93
+train_accuracy 90.462
+one epoch duration:30.57881188392639
+Epoch #3, Learning rate: 5e-05
+Epoch: [3][99/183]	Loss 0.4800 (0.5381)	Accuracy 93.750 (90.438)	Time 16.69
+train_accuracy 90.458
+one epoch duration:30.707852363586426
+Epoch #4, Learning rate: 5e-05
+Epoch: [4][99/183]	Loss 0.3827 (0.3998)	Accuracy 92.578 (90.484)	Time 16.69
+train_accuracy 90.572
+one epoch duration:30.95227313041687
+Epoch #5, Learning rate: 5e-05
+Epoch: [5][99/183]	Loss 0.2647 (0.2645)	Accuracy 93.359 (90.727)	Time 17.66
+train_accuracy 90.649
+one epoch duration:31.677927017211914
+Epoch #6, Learning rate: 5e-05
+Epoch: [6][99/183]	Loss 0.2280 (0.2696)	Accuracy 92.578 (90.488)	Time 17.32
+train_accuracy 90.653
+one epoch duration:31.60921025276184
+Epoch #7, Learning rate: 5e-05
+Epoch: [7][99/183]	Loss 0.2268 (0.2617)	Accuracy 91.797 (90.875)	Time 16.87
+train_accuracy 90.700
+one epoch duration:31.159623622894287
+Epoch #8, Learning rate: 5e-05
+Epoch: [8][99/183]	Loss 0.2570 (0.2632)	Accuracy 91.406 (90.828)	Time 16.58
+train_accuracy 90.702
+one epoch duration:30.351163864135742
+Epoch #9, Learning rate: 5e-05
+Epoch: [9][99/183]	Loss 0.2029 (0.2680)	Accuracy 91.016 (90.484)	Time 16.72
+train_accuracy 90.447
+one epoch duration:31.0029878616333
+     FT_l1 | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 98.14/92.58/83.51 | ΔF:+15.07 ΔR: 0.75 ΔT: 0.38 | MIA:0.4533 PredDiff:9.63%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] FT_l1 stage 3 (|forget_total|=5000)
+  > Applied specific params for FT_l1: {'unlearn_epochs': 10, 'unlearn_lr': 0.005, 'alpha': 1e-05, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0005
+Epoch: [0][99/176]	Loss 0.8739 (0.9125)	Accuracy 92.188 (91.176)	Time 16.79
+train_accuracy 91.018
+one epoch duration:29.47828459739685
+Epoch #1, Learning rate: 0.0005
+Epoch: [1][99/176]	Loss 0.7072 (0.7749)	Accuracy 94.141 (91.453)	Time 16.52
+train_accuracy 91.429
+one epoch duration:29.301417589187622
+Epoch #2, Learning rate: 0.0005
+Epoch: [2][99/176]	Loss 0.6241 (0.6400)	Accuracy 92.188 (91.426)	Time 16.79
+train_accuracy 91.351
+one epoch duration:29.459230184555054
+Epoch #3, Learning rate: 5e-05
+Epoch: [3][99/176]	Loss 0.4924 (0.5067)	Accuracy 91.406 (91.387)	Time 16.75
+train_accuracy 91.429
+one epoch duration:29.747703552246094
+Epoch #4, Learning rate: 5e-05
+Epoch: [4][99/176]	Loss 0.3787 (0.3753)	Accuracy 92.188 (91.426)	Time 17.01
+train_accuracy 91.418
+one epoch duration:29.88590693473816
+Epoch #5, Learning rate: 5e-05
+Epoch: [5][99/176]	Loss 0.2862 (0.2443)	Accuracy 90.234 (91.324)	Time 17.36
+train_accuracy 91.424
+one epoch duration:30.402344703674316
+Epoch #6, Learning rate: 5e-05
+Epoch: [6][99/176]	Loss 0.2627 (0.2433)	Accuracy 90.234 (91.355)	Time 16.98
+train_accuracy 91.387
+one epoch duration:30.037617206573486
+Epoch #7, Learning rate: 5e-05
+Epoch: [7][99/176]	Loss 0.2145 (0.2459)	Accuracy 92.188 (91.641)	Time 17.50
+train_accuracy 91.631
+one epoch duration:30.798689603805542
+Epoch #8, Learning rate: 5e-05
+Epoch: [8][99/176]	Loss 0.2011 (0.2432)	Accuracy 92.969 (91.648)	Time 17.43
+train_accuracy 91.616
+one epoch duration:30.222381830215454
+Epoch #9, Learning rate: 5e-05
+Epoch: [9][99/176]	Loss 0.2445 (0.2420)	Accuracy 91.797 (91.465)	Time 16.74
+train_accuracy 91.422
+one epoch duration:29.749664068222046
+     FT_l1 | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 68.42/93.39/81.79 | ΔF:+68.42 ΔR: 0.58 ΔT: 5.68 | MIA:0.4571 PredDiff:14.85%
+
+===== Running Method: GA =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] GA stage 1 (|forget_total|=1666)
+  > Applied specific params for GA: {'unlearn_epochs': 10, 'unlearn_lr': 0.0001, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 1e-05
+len(train_loader):  7
+train_accuracy 15.066
+one epoch duration:1.203669548034668
+Epoch #1, Learning rate: 1e-05
+len(train_loader):  7
+train_accuracy 13.565
+one epoch duration:1.088587760925293
+Epoch #2, Learning rate: 1e-05
+len(train_loader):  7
+train_accuracy 14.406
+one epoch duration:1.0889642238616943
+Epoch #3, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 14.586
+one epoch duration:1.0838472843170166
+Epoch #4, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 14.106
+one epoch duration:1.091198444366455
+Epoch #5, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 13.986
+one epoch duration:1.1052289009094238
+Epoch #6, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 13.745
+one epoch duration:1.0620341300964355
+Epoch #7, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 14.166
+one epoch duration:1.0767316818237305
+Epoch #8, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 13.986
+one epoch duration:1.0752906799316406
+Epoch #9, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 14.466
+one epoch duration:1.08402681350708
+        GA | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 15.91/72.38/65.79 | ΔF:-83.31 ΔR:19.35 ΔT:18.01 | MIA:0.4235 PredDiff:29.73%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] GA stage 2 (|forget_total|=3332)
+  > Applied specific params for GA: {'unlearn_epochs': 10, 'unlearn_lr': 0.0001, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 1e-05
+len(train_loader):  14
+train_accuracy 14.856
+one epoch duration:2.1565070152282715
+Epoch #1, Learning rate: 1e-05
+len(train_loader):  14
+train_accuracy 15.036
+one epoch duration:2.1416659355163574
+Epoch #2, Learning rate: 1e-05
+len(train_loader):  14
+train_accuracy 13.745
+one epoch duration:2.1535565853118896
+Epoch #3, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 14.256
+one epoch duration:2.1524269580841064
+Epoch #4, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 13.836
+one epoch duration:2.139187812805176
+Epoch #5, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 13.806
+one epoch duration:2.4287168979644775
+Epoch #6, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 14.256
+one epoch duration:2.2581636905670166
+Epoch #7, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 14.016
+one epoch duration:2.2067720890045166
+Epoch #8, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 14.046
+one epoch duration:2.176440715789795
+Epoch #9, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 14.406
+one epoch duration:2.2580931186676025
+        GA | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 15.28/75.19/66.65 | ΔF:-67.80 ΔR:16.63 ΔT:16.48 | MIA:0.3942 PredDiff:28.65%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] GA stage 3 (|forget_total|=5000)
+  > Applied specific params for GA: {'unlearn_epochs': 10, 'unlearn_lr': 0.0001, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 1e-05
+len(train_loader):  20
+train_accuracy 15.520
+one epoch duration:3.2544381618499756
+Epoch #1, Learning rate: 1e-05
+len(train_loader):  20
+train_accuracy 15.180
+one epoch duration:3.5038626194000244
+Epoch #2, Learning rate: 1e-05
+len(train_loader):  20
+train_accuracy 14.840
+one epoch duration:3.3130908012390137
+Epoch #3, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.600
+one epoch duration:3.5521647930145264
+Epoch #4, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.700
+one epoch duration:3.2443645000457764
+Epoch #5, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.700
+one epoch duration:3.505261182785034
+Epoch #6, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 13.960
+one epoch duration:3.2418057918548584
+Epoch #7, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.060
+one epoch duration:3.3169286251068115
+Epoch #8, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.000
+one epoch duration:3.285801410675049
+Epoch #9, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.500
+one epoch duration:3.28580379486084
+        GA | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 16.40/82.79/70.92 | ΔF:+16.40 ΔR:10.02 ΔT: 5.19 | MIA:0.4172 PredDiff:22.43%
+
+===== Running Method: NG =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] NG stage 1 (|forget_total|=1666)
+  > Applied specific params for NG: {'unlearn_epochs': 5, 'unlearn_lr': 0.01, 'alpha': 0.9, 'decreasing_lr': '2,4', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [0][99/189]	Loss -0.4232 (-0.3342)	Accuracy 91.406 (90.184)	Time 20.96
+train_accuracy 90.166
+one epoch duration:39.1543345451355
+Epoch #1, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [1][99/189]	Loss -0.4311 (-0.4164)	Accuracy 91.406 (90.309)	Time 21.18
+train_accuracy 90.382
+one epoch duration:39.15664267539978
+Epoch #2, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [2][99/189]	Loss -0.4805 (-0.4983)	Accuracy 87.500 (90.398)	Time 21.55
+train_accuracy 90.330
+one epoch duration:40.019413232803345
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [3][99/189]	Loss -0.6126 (-0.5832)	Accuracy 90.625 (90.152)	Time 21.14
+train_accuracy 89.889
+one epoch duration:39.436793088912964
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [4][99/189]	Loss -0.7619 (-0.6502)	Accuracy 92.969 (89.414)	Time 21.14
+train_accuracy 89.719
+one epoch duration:39.4009108543396
+        NG | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 59.18/81.72/74.80 | ΔF:-40.04 ΔR:10.01 ΔT: 9.00 | MIA:0.4521 PredDiff:19.61%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] NG stage 2 (|forget_total|=3332)
+  > Applied specific params for NG: {'unlearn_epochs': 5, 'unlearn_lr': 0.01, 'alpha': 0.9, 'decreasing_lr': '2,4', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [0][99/183]	Loss -0.7670 (-0.7268)	Accuracy 91.406 (89.688)	Time 21.92
+train_accuracy 89.805
+one epoch duration:38.84128785133362
+Epoch #1, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [1][99/183]	Loss -0.9140 (-0.8135)	Accuracy 92.188 (89.871)	Time 21.97
+train_accuracy 89.757
+one epoch duration:38.81107306480408
+Epoch #2, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [2][99/183]	Loss -0.8893 (-0.8999)	Accuracy 88.672 (90.012)	Time 21.94
+train_accuracy 89.693
+one epoch duration:38.851892948150635
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [3][99/183]	Loss -0.9614 (-0.9702)	Accuracy 87.891 (89.676)	Time 21.87
+train_accuracy 89.547
+one epoch duration:38.632792234420776
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [4][99/183]	Loss -1.0493 (-1.0519)	Accuracy 87.109 (88.984)	Time 22.16
+train_accuracy 89.168
+one epoch duration:39.13752555847168
+        NG | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 37.24/84.35/74.73 | ΔF:-45.83 ΔR: 7.47 ΔT: 8.40 | MIA:0.4568 PredDiff:18.85%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] NG stage 3 (|forget_total|=5000)
+  > Applied specific params for NG: {'unlearn_epochs': 5, 'unlearn_lr': 0.01, 'alpha': 0.9, 'decreasing_lr': '2,4', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [0][99/176]	Loss -1.2497 (-1.1639)	Accuracy 92.969 (90.332)	Time 23.13
+train_accuracy 90.502
+one epoch duration:38.45723056793213
+Epoch #1, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [1][99/176]	Loss -1.3250 (-1.2723)	Accuracy 91.016 (90.422)	Time 22.36
+train_accuracy 90.451
+one epoch duration:37.66991376876831
+Epoch #2, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [2][99/176]	Loss -1.3566 (-1.3778)	Accuracy 87.891 (90.426)	Time 22.30
+train_accuracy 90.498
+one epoch duration:37.988786935806274
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [3][99/176]	Loss -1.4631 (-1.4972)	Accuracy 90.234 (90.645)	Time 22.81
+train_accuracy 90.511
+one epoch duration:38.294535636901855
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [4][99/176]	Loss -1.5603 (-1.6127)	Accuracy 90.625 (90.805)	Time 22.90
+train_accuracy 90.653
+one epoch duration:38.786240577697754
+        NG | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T:  2.86/87.83/72.87 | ΔF:+2.86 ΔR: 4.98 ΔT: 3.24 | MIA:0.4505 PredDiff:16.23%
+
+===== Running Method: RL =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] RL stage 1 (|forget_total|=1666)
+  > Applied specific params for RL: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/196]	Loss 0.2943 (0.4690)	Accuracy 88.672 (87.538)	Time 15.56
+Epoch: [0][199/196]	Loss 0.3549 (0.4325)	Accuracy 87.500 (87.443)	Time 16.88
+one epoch duration:80.47560167312622
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/196]	Loss 0.3626 (0.3884)	Accuracy 86.719 (87.462)	Time 15.54
+Epoch: [1][199/196]	Loss 0.3056 (0.3879)	Accuracy 90.625 (87.526)	Time 16.91
+one epoch duration:92.45488572120667
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/196]	Loss 0.4063 (0.3766)	Accuracy 85.938 (87.752)	Time 15.86
+Epoch: [2][199/196]	Loss 0.3689 (0.3764)	Accuracy 89.062 (87.656)	Time 17.00
+one epoch duration:131.47412276268005
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/196]	Loss 0.3429 (0.3689)	Accuracy 89.844 (88.033)	Time 15.55
+Epoch: [3][199/196]	Loss 0.4570 (0.3724)	Accuracy 86.328 (87.988)	Time 16.94
+one epoch duration:54.855703830718994
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/196]	Loss 0.2852 (0.3812)	Accuracy 91.016 (87.546)	Time 15.81
+Epoch: [4][199/196]	Loss 0.3469 (0.3726)	Accuracy 87.891 (87.822)	Time 17.42
+one epoch duration:68.56538009643555
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/196]	Loss 0.3401 (0.3679)	Accuracy 88.281 (88.277)	Time 15.96
+Epoch: [5][199/196]	Loss 0.3447 (0.3681)	Accuracy 89.062 (88.077)	Time 16.59
+one epoch duration:35.86016058921814
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/196]	Loss 0.3487 (0.3750)	Accuracy 88.672 (87.882)	Time 15.74
+Epoch: [6][199/196]	Loss 0.2365 (0.3728)	Accuracy 94.141 (87.787)	Time 16.82
+one epoch duration:35.074298620224
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/196]	Loss 0.4038 (0.3677)	Accuracy 86.719 (87.836)	Time 15.59
+Epoch: [7][199/196]	Loss 0.3918 (0.3716)	Accuracy 88.281 (87.921)	Time 17.18
+one epoch duration:34.95788860321045
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/196]	Loss 0.3667 (0.3658)	Accuracy 87.891 (88.168)	Time 16.19
+Epoch: [8][199/196]	Loss 0.3699 (0.3665)	Accuracy 87.891 (88.002)	Time 16.92
+one epoch duration:35.91131114959717
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/196]	Loss 0.3887 (0.3640)	Accuracy 87.109 (88.050)	Time 15.76
+Epoch: [9][199/196]	Loss 0.3526 (0.3659)	Accuracy 89.844 (88.016)	Time 17.09
+one epoch duration:35.41888117790222
+        RL | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 94.12/92.68/83.84 | ΔF:-5.10 ΔR: 0.94 ΔT: 0.04 | MIA:0.8369 PredDiff:8.86%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] RL stage 2 (|forget_total|=3332)
+  > Applied specific params for RL: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/197]	Loss 0.4784 (0.4589)	Accuracy 83.594 (84.925)	Time 14.38
+Epoch: [0][199/197]	Loss 0.5047 (0.4519)	Accuracy 83.594 (84.982)	Time 16.66
+one epoch duration:37.13565969467163
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/197]	Loss 0.4217 (0.4379)	Accuracy 85.938 (85.211)	Time 14.40
+Epoch: [1][199/197]	Loss 0.3539 (0.4402)	Accuracy 89.062 (85.020)	Time 16.87
+one epoch duration:35.09265637397766
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/197]	Loss 0.4260 (0.4374)	Accuracy 86.328 (85.084)	Time 14.74
+Epoch: [2][199/197]	Loss 0.5090 (0.4387)	Accuracy 84.375 (85.001)	Time 17.01
+one epoch duration:35.76538348197937
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/197]	Loss 0.3555 (0.4314)	Accuracy 89.062 (85.506)	Time 14.85
+Epoch: [3][199/197]	Loss 0.4409 (0.4351)	Accuracy 84.375 (85.310)	Time 16.95
+one epoch duration:35.95480942726135
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/197]	Loss 0.4556 (0.4360)	Accuracy 83.594 (85.247)	Time 14.53
+Epoch: [4][199/197]	Loss 0.3470 (0.4315)	Accuracy 89.453 (85.368)	Time 16.88
+one epoch duration:46.51590609550476
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/197]	Loss 0.3959 (0.4326)	Accuracy 86.328 (85.256)	Time 14.54
+Epoch: [5][199/197]	Loss 0.5255 (0.4298)	Accuracy 80.859 (85.282)	Time 16.94
+one epoch duration:36.866015672683716
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/197]	Loss 0.3539 (0.4386)	Accuracy 86.719 (85.029)	Time 14.64
+Epoch: [6][199/197]	Loss 0.3352 (0.4334)	Accuracy 88.281 (85.196)	Time 16.97
+one epoch duration:36.213390827178955
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/197]	Loss 0.4790 (0.4375)	Accuracy 83.203 (85.011)	Time 14.45
+Epoch: [7][199/197]	Loss 0.4495 (0.4339)	Accuracy 83.203 (85.079)	Time 16.95
+one epoch duration:36.52789568901062
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/197]	Loss 0.4800 (0.4389)	Accuracy 83.594 (85.165)	Time 14.59
+Epoch: [8][199/197]	Loss 0.4388 (0.4341)	Accuracy 83.594 (85.301)	Time 17.01
+one epoch duration:35.47094964981079
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/197]	Loss 0.3802 (0.4356)	Accuracy 87.500 (85.006)	Time 14.51
+Epoch: [9][199/197]	Loss 0.4510 (0.4325)	Accuracy 82.812 (85.261)	Time 16.99
+one epoch duration:35.25969386100769
+        RL | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 63.66/92.71/81.31 | ΔF:-19.42 ΔR: 0.89 ΔT: 1.82 | MIA:0.8402 PredDiff:10.98%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] RL stage 3 (|forget_total|=5000)
+  > Applied specific params for RL: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/196]	Loss 0.4579 (0.5040)	Accuracy 84.375 (83.086)	Time 13.61
+Epoch: [0][199/196]	Loss 0.4554 (0.4862)	Accuracy 84.375 (83.455)	Time 16.86
+one epoch duration:35.36177086830139
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/196]	Loss 0.5018 (0.4679)	Accuracy 82.031 (83.735)	Time 13.55
+Epoch: [1][199/196]	Loss 0.4205 (0.4801)	Accuracy 84.375 (83.366)	Time 17.15
+one epoch duration:43.44410705566406
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/196]	Loss 0.4695 (0.4707)	Accuracy 80.469 (83.340)	Time 13.42
+Epoch: [2][199/196]	Loss 0.4336 (0.4735)	Accuracy 84.766 (83.338)	Time 17.05
+one epoch duration:35.11488127708435
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/196]	Loss 0.5170 (0.4625)	Accuracy 80.469 (83.818)	Time 13.56
+Epoch: [3][199/196]	Loss 0.5709 (0.4676)	Accuracy 79.297 (83.672)	Time 16.83
+one epoch duration:35.45852494239807
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/196]	Loss 0.5149 (0.4736)	Accuracy 82.422 (83.394)	Time 13.33
+Epoch: [4][199/196]	Loss 0.4585 (0.4673)	Accuracy 81.250 (83.659)	Time 16.88
+one epoch duration:34.963756799697876
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/196]	Loss 0.4949 (0.4697)	Accuracy 82.031 (83.418)	Time 13.47
+Epoch: [5][199/196]	Loss 0.4732 (0.4688)	Accuracy 82.422 (83.600)	Time 16.77
+one epoch duration:35.04796648025513
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/196]	Loss 0.4185 (0.4642)	Accuracy 87.109 (83.828)	Time 13.58
+Epoch: [6][199/196]	Loss 0.4533 (0.4676)	Accuracy 83.594 (83.685)	Time 16.86
+one epoch duration:51.76724863052368
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/196]	Loss 0.4336 (0.4703)	Accuracy 87.500 (83.462)	Time 13.65
+Epoch: [7][199/196]	Loss 0.5785 (0.4679)	Accuracy 79.688 (83.557)	Time 16.68
+one epoch duration:34.88989591598511
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/196]	Loss 0.5200 (0.4778)	Accuracy 82.422 (83.242)	Time 13.42
+Epoch: [8][199/196]	Loss 0.4919 (0.4699)	Accuracy 82.422 (83.457)	Time 16.96
+one epoch duration:35.089752197265625
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/196]	Loss 0.3464 (0.4739)	Accuracy 87.109 (83.345)	Time 13.59
+Epoch: [9][199/196]	Loss 0.5114 (0.4683)	Accuracy 82.422 (83.485)	Time 16.81
+one epoch duration:35.7773814201355
+        RL | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T:  2.22/93.71/76.36 | ΔF:+2.22 ΔR: 0.90 ΔT: 0.25 | MIA:0.4565 PredDiff:12.67%
+
+===== Running Method: Wfisher =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] Wfisher stage 1 (|forget_total|=1666)
+  > Applied specific params for Wfisher: {'alpha': 10.0}
+   Wfisher | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 20.35/83.26/74.25 | ΔF:-78.87 ΔR: 8.47 ΔT: 9.55 | MIA:0.5320 PredDiff:19.64%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] Wfisher stage 2 (|forget_total|=3332)
+  > Applied specific params for Wfisher: {'alpha': 10.0}
+   Wfisher | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T:  0.00/10.71/10.00 | ΔF:-83.07 ΔR:81.11 ΔT:73.13 | MIA:0.5000 PredDiff:89.13%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] Wfisher stage 3 (|forget_total|=5000)
+  > Applied specific params for Wfisher: {'alpha': 10.0}
+   Wfisher | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 100.00/ 0.00/10.00 | ΔF:+100.00 ΔR:92.81 ΔT:66.11 | MIA:0.0000 PredDiff:100.00%
+
+===== Running Method: SCRUB =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] SCRUB stage 1 (|forget_total|=1666)
+  > Applied specific params for SCRUB: {'unlearn_epochs': 10, 'kd_T': 4.0, 'gamma': 1.0, 'beta': 1.0, 'msteps': 5, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+len(r_loader): 189, len(f_loader): 7
+/root/miniconda3/envs/myenv/lib/python3.10/site-packages/torch/nn/_reduction.py:42: UserWarning: size_average and reduce args will be deprecated, please use reduction='sum' instead.
+  warnings.warn(warning.format(ret))
+*** Maximize step ***
+Epoch: [0][6/7]	Time 0.098 (0.153)	Data 0.065 (0.109)	Loss -18.5415 (-15.8160)	Forget_Acc@1 8.462 (12.545)
+*** Minimize step ***
+Epoch: [0][188/189]	Time 0.168 (0.168)	Data 0.123 (0.122)	Loss 0.3081 (0.4527)	Retain_Acc@1 93.689 (89.899)
+Epoch: [0]	 train-acc:	89.8994496431902	 train-loss: 0.45272227539202076
+one epoch duration:32.7883415222168
+Epoch #1, Learning rate: 0.001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [1][6/7]	Time 0.121 (0.175)	Data 0.084 (0.129)	Loss -21.6787 (-18.9874)	Forget_Acc@1 10.769 (10.504)
+*** Minimize step ***
+Epoch: [1][188/189]	Time 0.170 (0.169)	Data 0.125 (0.123)	Loss 0.4239 (0.4980)	Retain_Acc@1 85.437 (90.017)
+Epoch: [1]	 train-acc:	90.01737905548016	 train-loss: 0.49800180079955036
+one epoch duration:33.12135720252991
+Epoch #2, Learning rate: 0.001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [2][6/7]	Time 0.100 (0.169)	Data 0.067 (0.124)	Loss -23.1848 (-20.8962)	Forget_Acc@1 9.231 (11.164)
+*** Minimize step ***
+Epoch: [2][188/189]	Time 0.145 (0.171)	Data 0.104 (0.125)	Loss 0.3999 (0.5433)	Retain_Acc@1 91.262 (89.842)
+Epoch: [2]	 train-acc:	89.84151943773617	 train-loss: 0.5433069567888619
+one epoch duration:33.45505714416504
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [3][6/7]	Time 0.095 (0.156)	Data 0.063 (0.113)	Loss -19.9984 (-20.1735)	Forget_Acc@1 13.846 (11.825)
+*** Minimize step ***
+Epoch: [3][188/189]	Time 0.142 (0.171)	Data 0.100 (0.125)	Loss 0.2838 (0.3734)	Retain_Acc@1 93.689 (90.384)
+Epoch: [3]	 train-acc:	90.38358089655222	 train-loss: 0.37343690791650763
+one epoch duration:33.44259214401245
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [4][6/7]	Time 0.093 (0.153)	Data 0.060 (0.111)	Loss -21.3157 (-20.9795)	Forget_Acc@1 13.077 (12.725)
+*** Minimize step ***
+Epoch: [4][188/189]	Time 0.161 (0.168)	Data 0.115 (0.122)	Loss 0.3120 (0.3767)	Retain_Acc@1 92.233 (90.605)
+Epoch: [4]	 train-acc:	90.60495717142604	 train-loss: 0.37674569892598186
+one epoch duration:32.82403540611267
+Epoch #5, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [5][6/7]	Time 0.107 (0.175)	Data 0.073 (0.129)	Loss -22.2670 (-21.7349)	Forget_Acc@1 10.769 (12.485)
+*** Minimize step ***
+Epoch: [5][188/189]	Time 0.148 (0.169)	Data 0.103 (0.122)	Loss 0.3048 (0.3932)	Retain_Acc@1 92.718 (90.595)
+Epoch: [5]	 train-acc:	90.59461248052693	 train-loss: 0.39321656130578286
+one epoch duration:33.159934282302856
+Epoch #6, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [6][188/189]	Time 0.149 (0.168)	Data 0.104 (0.121)	Loss 0.3548 (0.3708)	Retain_Acc@1 94.175 (90.342)
+Epoch: [6]	 train-acc:	90.34220218346698	 train-loss: 0.3708154723740642
+one epoch duration:31.74941349029541
+Epoch #7, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [7][188/189]	Time 0.147 (0.170)	Data 0.102 (0.122)	Loss 0.3887 (0.3527)	Retain_Acc@1 88.835 (90.615)
+Epoch: [7]	 train-acc:	90.61530186579778	 train-loss: 0.3526878803851277
+one epoch duration:32.06847643852234
+Epoch #8, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [8][188/189]	Time 0.149 (0.170)	Data 0.106 (0.123)	Loss 0.3500 (0.3420)	Retain_Acc@1 93.689 (90.833)
+Epoch: [8]	 train-acc:	90.8325402212512	 train-loss: 0.34196321619564735
+one epoch duration:32.05687069892883
+Epoch #9, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [9][188/189]	Time 0.165 (0.170)	Data 0.120 (0.124)	Loss 0.2559 (0.3420)	Retain_Acc@1 94.175 (90.737)
+Epoch: [9]	 train-acc:	90.73736914668129	 train-loss: 0.34198835675754974
+one epoch duration:32.134066581726074
+     SCRUB | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 99.58/92.61/84.02 | ΔF:+0.36 ΔR: 0.88 ΔT: 0.22 | MIA:0.4500 PredDiff:8.83%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] SCRUB stage 2 (|forget_total|=3332)
+  > Applied specific params for SCRUB: {'unlearn_epochs': 10, 'kd_T': 4.0, 'gamma': 1.0, 'beta': 1.0, 'msteps': 5, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [0][13/14]	Time 0.047 (0.158)	Data 0.017 (0.113)	Loss -24.7276 (-21.3505)	Forget_Acc@1 0.000 (9.634)
+*** Minimize step ***
+Epoch: [0][182/183]	Time 0.073 (0.169)	Data 0.041 (0.123)	Loss 0.3558 (0.8993)	Retain_Acc@1 92.105 (88.836)
+Epoch: [0]	 train-acc:	88.83603325553875	 train-loss: 0.8992715634528863
+one epoch duration:33.18676161766052
+Epoch #1, Learning rate: 0.001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [1][13/14]	Time 0.047 (0.160)	Data 0.013 (0.115)	Loss -44.2693 (-30.5708)	Forget_Acc@1 0.000 (7.113)
+*** Minimize step ***
+Epoch: [1][182/183]	Time 0.078 (0.172)	Data 0.046 (0.125)	Loss 0.4390 (1.4805)	Retain_Acc@1 96.053 (87.966)
+Epoch: [1]	 train-acc:	87.96605810608607	 train-loss: 1.4804512351953125
+one epoch duration:33.70957970619202
+Epoch #2, Learning rate: 0.001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [2][13/14]	Time 0.048 (0.160)	Data 0.016 (0.114)	Loss -58.9633 (-39.1057)	Forget_Acc@1 0.000 (8.013)
+*** Minimize step ***
+Epoch: [2][182/183]	Time 0.077 (0.169)	Data 0.046 (0.123)	Loss 0.7345 (1.7129)	Retain_Acc@1 89.474 (87.411)
+Epoch: [2]	 train-acc:	87.41107397258482	 train-loss: 1.7129413042898562
+one epoch duration:33.216649532318115
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [3][13/14]	Time 0.047 (0.162)	Data 0.015 (0.115)	Loss -53.9304 (-41.5327)	Forget_Acc@1 25.000 (7.263)
+*** Minimize step ***
+Epoch: [3][182/183]	Time 0.087 (0.171)	Data 0.048 (0.125)	Loss 1.0409 (0.8783)	Retain_Acc@1 82.895 (88.716)
+Epoch: [3]	 train-acc:	88.71603668532008	 train-loss: 0.878332861910302
+one epoch duration:33.57726860046387
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [4][13/14]	Time 0.048 (0.168)	Data 0.012 (0.121)	Loss -42.6996 (-50.5544)	Forget_Acc@1 0.000 (7.143)
+*** Minimize step ***
+Epoch: [4][182/183]	Time 0.077 (0.169)	Data 0.043 (0.123)	Loss 0.6991 (0.8601)	Retain_Acc@1 90.789 (88.864)
+Epoch: [4]	 train-acc:	88.86388960446206	 train-loss: 0.8601439605389032
+one epoch duration:33.271666526794434
+Epoch #5, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [5][13/14]	Time 0.044 (0.159)	Data 0.010 (0.114)	Loss -49.5362 (-55.8508)	Forget_Acc@1 0.000 (6.483)
+*** Minimize step ***
+Epoch: [5][182/183]	Time 0.077 (0.168)	Data 0.045 (0.122)	Loss 0.6892 (0.8684)	Retain_Acc@1 89.474 (88.853)
+Epoch: [5]	 train-acc:	88.85317562682326	 train-loss: 0.86837958055259
+one epoch duration:33.05288124084473
+Epoch #6, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [6][182/183]	Time 0.077 (0.167)	Data 0.045 (0.122)	Loss 0.6782 (0.6915)	Retain_Acc@1 93.421 (89.286)
+Epoch: [6]	 train-acc:	89.28602039680145	 train-loss: 0.6914678356064472
+one epoch duration:30.65499496459961
+Epoch #7, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [7][182/183]	Time 0.075 (0.170)	Data 0.041 (0.123)	Loss 0.6274 (0.6280)	Retain_Acc@1 89.474 (89.434)
+Epoch: [7]	 train-acc:	89.43387332117484	 train-loss: 0.6279985567971041
+one epoch duration:31.040176153182983
+Epoch #8, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [8][182/183]	Time 0.072 (0.164)	Data 0.040 (0.118)	Loss 0.7670 (0.5766)	Retain_Acc@1 88.158 (89.537)
+Epoch: [8]	 train-acc:	89.53672751487757	 train-loss: 0.5766480720736961
+one epoch duration:30.0317440032959
+Epoch #9, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [9][182/183]	Time 0.076 (0.165)	Data 0.045 (0.119)	Loss 0.5992 (0.5473)	Retain_Acc@1 88.158 (89.558)
+Epoch: [9]	 train-acc:	89.55815547407875	 train-loss: 0.5472976470387992
+one epoch duration:30.26999807357788
+     SCRUB | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 94.57/91.77/83.43 | ΔF:+11.49 ΔR: 0.06 ΔT: 0.30 | MIA:0.4578 PredDiff:10.02%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] SCRUB stage 3 (|forget_total|=5000)
+  > Applied specific params for SCRUB: {'unlearn_epochs': 10, 'kd_T': 4.0, 'gamma': 1.0, 'beta': 1.0, 'msteps': 5, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [0][19/20]	Time 0.111 (0.178)	Data 0.074 (0.129)	Loss -100.0920 (-63.2648)	Forget_Acc@1 0.000 (2.960)
+*** Minimize step ***
+Epoch: [0][175/176]	Time 0.159 (0.183)	Data 0.113 (0.135)	Loss 1.1124 (5.5091)	Retain_Acc@1 89.000 (79.273)
+Epoch: [0]	 train-acc:	79.27333333333333	 train-loss: 5.509103385204739
+one epoch duration:35.816139936447144
+Epoch #1, Learning rate: 0.001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [1][19/20]	Time 0.099 (0.176)	Data 0.066 (0.128)	Loss -133.5283 (-74.1231)	Forget_Acc@1 0.000 (0.940)
+*** Minimize step ***
+Epoch: [1][175/176]	Time 0.144 (0.168)	Data 0.102 (0.122)	Loss 1.9402 (6.7167)	Retain_Acc@1 83.000 (77.831)
+Epoch: [1]	 train-acc:	77.83111111111111	 train-loss: 6.716670296923319
+one epoch duration:33.045305252075195
+Epoch #2, Learning rate: 0.001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [2][19/20]	Time 0.097 (0.174)	Data 0.064 (0.127)	Loss -194.0538 (-119.4403)	Forget_Acc@1 0.000 (0.420)
+*** Minimize step ***
+Epoch: [2][175/176]	Time 0.145 (0.173)	Data 0.103 (0.126)	Loss 2.4105 (9.2434)	Retain_Acc@1 83.000 (71.016)
+Epoch: [2]	 train-acc:	71.01555555555555	 train-loss: 9.243353186967639
+one epoch duration:33.886311769485474
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [3][19/20]	Time 0.112 (0.178)	Data 0.074 (0.130)	Loss -141.1174 (-111.9414)	Forget_Acc@1 0.000 (0.000)
+*** Minimize step ***
+Epoch: [3][175/176]	Time 0.143 (0.168)	Data 0.099 (0.122)	Loss 3.2476 (5.5789)	Retain_Acc@1 84.000 (78.744)
+Epoch: [3]	 train-acc:	78.74444444444444	 train-loss: 5.578874723900689
+one epoch duration:33.11704397201538
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [4][19/20]	Time 0.097 (0.175)	Data 0.064 (0.129)	Loss -172.2451 (-153.9828)	Forget_Acc@1 0.000 (0.060)
+*** Minimize step ***
+Epoch: [4][175/176]	Time 0.142 (0.169)	Data 0.099 (0.123)	Loss 3.6454 (4.7319)	Retain_Acc@1 81.500 (80.502)
+Epoch: [4]	 train-acc:	80.50222222222222	 train-loss: 4.731879973814222
+one epoch duration:33.281606674194336
+Epoch #5, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [5][19/20]	Time 0.097 (0.168)	Data 0.065 (0.122)	Loss -191.3356 (-176.4587)	Forget_Acc@1 0.735 (0.220)
+*** Minimize step ***
+Epoch: [5][175/176]	Time 0.141 (0.168)	Data 0.100 (0.122)	Loss 3.5641 (4.6326)	Retain_Acc@1 80.500 (81.198)
+Epoch: [5]	 train-acc:	81.19777777777777	 train-loss: 4.6325899478488495
+one epoch duration:32.92551612854004
+Epoch #6, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [6][175/176]	Time 0.144 (0.169)	Data 0.102 (0.122)	Loss 2.8598 (3.2047)	Retain_Acc@1 80.500 (82.862)
+Epoch: [6]	 train-acc:	82.86222222222223	 train-loss: 3.2046965081956653
+one epoch duration:29.710628271102905
+Epoch #7, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [7][175/176]	Time 0.139 (0.169)	Data 0.096 (0.123)	Loss 2.4961 (2.8121)	Retain_Acc@1 86.000 (83.258)
+Epoch: [7]	 train-acc:	83.25777777777778	 train-loss: 2.8121022042168513
+one epoch duration:29.780250787734985
+Epoch #8, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [8][175/176]	Time 0.146 (0.169)	Data 0.100 (0.122)	Loss 2.6151 (2.5464)	Retain_Acc@1 84.500 (83.669)
+Epoch: [8]	 train-acc:	83.66888888888889	 train-loss: 2.5464462157355414
+one epoch duration:29.760344982147217
+Epoch #9, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [9][175/176]	Time 0.161 (0.169)	Data 0.116 (0.122)	Loss 2.3829 (2.3740)	Retain_Acc@1 85.500 (84.184)
+Epoch: [9]	 train-acc:	84.18444444444444	 train-loss: 2.374012176852756
+one epoch duration:29.76098108291626
+     SCRUB | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T:  3.52/86.64/73.27 | ΔF:+3.52 ΔR: 6.17 ΔT: 2.84 | MIA:0.4580 PredDiff:16.16%
+
+===== Full Results =====
+ method  stage  forget_total  Retrain_F  Retrain_R  Retrain_T  Unlearn_F  Unlearn_R  Unlearn_T         ΔF        ΔR    ΔT      MIA  PredDiff(%)
+     FT      1          1666  99.219688  91.732528      83.80  99.939976  92.762858      83.76   0.720288  1.030331  0.04 0.455414        8.712
+     FT      2          3332  83.073229  91.820948      83.13  96.158463  92.954487      83.55  13.085234  1.133539  0.42 0.456898        9.402
+     FT      3          5000   0.000000  92.808889      76.11  55.460000  93.697778      80.72  55.460000  0.888889  4.61 0.454033       14.022
+  FT_l1      1          1666  99.219688  91.732528      83.80  99.939976  92.690446      83.75   0.720288  0.957918  0.05 0.456252        8.630
+  FT_l1      2          3332  83.073229  91.820948      83.13  98.139256  92.575212      83.51  15.066026  0.754264  0.38 0.453298        9.630
+  FT_l1      3          5000   0.000000  92.808889      76.11  68.420000  93.391111      81.79  68.420000  0.582222  5.68 0.457067       14.852
+     GA      1          1666  99.219688  91.732528      83.80  15.906363  72.381760      65.79 -83.313325 19.350768 18.01 0.423530       29.734
+     GA      2          3332  83.073229  91.820948      83.13  15.276110  75.188566      66.65 -67.797119 16.632382 16.48 0.394243       28.652
+     GA      3          5000   0.000000  92.808889      76.11  16.400000  82.791111      70.92  16.400000 10.017778  5.19 0.417156       22.430
+     NG      1          1666  99.219688  91.732528      83.80  59.183673  81.718873      74.80 -40.036014 10.013655  9.00 0.452084       19.612
+     NG      2          3332  83.073229  91.820948      83.13  37.244898  84.351161      74.73 -45.828331  7.469787  8.40 0.456750       18.854
+     NG      3          5000   0.000000  92.808889      76.11   2.860000  87.833333      72.87   2.860000  4.975556  3.24 0.450467       16.226
+     RL      1          1666  99.219688  91.732528      83.80  94.117647  92.675963      83.84  -5.102041  0.943435  0.04 0.836892        8.864
+     RL      2          3332  83.073229  91.820948      83.13  63.655462  92.712351      81.31 -19.417767  0.891403  1.82 0.840230       10.978
+     RL      3          5000   0.000000  92.808889      76.11   2.220000  93.711111      76.36   2.220000  0.902222  0.25 0.456522       12.672
+Wfisher      1          1666  99.219688  91.732528      83.80  20.348139  83.258162      74.25 -78.871549  8.474366  9.55 0.531962       19.640
+Wfisher      2          3332  83.073229  91.820948      83.13   0.000000  10.713980      10.00 -83.073229 81.106968 73.13 0.500000       89.126
+Wfisher      3          5000   0.000000  92.808889      76.11 100.000000   0.000000      10.00 100.000000 92.808889 66.11 0.000000      100.000
+  SCRUB      1          1666  99.219688  91.732528      83.80  99.579832  92.609757      84.02   0.360144  0.877229  0.22 0.450046        8.832
+  SCRUB      2          3332  83.073229  91.820948      83.13  94.567827  91.765235      83.43  11.494598  0.055713  0.30 0.457842       10.022
+  SCRUB      3          5000   0.000000  92.808889      76.11   3.520000  86.637778      73.27   3.520000  6.171111  2.84 0.457989       16.160
+
+Results saved to saved_models_gpu0/results_class_easy_first.csv
+
+--- [1/3] Experiment FINISHED ---
+============================================================
+
+--- [2/3] Running Experiment ---
+  - Forget Set Definition: class
+  - Partition Ordering   : hard_first
+  - Results will be saved to: saved_models_gpu0/results_class_hard_first.csv
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+[LOAD] Original model from saved_models_gpu0/original_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+Defining forget set: all samples from class 0.
+Partitioning 5000 forget samples using 'memorization' method...
+Partition sizes: [1666, 1666, 1668]
+[INFO] Unlearning order: Hard first (high memorization -> low)
+
+===== Running Method: FT =====
+[TRAIN] Retrain on 48332 samples
+    Epoch 1/30  30.22s
+    Epoch 2/30  29.90s
+    Epoch 3/30  29.52s
+    Epoch 4/30  29.68s
+    Epoch 5/30  29.26s
+    Epoch 6/30  29.05s
+    Epoch 7/30  28.99s
+    Epoch 8/30  28.87s
+    Epoch 9/30  29.19s
+    Epoch 10/30  28.88s
+    Epoch 11/30  28.66s
+    Epoch 12/30  28.49s
+    Epoch 13/30  28.77s
+    Epoch 14/30  29.62s
+    Epoch 15/30  28.93s
+    Epoch 16/30  28.94s
+    Epoch 17/30  29.05s
+    Epoch 18/30  29.57s
+    Epoch 19/30  28.85s
+    Epoch 20/30  29.14s
+    Epoch 21/30  28.76s
+    Epoch 22/30  28.91s
+    Epoch 23/30  29.25s
+    Epoch 24/30  28.33s
+    Epoch 25/30  28.69s
+    Epoch 26/30  28.97s
+    Epoch 27/30  28.81s
+    Epoch 28/30  29.01s
+    Epoch 29/30  29.27s
+    Epoch 30/30  28.72s
+[SAVE] saved_models_gpu0/retrain_f9b94a931012210df155f7175f726e4498262407_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+[UNLEARN] FT stage 1 (|forget_total|=1668)
+  > Applied specific params for FT: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+/root/miniconda3/envs/myenv/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:138: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/189]	Loss 0.2497 (0.2633)	Accuracy 92.188 (90.605)	Time 16.36
+train_accuracy 90.857
+one epoch duration:30.932337522506714
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/189]	Loss 0.2677 (0.2565)	Accuracy 91.016 (91.133)	Time 16.46
+train_accuracy 91.229
+one epoch duration:31.263394117355347
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/189]	Loss 0.2729 (0.2487)	Accuracy 91.016 (91.242)	Time 16.68
+train_accuracy 91.134
+one epoch duration:31.571796655654907
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/189]	Loss 0.2233 (0.2378)	Accuracy 92.578 (91.746)	Time 16.86
+train_accuracy 91.587
+one epoch duration:31.713927268981934
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/189]	Loss 0.3291 (0.2385)	Accuracy 89.453 (91.645)	Time 16.71
+train_accuracy 91.558
+one epoch duration:31.539191722869873
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/189]	Loss 0.2107 (0.2446)	Accuracy 93.750 (91.332)	Time 16.94
+train_accuracy 91.565
+one epoch duration:31.76274037361145
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/189]	Loss 0.2241 (0.2403)	Accuracy 91.797 (91.496)	Time 16.66
+train_accuracy 91.387
+one epoch duration:31.513453245162964
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/189]	Loss 0.2364 (0.2371)	Accuracy 90.234 (91.711)	Time 16.66
+train_accuracy 91.705
+one epoch duration:31.56379532814026
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/189]	Loss 0.2246 (0.2417)	Accuracy 93.359 (91.504)	Time 16.84
+train_accuracy 91.583
+one epoch duration:31.990550994873047
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/189]	Loss 0.2066 (0.2412)	Accuracy 92.188 (91.559)	Time 16.78
+train_accuracy 91.558
+one epoch duration:31.776716709136963
+        FT | S1 | Ftot=1668 | Ret F/R/T: 35.01/92.94/83.21 | Unl F/R/T: 73.20/93.50/83.67 | ΔF:+38.19 ΔR: 0.56 ΔT: 0.46 | MIA:0.7186 PredDiff:9.08%
+[TRAIN] Retrain on 46666 samples
+    Epoch 1/30  28.66s
+    Epoch 2/30  28.45s
+    Epoch 3/30  28.46s
+    Epoch 4/30  27.97s
+    Epoch 5/30  28.18s
+    Epoch 6/30  27.82s
+    Epoch 7/30  27.93s
+    Epoch 8/30  27.85s
+    Epoch 9/30  27.82s
+    Epoch 10/30  27.81s
+    Epoch 11/30  27.93s
+    Epoch 12/30  28.10s
+    Epoch 13/30  27.87s
+    Epoch 14/30  27.57s
+    Epoch 15/30  27.90s
+    Epoch 16/30  28.20s
+    Epoch 17/30  27.79s
+    Epoch 18/30  28.33s
+    Epoch 19/30  27.88s
+    Epoch 20/30  28.07s
+    Epoch 21/30  28.20s
+    Epoch 22/30  28.05s
+    Epoch 23/30  27.75s
+    Epoch 24/30  27.80s
+    Epoch 25/30  27.96s
+    Epoch 26/30  27.58s
+    Epoch 27/30  27.63s
+    Epoch 28/30  28.11s
+    Epoch 29/30  28.28s
+    Epoch 30/30  27.33s
+[SAVE] saved_models_gpu0/retrain_ba5991e6c795c270ccd5e75b93c58cf5d9804e17_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+[UNLEARN] FT stage 2 (|forget_total|=3334)
+  > Applied specific params for FT: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/183]	Loss 0.2361 (0.2437)	Accuracy 91.797 (91.484)	Time 16.45
+train_accuracy 91.362
+one epoch duration:29.982439517974854
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/183]	Loss 0.2540 (0.2400)	Accuracy 91.406 (91.613)	Time 16.39
+train_accuracy 91.506
+one epoch duration:30.457108736038208
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/183]	Loss 0.2474 (0.2443)	Accuracy 90.625 (91.410)	Time 16.34
+train_accuracy 91.349
+one epoch duration:30.273080825805664
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/183]	Loss 0.2742 (0.2402)	Accuracy 89.453 (91.539)	Time 16.61
+train_accuracy 91.583
+one epoch duration:30.304045915603638
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/183]	Loss 0.2858 (0.2347)	Accuracy 89.062 (91.723)	Time 16.82
+train_accuracy 91.711
+one epoch duration:30.567383527755737
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/183]	Loss 0.2432 (0.2363)	Accuracy 90.234 (91.801)	Time 16.72
+train_accuracy 91.816
+one epoch duration:30.449662685394287
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/183]	Loss 0.2348 (0.2368)	Accuracy 92.188 (91.723)	Time 16.62
+train_accuracy 91.679
+one epoch duration:30.421104669570923
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/183]	Loss 0.2027 (0.2386)	Accuracy 93.359 (91.668)	Time 16.98
+train_accuracy 91.780
+one epoch duration:30.86002802848816
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/183]	Loss 0.1677 (0.2338)	Accuracy 94.922 (91.711)	Time 16.81
+train_accuracy 91.821
+one epoch duration:30.62874937057495
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/183]	Loss 0.3043 (0.2320)	Accuracy 89.062 (91.863)	Time 16.69
+train_accuracy 91.724
+one epoch duration:30.292171001434326
+        FT | S2 | Ftot=3334 | Ret F/R/T: 37.79/93.34/81.70 | Unl F/R/T: 72.08/93.69/83.02 | ΔF:+34.28 ΔR: 0.35 ΔT: 1.32 | MIA:0.7892 PredDiff:10.18%
+[LOAD] Retrain from saved_models_gpu0/retrain_a62f7f023205747846b1034cd18248029bb5c0bd_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+[UNLEARN] FT stage 3 (|forget_total|=5000)
+  > Applied specific params for FT: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/176]	Loss 0.2348 (0.2443)	Accuracy 92.188 (91.449)	Time 16.95
+train_accuracy 91.411
+one epoch duration:29.48814558982849
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/176]	Loss 0.2771 (0.2434)	Accuracy 90.234 (91.520)	Time 16.49
+train_accuracy 91.500
+one epoch duration:28.948262453079224
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/176]	Loss 0.2626 (0.2357)	Accuracy 91.016 (91.875)	Time 16.61
+train_accuracy 91.700
+one epoch duration:29.327790021896362
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/176]	Loss 0.2553 (0.2346)	Accuracy 91.016 (91.660)	Time 16.76
+train_accuracy 91.809
+one epoch duration:29.826668739318848
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/176]	Loss 0.2298 (0.2344)	Accuracy 94.531 (91.887)	Time 16.88
+train_accuracy 91.816
+one epoch duration:29.454297304153442
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/176]	Loss 0.2577 (0.2326)	Accuracy 92.188 (91.914)	Time 16.59
+train_accuracy 91.849
+one epoch duration:29.703588247299194
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/176]	Loss 0.2520 (0.2326)	Accuracy 91.797 (91.734)	Time 16.93
+train_accuracy 91.782
+one epoch duration:29.610196828842163
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/176]	Loss 0.2730 (0.2288)	Accuracy 90.625 (92.012)	Time 16.89
+train_accuracy 91.993
+one epoch duration:29.622286558151245
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/176]	Loss 0.2553 (0.2355)	Accuracy 90.234 (91.828)	Time 16.73
+train_accuracy 92.022
+one epoch duration:29.360727310180664
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/176]	Loss 0.2692 (0.2305)	Accuracy 90.234 (91.699)	Time 16.99
+train_accuracy 91.862
+one epoch duration:29.844070434570312
+        FT | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 61.66/93.92/81.31 | ΔF:+61.66 ΔR: 1.11 ΔT: 5.20 | MIA:0.4582 PredDiff:14.44%
+
+===== Running Method: FT_l1 =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] FT_l1 stage 1 (|forget_total|=1668)
+  > Applied specific params for FT_l1: {'unlearn_epochs': 10, 'unlearn_lr': 0.005, 'alpha': 1e-05, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0005
+Epoch: [0][99/189]	Loss 0.8583 (0.9224)	Accuracy 92.969 (91.301)	Time 16.82
+train_accuracy 91.066
+one epoch duration:32.001004457473755
+Epoch #1, Learning rate: 0.0005
+Epoch: [1][99/189]	Loss 0.7969 (0.7834)	Accuracy 89.844 (91.141)	Time 18.01
+train_accuracy 91.192
+one epoch duration:33.45222210884094
+Epoch #2, Learning rate: 0.0005
+Epoch: [2][99/189]	Loss 0.6093 (0.6500)	Accuracy 92.188 (91.242)	Time 17.26
+train_accuracy 91.174
+one epoch duration:32.27629995346069
+Epoch #3, Learning rate: 5e-05
+Epoch: [3][99/189]	Loss 0.5539 (0.5168)	Accuracy 91.406 (91.348)	Time 17.28
+train_accuracy 91.426
+one epoch duration:32.76097106933594
+Epoch #4, Learning rate: 5e-05
+Epoch: [4][99/189]	Loss 0.3667 (0.3755)	Accuracy 92.188 (91.512)	Time 17.25
+train_accuracy 91.395
+one epoch duration:32.23419380187988
+Epoch #5, Learning rate: 5e-05
+Epoch: [5][99/189]	Loss 0.2486 (0.2467)	Accuracy 91.016 (91.453)	Time 16.98
+train_accuracy 91.476
+one epoch duration:32.27132844924927
+Epoch #6, Learning rate: 5e-05
+Epoch: [6][99/189]	Loss 0.2801 (0.2459)	Accuracy 92.188 (91.410)	Time 16.79
+train_accuracy 91.432
+one epoch duration:31.747093677520752
+Epoch #7, Learning rate: 5e-05
+Epoch: [7][99/189]	Loss 0.2878 (0.2517)	Accuracy 90.625 (91.223)	Time 16.86
+train_accuracy 91.289
+one epoch duration:31.711968183517456
+Epoch #8, Learning rate: 5e-05
+Epoch: [8][99/189]	Loss 0.1875 (0.2419)	Accuracy 92.188 (91.375)	Time 16.76
+train_accuracy 91.345
+one epoch duration:31.732830286026
+Epoch #9, Learning rate: 5e-05
+Epoch: [9][99/189]	Loss 0.1994 (0.2424)	Accuracy 93.750 (91.621)	Time 17.11
+train_accuracy 91.517
+one epoch duration:32.305091381073
+     FT_l1 | S1 | Ftot=1668 | Ret F/R/T: 35.01/92.94/83.21 | Unl F/R/T: 75.24/93.34/83.74 | ΔF:+40.23 ΔR: 0.40 ΔT: 0.53 | MIA:0.7255 PredDiff:9.16%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] FT_l1 stage 2 (|forget_total|=3334)
+  > Applied specific params for FT_l1: {'unlearn_epochs': 10, 'unlearn_lr': 0.005, 'alpha': 1e-05, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0005
+Epoch: [0][99/183]	Loss 0.9642 (0.9137)	Accuracy 89.453 (91.266)	Time 16.87
+train_accuracy 91.186
+one epoch duration:30.86888098716736
+Epoch #1, Learning rate: 0.0005
+Epoch: [1][99/183]	Loss 0.7675 (0.7685)	Accuracy 92.188 (91.715)	Time 17.32
+train_accuracy 91.456
+one epoch duration:31.28487539291382
+Epoch #2, Learning rate: 0.0005
+Epoch: [2][99/183]	Loss 0.6161 (0.6386)	Accuracy 92.578 (91.703)	Time 17.20
+train_accuracy 91.561
+one epoch duration:31.109381675720215
+Epoch #3, Learning rate: 5e-05
+Epoch: [3][99/183]	Loss 0.5510 (0.5146)	Accuracy 87.500 (91.109)	Time 17.23
+train_accuracy 91.381
+one epoch duration:31.465028047561646
+Epoch #4, Learning rate: 5e-05
+Epoch: [4][99/183]	Loss 0.3047 (0.3774)	Accuracy 93.750 (91.398)	Time 17.05
+train_accuracy 91.514
+one epoch duration:30.945882081985474
+Epoch #5, Learning rate: 5e-05
+Epoch: [5][99/183]	Loss 0.3326 (0.2430)	Accuracy 89.062 (91.492)	Time 16.87
+train_accuracy 91.383
+one epoch duration:30.80915069580078
+Epoch #6, Learning rate: 5e-05
+Epoch: [6][99/183]	Loss 0.2673 (0.2448)	Accuracy 89.453 (91.562)	Time 16.90
+train_accuracy 91.426
+one epoch duration:31.014712810516357
+Epoch #7, Learning rate: 5e-05
+Epoch: [7][99/183]	Loss 0.2637 (0.2424)	Accuracy 89.453 (91.547)	Time 16.97
+train_accuracy 91.452
+one epoch duration:30.78788685798645
+Epoch #8, Learning rate: 5e-05
+Epoch: [8][99/183]	Loss 0.3056 (0.2414)	Accuracy 89.062 (91.672)	Time 16.60
+train_accuracy 91.563
+one epoch duration:30.25828719139099
+Epoch #9, Learning rate: 5e-05
+Epoch: [9][99/183]	Loss 0.2575 (0.2425)	Accuracy 91.797 (91.348)	Time 16.82
+train_accuracy 91.529
+one epoch duration:30.874624490737915
+     FT_l1 | S2 | Ftot=3334 | Ret F/R/T: 37.79/93.34/81.70 | Unl F/R/T: 75.85/93.41/83.25 | ΔF:+38.06 ΔR: 0.07 ΔT: 1.55 | MIA:0.7718 PredDiff:10.40%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] FT_l1 stage 3 (|forget_total|=5000)
+  > Applied specific params for FT_l1: {'unlearn_epochs': 10, 'unlearn_lr': 0.005, 'alpha': 1e-05, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0005
+Epoch: [0][99/176]	Loss 0.8673 (0.9111)	Accuracy 94.141 (91.055)	Time 17.10
+train_accuracy 91.136
+one epoch duration:30.602744817733765
+Epoch #1, Learning rate: 0.0005
+Epoch: [1][99/176]	Loss 0.6865 (0.7728)	Accuracy 94.531 (91.648)	Time 17.22
+train_accuracy 91.498
+one epoch duration:30.74205231666565
+Epoch #2, Learning rate: 0.0005
+Epoch: [2][99/176]	Loss 0.6337 (0.6461)	Accuracy 91.406 (91.188)	Time 17.17
+train_accuracy 91.260
+one epoch duration:30.32722806930542
+Epoch #3, Learning rate: 5e-05
+Epoch: [3][99/176]	Loss 0.4868 (0.5064)	Accuracy 92.969 (91.340)	Time 17.49
+train_accuracy 91.380
+one epoch duration:30.87422752380371
+Epoch #4, Learning rate: 5e-05
+Epoch: [4][99/176]	Loss 0.4001 (0.3733)	Accuracy 91.016 (91.434)	Time 17.23
+train_accuracy 91.562
+one epoch duration:30.153294563293457
+Epoch #5, Learning rate: 5e-05
+Epoch: [5][99/176]	Loss 0.3170 (0.2424)	Accuracy 89.453 (91.289)	Time 16.94
+train_accuracy 91.269
+one epoch duration:29.768430948257446
+Epoch #6, Learning rate: 5e-05
+Epoch: [6][99/176]	Loss 0.2841 (0.2366)	Accuracy 89.062 (91.723)	Time 16.97
+train_accuracy 91.631
+one epoch duration:29.783164978027344
+Epoch #7, Learning rate: 5e-05
+Epoch: [7][99/176]	Loss 0.2354 (0.2398)	Accuracy 92.578 (91.543)	Time 16.83
+train_accuracy 91.516
+one epoch duration:29.58960723876953
+Epoch #8, Learning rate: 5e-05
+Epoch: [8][99/176]	Loss 0.2347 (0.2412)	Accuracy 91.797 (91.504)	Time 16.80
+train_accuracy 91.542
+one epoch duration:29.565704822540283
+Epoch #9, Learning rate: 5e-05
+Epoch: [9][99/176]	Loss 0.2345 (0.2496)	Accuracy 91.016 (91.223)	Time 16.88
+train_accuracy 91.316
+one epoch duration:29.738543272018433
+     FT_l1 | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 68.94/93.42/82.07 | ΔF:+68.94 ΔR: 0.61 ΔT: 5.96 | MIA:0.4523 PredDiff:14.95%
+
+===== Running Method: GA =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] GA stage 1 (|forget_total|=1668)
+  > Applied specific params for GA: {'unlearn_epochs': 10, 'unlearn_lr': 0.0001, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 1e-05
+len(train_loader):  7
+train_accuracy 9.293
+one epoch duration:1.08486008644104
+Epoch #1, Learning rate: 1e-05
+len(train_loader):  7
+train_accuracy 9.412
+one epoch duration:1.0618581771850586
+Epoch #2, Learning rate: 1e-05
+len(train_loader):  7
+train_accuracy 9.293
+one epoch duration:1.0615875720977783
+Epoch #3, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 8.633
+one epoch duration:1.0837101936340332
+Epoch #4, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 8.873
+one epoch duration:1.0878572463989258
+Epoch #5, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 9.113
+one epoch duration:1.0877413749694824
+Epoch #6, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 8.573
+one epoch duration:1.084486961364746
+Epoch #7, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 8.633
+one epoch duration:1.0901472568511963
+Epoch #8, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 9.053
+one epoch duration:1.090216875076294
+Epoch #9, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 8.693
+one epoch duration:1.0894205570220947
+        GA | S1 | Ftot=1668 | Ret F/R/T: 35.01/92.94/83.21 | Unl F/R/T: 11.69/85.29/76.47 | ΔF:-23.32 ΔR: 7.65 ΔT: 6.74 | MIA:0.6294 PredDiff:16.74%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] GA stage 2 (|forget_total|=3334)
+  > Applied specific params for GA: {'unlearn_epochs': 10, 'unlearn_lr': 0.0001, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 1e-05
+len(train_loader):  14
+train_accuracy 11.758
+one epoch duration:2.2134628295898438
+Epoch #1, Learning rate: 1e-05
+len(train_loader):  14
+train_accuracy 11.098
+one epoch duration:2.1984212398529053
+Epoch #2, Learning rate: 1e-05
+len(train_loader):  14
+train_accuracy 11.278
+one epoch duration:2.3438332080841064
+Epoch #3, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 11.308
+one epoch duration:2.2179954051971436
+Epoch #4, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 11.458
+one epoch duration:2.1830289363861084
+Epoch #5, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 10.828
+one epoch duration:2.1889572143554688
+Epoch #6, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 10.828
+one epoch duration:2.3592915534973145
+Epoch #7, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 10.498
+one epoch duration:2.205721855163574
+Epoch #8, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 10.558
+one epoch duration:2.4169223308563232
+Epoch #9, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 10.798
+one epoch duration:2.2963600158691406
+        GA | S2 | Ftot=3334 | Ret F/R/T: 37.79/93.34/81.70 | Unl F/R/T: 15.42/84.13/73.52 | ΔF:-22.38 ΔR: 9.21 ΔT: 8.18 | MIA:0.7899 PredDiff:19.11%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] GA stage 3 (|forget_total|=5000)
+  > Applied specific params for GA: {'unlearn_epochs': 10, 'unlearn_lr': 0.0001, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 1e-05
+len(train_loader):  20
+train_accuracy 15.420
+one epoch duration:3.2229557037353516
+Epoch #1, Learning rate: 1e-05
+len(train_loader):  20
+train_accuracy 15.040
+one epoch duration:3.316556692123413
+Epoch #2, Learning rate: 1e-05
+len(train_loader):  20
+train_accuracy 14.520
+one epoch duration:3.2692768573760986
+Epoch #3, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.460
+one epoch duration:3.3310985565185547
+Epoch #4, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.300
+one epoch duration:3.2825276851654053
+Epoch #5, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.700
+one epoch duration:3.2460010051727295
+Epoch #6, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.200
+one epoch duration:3.4834487438201904
+Epoch #7, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.780
+one epoch duration:3.3191747665405273
+Epoch #8, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.100
+one epoch duration:3.30562162399292
+Epoch #9, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 15.160
+one epoch duration:3.2617366313934326
+        GA | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 16.38/82.93/71.07 | ΔF:+16.38 ΔR: 9.88 ΔT: 5.04 | MIA:0.4087 PredDiff:22.28%
+
+===== Running Method: NG =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] NG stage 1 (|forget_total|=1668)
+  > Applied specific params for NG: {'unlearn_epochs': 5, 'unlearn_lr': 0.01, 'alpha': 0.9, 'decreasing_lr': '2,4', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [0][99/189]	Loss -0.3832 (-0.3761)	Accuracy 90.234 (91.004)	Time 21.00
+train_accuracy 91.114
+one epoch duration:39.38023328781128
+Epoch #1, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [1][99/189]	Loss -0.5320 (-0.4693)	Accuracy 92.578 (91.262)	Time 20.87
+train_accuracy 91.097
+one epoch duration:38.783029317855835
+Epoch #2, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [2][99/189]	Loss -0.5410 (-0.5401)	Accuracy 91.016 (90.797)	Time 21.35
+train_accuracy 90.911
+one epoch duration:39.69153356552124
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [3][99/189]	Loss -0.5998 (-0.6233)	Accuracy 87.891 (90.910)	Time 21.29
+train_accuracy 90.894
+one epoch duration:39.32868409156799
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [4][99/189]	Loss -0.7046 (-0.7092)	Accuracy 89.844 (90.625)	Time 21.21
+train_accuracy 90.712
+one epoch duration:39.6125807762146
+        NG | S1 | Ftot=1668 | Ret F/R/T: 35.01/92.94/83.21 | Unl F/R/T: 13.31/88.91/79.26 | ΔF:-21.70 ΔR: 4.03 ΔT: 3.95 | MIA:0.7502 PredDiff:12.94%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] NG stage 2 (|forget_total|=3334)
+  > Applied specific params for NG: {'unlearn_epochs': 5, 'unlearn_lr': 0.01, 'alpha': 0.9, 'decreasing_lr': '2,4', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [0][99/183]	Loss -0.8816 (-0.7869)	Accuracy 94.922 (91.004)	Time 22.16
+train_accuracy 90.972
+one epoch duration:39.15379452705383
+Epoch #1, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [1][99/183]	Loss -0.9297 (-0.8750)	Accuracy 91.406 (90.930)	Time 21.99
+train_accuracy 90.807
+one epoch duration:39.07727408409119
+Epoch #2, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [2][99/183]	Loss -0.9208 (-0.9798)	Accuracy 89.844 (90.828)	Time 22.19
+train_accuracy 90.756
+one epoch duration:39.27656173706055
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [3][99/183]	Loss -1.1135 (-1.0586)	Accuracy 93.750 (90.590)	Time 22.27
+train_accuracy 90.591
+one epoch duration:39.00302338600159
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [4][99/183]	Loss -1.0066 (-1.1413)	Accuracy 86.328 (90.367)	Time 21.95
+train_accuracy 90.447
+one epoch duration:38.96098971366882
+        NG | S2 | Ftot=3334 | Ret F/R/T: 37.79/93.34/81.70 | Unl F/R/T:  7.05/87.69/75.88 | ΔF:-30.74 ΔR: 5.64 ΔT: 5.82 | MIA:0.8064 PredDiff:15.69%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] NG stage 3 (|forget_total|=5000)
+  > Applied specific params for NG: {'unlearn_epochs': 5, 'unlearn_lr': 0.01, 'alpha': 0.9, 'decreasing_lr': '2,4', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [0][99/176]	Loss -1.2479 (-1.2229)	Accuracy 91.406 (90.258)	Time 22.63
+train_accuracy 90.449
+one epoch duration:38.313647747039795
+Epoch #1, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [1][99/176]	Loss -1.4152 (-1.3273)	Accuracy 91.797 (90.203)	Time 23.41
+train_accuracy 90.440
+one epoch duration:39.20197796821594
+Epoch #2, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [2][99/176]	Loss -1.4547 (-1.4388)	Accuracy 91.016 (90.578)	Time 22.78
+train_accuracy 90.393
+one epoch duration:38.540043115615845
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [3][99/176]	Loss -1.5781 (-1.5640)	Accuracy 89.844 (90.738)	Time 23.20
+train_accuracy 90.480
+one epoch duration:38.676955461502075
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [4][99/176]	Loss -1.6656 (-1.6602)	Accuracy 89.062 (90.418)	Time 22.90
+train_accuracy 90.362
+one epoch duration:38.56773352622986
+        NG | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T:  0.72/88.36/73.25 | ΔF:+0.72 ΔR: 4.44 ΔT: 2.86 | MIA:0.4559 PredDiff:15.35%
+
+===== Running Method: RL =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] RL stage 1 (|forget_total|=1668)
+  > Applied specific params for RL: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/196]	Loss 0.3593 (0.4291)	Accuracy 89.453 (88.567)	Time 15.46
+Epoch: [0][199/196]	Loss 0.5109 (0.4190)	Accuracy 87.891 (88.447)	Time 16.62
+one epoch duration:165.1471652984619
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/196]	Loss 0.5100 (0.3875)	Accuracy 85.156 (88.735)	Time 15.82
+Epoch: [1][199/196]	Loss 0.3932 (0.3925)	Accuracy 86.328 (88.427)	Time 16.79
+one epoch duration:59.92132043838501
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/196]	Loss 0.3739 (0.3866)	Accuracy 88.281 (88.605)	Time 15.89
+Epoch: [2][199/196]	Loss 0.3964 (0.3826)	Accuracy 87.500 (88.585)	Time 16.78
+one epoch duration:35.78555917739868
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/196]	Loss 0.3731 (0.3810)	Accuracy 85.547 (88.529)	Time 15.78
+Epoch: [3][199/196]	Loss 0.3276 (0.3837)	Accuracy 90.234 (88.431)	Time 16.72
+one epoch duration:35.48139214515686
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/196]	Loss 0.2780 (0.3710)	Accuracy 92.578 (88.588)	Time 15.91
+Epoch: [4][199/196]	Loss 0.4439 (0.3752)	Accuracy 87.109 (88.530)	Time 16.78
+one epoch duration:36.05669045448303
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/196]	Loss 0.3227 (0.3735)	Accuracy 91.016 (88.638)	Time 15.72
+Epoch: [5][199/196]	Loss 0.4198 (0.3742)	Accuracy 86.328 (88.670)	Time 16.75
+one epoch duration:35.30052328109741
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/196]	Loss 0.3926 (0.3739)	Accuracy 89.453 (88.840)	Time 15.81
+Epoch: [6][199/196]	Loss 0.3286 (0.3717)	Accuracy 91.016 (88.826)	Time 16.71
+one epoch duration:35.2974808216095
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/196]	Loss 0.3877 (0.3815)	Accuracy 87.891 (88.512)	Time 15.78
+Epoch: [7][199/196]	Loss 0.3284 (0.3790)	Accuracy 89.453 (88.668)	Time 16.79
+one epoch duration:35.81030559539795
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/196]	Loss 0.4057 (0.3687)	Accuracy 87.109 (88.827)	Time 15.89
+Epoch: [8][199/196]	Loss 0.4045 (0.3716)	Accuracy 88.672 (88.741)	Time 16.75
+one epoch duration:35.65335822105408
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/196]	Loss 0.3369 (0.3787)	Accuracy 88.281 (88.290)	Time 15.91
+Epoch: [9][199/196]	Loss 0.2605 (0.3723)	Accuracy 91.016 (88.494)	Time 17.03
+one epoch duration:36.08613300323486
+        RL | S1 | Ftot=1668 | Ret F/R/T: 35.01/92.94/83.21 | Unl F/R/T: 62.47/93.39/83.60 | ΔF:+27.46 ΔR: 0.45 ΔT: 0.39 | MIA:0.7941 PredDiff:9.07%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] RL stage 2 (|forget_total|=3334)
+  > Applied specific params for RL: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/197]	Loss 0.4535 (0.4833)	Accuracy 85.156 (85.783)	Time 14.63
+Epoch: [0][199/197]	Loss 0.5562 (0.4746)	Accuracy 82.812 (85.828)	Time 16.75
+one epoch duration:35.69922065734863
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/197]	Loss 0.4423 (0.4477)	Accuracy 87.109 (86.019)	Time 14.62
+Epoch: [1][199/197]	Loss 0.4576 (0.4499)	Accuracy 85.938 (85.858)	Time 16.92
+one epoch duration:35.546233892440796
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/197]	Loss 0.4821 (0.4423)	Accuracy 82.422 (85.765)	Time 14.66
+Epoch: [2][199/197]	Loss 0.4306 (0.4415)	Accuracy 85.938 (85.940)	Time 16.87
+one epoch duration:35.6095666885376
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/197]	Loss 0.4869 (0.4359)	Accuracy 86.719 (86.151)	Time 14.57
+Epoch: [3][199/197]	Loss 0.4691 (0.4375)	Accuracy 86.328 (86.040)	Time 16.80
+one epoch duration:35.705899715423584
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/197]	Loss 0.4356 (0.4384)	Accuracy 85.938 (85.824)	Time 14.66
+Epoch: [4][199/197]	Loss 0.3912 (0.4355)	Accuracy 86.328 (85.992)	Time 16.94
+one epoch duration:35.97098636627197
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/197]	Loss 0.4902 (0.4390)	Accuracy 85.156 (85.933)	Time 14.45
+Epoch: [5][199/197]	Loss 0.3724 (0.4361)	Accuracy 88.672 (85.982)	Time 16.96
+one epoch duration:35.43042302131653
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/197]	Loss 0.3855 (0.4252)	Accuracy 87.500 (86.464)	Time 14.55
+Epoch: [6][199/197]	Loss 0.4934 (0.4339)	Accuracy 83.984 (86.215)	Time 16.82
+one epoch duration:35.6260724067688
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/197]	Loss 0.4280 (0.4302)	Accuracy 85.547 (86.142)	Time 14.48
+Epoch: [7][199/197]	Loss 0.4280 (0.4345)	Accuracy 86.328 (86.055)	Time 16.89
+one epoch duration:35.38492965698242
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/197]	Loss 0.4625 (0.4399)	Accuracy 86.719 (85.965)	Time 14.50
+Epoch: [8][199/197]	Loss 0.5285 (0.4355)	Accuracy 83.594 (86.093)	Time 16.82
+one epoch duration:35.746644735336304
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/197]	Loss 0.4261 (0.4343)	Accuracy 85.156 (86.110)	Time 14.56
+Epoch: [9][199/197]	Loss 0.5027 (0.4319)	Accuracy 85.547 (86.179)	Time 16.82
+one epoch duration:35.41730570793152
+        RL | S2 | Ftot=3334 | Ret F/R/T: 37.79/93.34/81.70 | Unl F/R/T: 56.96/93.57/82.53 | ΔF:+19.17 ΔR: 0.23 ΔT: 0.83 | MIA:0.7837 PredDiff:10.09%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] RL stage 3 (|forget_total|=5000)
+  > Applied specific params for RL: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/196]	Loss 0.4769 (0.4923)	Accuracy 84.375 (83.198)	Time 13.52
+Epoch: [0][199/196]	Loss 0.5304 (0.4864)	Accuracy 82.031 (83.218)	Time 16.77
+one epoch duration:35.53217315673828
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/196]	Loss 0.4932 (0.4875)	Accuracy 81.641 (83.184)	Time 13.51
+Epoch: [1][199/196]	Loss 0.4276 (0.4771)	Accuracy 86.719 (83.403)	Time 16.76
+one epoch duration:35.32555365562439
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/196]	Loss 0.3823 (0.4801)	Accuracy 85.156 (83.184)	Time 13.61
+Epoch: [2][199/196]	Loss 0.4594 (0.4755)	Accuracy 83.203 (83.390)	Time 16.85
+one epoch duration:35.495086669921875
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/196]	Loss 0.4685 (0.4660)	Accuracy 82.031 (83.828)	Time 13.52
+Epoch: [3][199/196]	Loss 0.4153 (0.4678)	Accuracy 86.719 (83.624)	Time 16.67
+one epoch duration:35.578972816467285
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/196]	Loss 0.4160 (0.4652)	Accuracy 85.156 (83.794)	Time 13.61
+Epoch: [4][199/196]	Loss 0.5361 (0.4694)	Accuracy 83.984 (83.598)	Time 16.86
+one epoch duration:35.5806725025177
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/196]	Loss 0.3609 (0.4672)	Accuracy 85.547 (83.765)	Time 13.66
+Epoch: [5][199/196]	Loss 0.4933 (0.4636)	Accuracy 83.594 (83.787)	Time 16.93
+one epoch duration:36.05230975151062
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/196]	Loss 0.3925 (0.4680)	Accuracy 85.156 (83.643)	Time 13.63
+Epoch: [6][199/196]	Loss 0.4608 (0.4681)	Accuracy 84.375 (83.605)	Time 16.88
+one epoch duration:35.61056423187256
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/196]	Loss 0.4839 (0.4703)	Accuracy 83.984 (83.525)	Time 13.40
+Epoch: [7][199/196]	Loss 0.4118 (0.4697)	Accuracy 83.594 (83.461)	Time 16.80
+one epoch duration:35.17584729194641
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/196]	Loss 0.4463 (0.4651)	Accuracy 83.984 (83.667)	Time 13.58
+Epoch: [8][199/196]	Loss 0.5008 (0.4678)	Accuracy 80.859 (83.518)	Time 16.72
+one epoch duration:36.3214430809021
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/196]	Loss 0.4189 (0.4696)	Accuracy 84.766 (83.296)	Time 13.47
+Epoch: [9][199/196]	Loss 0.4575 (0.4667)	Accuracy 84.375 (83.494)	Time 16.78
+one epoch duration:35.28991460800171
+        RL | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 14.10/93.70/77.30 | ΔF:+14.10 ΔR: 0.89 ΔT: 1.19 | MIA:0.4561 PredDiff:12.65%
+
+===== Running Method: Wfisher =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] Wfisher stage 1 (|forget_total|=1668)
+  > Applied specific params for Wfisher: {'alpha': 10.0}
+   Wfisher | S1 | Ftot=1668 | Ret F/R/T: 35.01/92.94/83.21 | Unl F/R/T:  0.00/10.35/10.00 | ΔF:-35.01 ΔR:82.59 ΔT:73.21 | MIA:0.5000 PredDiff:89.65%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] Wfisher stage 2 (|forget_total|=3334)
+  > Applied specific params for Wfisher: {'alpha': 10.0}
+   Wfisher | S2 | Ftot=3334 | Ret F/R/T: 37.79/93.34/81.70 | Unl F/R/T: 100.00/ 3.57/10.00 | ΔF:+62.21 ΔR:89.77 ΔT:71.70 | MIA:0.0000 PredDiff:94.09%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] Wfisher stage 3 (|forget_total|=5000)
+  > Applied specific params for Wfisher: {'alpha': 10.0}
+   Wfisher | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 100.00/ 0.00/10.00 | ΔF:+100.00 ΔR:92.81 ΔT:66.11 | MIA:0.0000 PredDiff:100.00%
+
+===== Running Method: SCRUB =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] SCRUB stage 1 (|forget_total|=1668)
+  > Applied specific params for SCRUB: {'unlearn_epochs': 10, 'kd_T': 4.0, 'gamma': 1.0, 'beta': 1.0, 'msteps': 5, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+len(r_loader): 189, len(f_loader): 7
+/root/miniconda3/envs/myenv/lib/python3.10/site-packages/torch/nn/_reduction.py:42: UserWarning: size_average and reduce args will be deprecated, please use reduction='sum' instead.
+  warnings.warn(warning.format(ret))
+*** Maximize step ***
+Epoch: [0][6/7]	Time 0.097 (0.156)	Data 0.065 (0.111)	Loss -6.3831 (-5.8148)	Forget_Acc@1 9.091 (8.034)
+*** Minimize step ***
+Epoch: [0][188/189]	Time 0.146 (0.168)	Data 0.103 (0.121)	Loss 0.2215 (0.3472)	Retain_Acc@1 93.137 (91.027)
+Epoch: [0]	 train-acc:	91.02664900216739	 train-loss: 0.3472406043609641
+one epoch duration:32.8498215675354
+Epoch #1, Learning rate: 0.001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [1][6/7]	Time 0.097 (0.155)	Data 0.066 (0.112)	Loss -7.5200 (-6.4491)	Forget_Acc@1 4.545 (6.295)
+*** Minimize step ***
+Epoch: [1][188/189]	Time 0.142 (0.166)	Data 0.099 (0.119)	Loss 0.2650 (0.3580)	Retain_Acc@1 92.647 (90.963)
+Epoch: [1]	 train-acc:	90.96250930113044	 train-loss: 0.3579781766804226
+one epoch duration:32.41349935531616
+Epoch #2, Learning rate: 0.001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [2][6/7]	Time 0.094 (0.155)	Data 0.063 (0.112)	Loss -8.5129 (-6.9020)	Forget_Acc@1 3.788 (6.115)
+*** Minimize step ***
+Epoch: [2][188/189]	Time 0.146 (0.166)	Data 0.102 (0.120)	Loss 0.3684 (0.3705)	Retain_Acc@1 90.196 (90.861)
+Epoch: [2]	 train-acc:	90.86112719088075	 train-loss: 0.3705309738458155
+one epoch duration:32.40871620178223
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [3][6/7]	Time 0.094 (0.158)	Data 0.064 (0.114)	Loss -6.8910 (-6.7987)	Forget_Acc@1 6.818 (5.815)
+*** Minimize step ***
+Epoch: [3][188/189]	Time 0.143 (0.166)	Data 0.100 (0.121)	Loss 0.2928 (0.3147)	Retain_Acc@1 92.157 (91.285)
+Epoch: [3]	 train-acc:	91.28527682512039	 train-loss: 0.3146713165458263
+one epoch duration:32.541765451431274
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [4][6/7]	Time 0.095 (0.157)	Data 0.063 (0.113)	Loss -7.7753 (-6.8558)	Forget_Acc@1 6.061 (5.576)
+*** Minimize step ***
+Epoch: [4][188/189]	Time 0.148 (0.172)	Data 0.104 (0.125)	Loss 0.2665 (0.3171)	Retain_Acc@1 93.137 (91.192)
+Epoch: [4]	 train-acc:	91.19217080966553	 train-loss: 0.3170893391631134
+one epoch duration:33.61524796485901
+Epoch #5, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [5][6/7]	Time 0.099 (0.157)	Data 0.063 (0.112)	Loss -7.3965 (-7.1311)	Forget_Acc@1 5.303 (5.336)
+*** Minimize step ***
+Epoch: [5][188/189]	Time 0.152 (0.170)	Data 0.108 (0.123)	Loss 0.3971 (0.3179)	Retain_Acc@1 90.196 (91.219)
+Epoch: [5]	 train-acc:	91.21906809959548	 train-loss: 0.3179374668788192
+one epoch duration:33.24318861961365
+Epoch #6, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [6][188/189]	Time 0.146 (0.170)	Data 0.103 (0.123)	Loss 0.2975 (0.3076)	Retain_Acc@1 91.176 (91.424)
+Epoch: [6]	 train-acc:	91.42390133763725	 train-loss: 0.30761036206769654
+one epoch duration:32.09275221824646
+Epoch #7, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [7][188/189]	Time 0.147 (0.171)	Data 0.104 (0.124)	Loss 0.3550 (0.3084)	Retain_Acc@1 87.745 (91.151)
+Epoch: [7]	 train-acc:	91.1507903830476	 train-loss: 0.30836494458014724
+one epoch duration:32.24203586578369
+Epoch #8, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [8][188/189]	Time 0.140 (0.170)	Data 0.098 (0.123)	Loss 0.2658 (0.3007)	Retain_Acc@1 92.647 (91.498)
+Epoch: [8]	 train-acc:	91.49838615290565	 train-loss: 0.3006535785182229
+one epoch duration:32.06989240646362
+Epoch #9, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [9][188/189]	Time 0.144 (0.169)	Data 0.101 (0.123)	Loss 0.2681 (0.2983)	Retain_Acc@1 93.627 (91.411)
+Epoch: [9]	 train-acc:	91.41148720523196	 train-loss: 0.2983494578637716
+one epoch duration:31.976372480392456
+     SCRUB | S1 | Ftot=1668 | Ret F/R/T: 35.01/92.94/83.21 | Unl F/R/T: 83.21/93.26/83.83 | ΔF:+48.20 ΔR: 0.32 ΔT: 0.62 | MIA:0.7174 PredDiff:9.39%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] SCRUB stage 2 (|forget_total|=3334)
+  > Applied specific params for SCRUB: {'unlearn_epochs': 10, 'kd_T': 4.0, 'gamma': 1.0, 'beta': 1.0, 'msteps': 5, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [0][13/14]	Time 0.047 (0.168)	Data 0.013 (0.120)	Loss -11.9756 (-11.1412)	Forget_Acc@1 0.000 (5.609)
+*** Minimize step ***
+Epoch: [0][182/183]	Time 0.078 (0.169)	Data 0.045 (0.123)	Loss 0.4547 (0.6597)	Retain_Acc@1 91.892 (90.149)
+Epoch: [0]	 train-acc:	90.14914498713158	 train-loss: 0.6596505671697429
+one epoch duration:33.37510848045349
+Epoch #1, Learning rate: 0.001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [1][13/14]	Time 0.045 (0.158)	Data 0.014 (0.114)	Loss -16.5462 (-13.7626)	Forget_Acc@1 0.000 (2.999)
+*** Minimize step ***
+Epoch: [1][182/183]	Time 0.075 (0.168)	Data 0.043 (0.122)	Loss 0.6571 (0.7993)	Retain_Acc@1 89.189 (90.188)
+Epoch: [1]	 train-acc:	90.18771697457878	 train-loss: 0.7992921842639978
+one epoch duration:32.940523862838745
+Epoch #2, Learning rate: 0.001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [2][13/14]	Time 0.044 (0.157)	Data 0.013 (0.114)	Loss -20.3225 (-15.4054)	Forget_Acc@1 0.000 (3.149)
+*** Minimize step ***
+Epoch: [2][182/183]	Time 0.075 (0.168)	Data 0.041 (0.122)	Loss 0.8270 (0.8677)	Retain_Acc@1 83.784 (90.029)
+Epoch: [2]	 train-acc:	90.02914327216742	 train-loss: 0.8676973010020951
+one epoch duration:32.981695890426636
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [3][13/14]	Time 0.049 (0.170)	Data 0.018 (0.126)	Loss -19.6052 (-13.7016)	Forget_Acc@1 0.000 (4.079)
+*** Minimize step ***
+Epoch: [3][182/183]	Time 0.076 (0.171)	Data 0.042 (0.123)	Loss 0.7716 (0.4274)	Retain_Acc@1 87.838 (91.101)
+Epoch: [3]	 train-acc:	91.10058715026408	 train-loss: 0.42740338846357157
+one epoch duration:33.74227023124695
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [4][13/14]	Time 0.044 (0.158)	Data 0.014 (0.114)	Loss -11.7520 (-14.8281)	Forget_Acc@1 16.667 (3.989)
+*** Minimize step ***
+Epoch: [4][182/183]	Time 0.079 (0.169)	Data 0.045 (0.122)	Loss 0.6090 (0.4535)	Retain_Acc@1 90.541 (91.281)
+Epoch: [4]	 train-acc:	91.28058972598011	 train-loss: 0.45345754242891595
+one epoch duration:33.056400775909424
+Epoch #5, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [5][13/14]	Time 0.042 (0.159)	Data 0.012 (0.114)	Loss -13.8621 (-15.7937)	Forget_Acc@1 0.000 (4.049)
+*** Minimize step ***
+Epoch: [5][182/183]	Time 0.071 (0.167)	Data 0.041 (0.121)	Loss 0.9984 (0.4794)	Retain_Acc@1 89.189 (91.137)
+Epoch: [5]	 train-acc:	91.13701625028271	 train-loss: 0.47939680548204294
+one epoch duration:32.77121686935425
+Epoch #6, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [6][182/183]	Time 0.085 (0.168)	Data 0.051 (0.122)	Loss 0.6196 (0.4100)	Retain_Acc@1 89.189 (91.081)
+Epoch: [6]	 train-acc:	91.08130116863869	 train-loss: 0.40997585207856135
+one epoch duration:30.712172508239746
+Epoch #7, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [7][182/183]	Time 0.073 (0.169)	Data 0.041 (0.123)	Loss 0.4825 (0.3871)	Retain_Acc@1 87.838 (91.212)
+Epoch: [7]	 train-acc:	91.21201731355212	 train-loss: 0.3871317768543454
+one epoch duration:30.987537622451782
+Epoch #8, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [8][182/183]	Time 0.075 (0.165)	Data 0.042 (0.120)	Loss 0.4327 (0.3746)	Retain_Acc@1 93.243 (90.948)
+Epoch: [8]	 train-acc:	90.94844212812224	 train-loss: 0.3745560674961537
+one epoch duration:30.23405361175537
+Epoch #9, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [9][182/183]	Time 0.078 (0.168)	Data 0.044 (0.123)	Loss 0.4601 (0.3579)	Retain_Acc@1 87.838 (91.268)
+Epoch: [9]	 train-acc:	91.26773239519615	 train-loss: 0.35792884038641437
+one epoch duration:30.78351640701294
+     SCRUB | S2 | Ftot=3334 | Ret F/R/T: 37.79/93.34/81.70 | Unl F/R/T: 84.13/93.17/83.86 | ΔF:+46.34 ΔR: 0.17 ΔT: 2.16 | MIA:0.7874 PredDiff:10.81%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] SCRUB stage 3 (|forget_total|=5000)
+  > Applied specific params for SCRUB: {'unlearn_epochs': 10, 'kd_T': 4.0, 'gamma': 1.0, 'beta': 1.0, 'msteps': 5, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [0][19/20]	Time 0.100 (0.162)	Data 0.067 (0.117)	Loss -44.7921 (-25.9262)	Forget_Acc@1 0.000 (3.120)
+*** Minimize step ***
+Epoch: [0][175/176]	Time 0.142 (0.166)	Data 0.099 (0.120)	Loss 0.5252 (1.6712)	Retain_Acc@1 85.000 (87.673)
+Epoch: [0]	 train-acc:	87.67333333333333	 train-loss: 1.6711719906489055
+one epoch duration:32.53872513771057
+Epoch #1, Learning rate: 0.001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [1][19/20]	Time 0.098 (0.163)	Data 0.064 (0.119)	Loss -71.0026 (-46.0832)	Forget_Acc@1 0.000 (0.160)
+*** Minimize step ***
+Epoch: [1][175/176]	Time 0.144 (0.172)	Data 0.099 (0.125)	Loss 1.3350 (4.1369)	Retain_Acc@1 86.000 (84.287)
+Epoch: [1]	 train-acc:	84.28666666666666	 train-loss: 4.136910681618584
+one epoch duration:33.50938940048218
+Epoch #2, Learning rate: 0.001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [2][19/20]	Time 0.102 (0.164)	Data 0.068 (0.118)	Loss -99.5193 (-63.1888)	Forget_Acc@1 0.000 (0.060)
+*** Minimize step ***
+Epoch: [2][175/176]	Time 0.144 (0.169)	Data 0.099 (0.123)	Loss 1.7673 (5.1047)	Retain_Acc@1 88.500 (83.918)
+Epoch: [2]	 train-acc:	83.91777777777777	 train-loss: 5.104744200049506
+one epoch duration:32.95942997932434
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [3][19/20]	Time 0.098 (0.166)	Data 0.065 (0.119)	Loss -71.9613 (-61.2087)	Forget_Acc@1 0.000 (0.040)
+*** Minimize step ***
+Epoch: [3][175/176]	Time 0.143 (0.171)	Data 0.100 (0.124)	Loss 1.5305 (2.2329)	Retain_Acc@1 91.500 (87.522)
+Epoch: [3]	 train-acc:	87.52222222222223	 train-loss: 2.232859949874878
+one epoch duration:33.32525634765625
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [4][19/20]	Time 0.102 (0.165)	Data 0.066 (0.119)	Loss -79.9571 (-75.3194)	Forget_Acc@1 0.000 (0.160)
+*** Minimize step ***
+Epoch: [4][175/176]	Time 0.144 (0.168)	Data 0.099 (0.122)	Loss 1.9312 (2.3310)	Retain_Acc@1 85.500 (87.911)
+Epoch: [4]	 train-acc:	87.91111111111111	 train-loss: 2.33104653017256
+one epoch duration:32.86207175254822
+Epoch #5, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [5][19/20]	Time 0.101 (0.164)	Data 0.066 (0.119)	Loss -94.1054 (-85.5507)	Forget_Acc@1 0.735 (0.200)
+*** Minimize step ***
+Epoch: [5][175/176]	Time 0.144 (0.170)	Data 0.100 (0.124)	Loss 1.9094 (2.4292)	Retain_Acc@1 89.000 (87.676)
+Epoch: [5]	 train-acc:	87.67555555555556	 train-loss: 2.429216639879015
+one epoch duration:33.25018382072449
+Epoch #6, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [6][175/176]	Time 0.141 (0.169)	Data 0.099 (0.123)	Loss 1.9182 (1.8752)	Retain_Acc@1 90.500 (88.567)
+Epoch: [6]	 train-acc:	88.56666666666666	 train-loss: 1.8752203150855171
+one epoch duration:29.804441213607788
+Epoch #7, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [7][175/176]	Time 0.145 (0.170)	Data 0.099 (0.124)	Loss 1.6817 (1.6737)	Retain_Acc@1 91.000 (88.860)
+Epoch: [7]	 train-acc:	88.86	 train-loss: 1.6737407179726496
+one epoch duration:29.985137939453125
+Epoch #8, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [8][175/176]	Time 0.143 (0.166)	Data 0.101 (0.120)	Loss 1.4004 (1.5097)	Retain_Acc@1 88.500 (88.893)
+Epoch: [8]	 train-acc:	88.89333333333333	 train-loss: 1.509699369070265
+one epoch duration:29.24207091331482
+Epoch #9, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [9][175/176]	Time 0.142 (0.170)	Data 0.100 (0.123)	Loss 1.1680 (1.3884)	Retain_Acc@1 92.000 (89.027)
+Epoch: [9]	 train-acc:	89.02666666666667	 train-loss: 1.3883564056608413
+one epoch duration:29.89610457420349
+     SCRUB | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 27.86/91.26/77.96 | ΔF:+27.86 ΔR: 1.55 ΔT: 1.85 | MIA:0.4579 PredDiff:13.77%
+
+===== Full Results =====
+ method  stage  forget_total  Retrain_F  Retrain_R  Retrain_T  Unlearn_F  Unlearn_R  Unlearn_T         ΔF        ΔR    ΔT      MIA  PredDiff(%)
+     FT      1          1668  35.011990  92.938426      83.21  73.201439  93.501200      83.67  38.189448  0.562774  0.46 0.718621        9.084
+     FT      2          3334  37.792442  93.337762      81.70  72.075585  93.687053      83.02  34.283143  0.349291  1.32 0.789186       10.182
+     FT      3          5000   0.000000  92.808889      76.11  61.660000  93.920000      81.31  61.660000  1.111111  5.20 0.458178       14.440
+  FT_l1      1          1668  35.011990  92.938426      83.21  75.239808  93.341885      83.74  40.227818  0.403459  0.53 0.725468        9.158
+  FT_l1      2          3334  37.792442  93.337762      81.70  75.854829  93.406334      83.25  38.062388  0.068572  1.55 0.771779       10.398
+  FT_l1      3          5000   0.000000  92.808889      76.11  68.940000  93.417778      82.07  68.940000  0.608889  5.96 0.452300       14.946
+     GA      1          1668  35.011990  92.938426      83.21  11.690647  85.285111      76.47 -23.321343  7.653315  6.74 0.629371       16.740
+     GA      2          3334  37.792442  93.337762      81.70  15.416917  84.129773      73.52 -22.375525  9.207989  8.18 0.789875       19.110
+     GA      3          5000   0.000000  92.808889      76.11  16.380000  82.933333      71.07  16.380000  9.875556  5.04 0.408722       22.278
+     NG      1          1668  35.011990  92.938426      83.21  13.309353  88.905901      79.26 -21.702638  4.032525  3.95 0.750189       12.940
+     NG      2          3334  37.792442  93.337762      81.70   7.048590  87.693396      75.88 -30.743851  5.644366  5.82 0.806356       15.688
+     NG      3          5000   0.000000  92.808889      76.11   0.720000  88.364444      73.25   0.720000  4.444444  2.86 0.455911       15.350
+     RL      1          1668  35.011990  92.938426      83.21  62.470024  93.387404      83.60  27.458034  0.448978  0.39 0.794062        9.074
+     RL      2          3334  37.792442  93.337762      81.70  56.958608  93.567051      82.53  19.166167  0.229289  0.83 0.783657       10.094
+     RL      3          5000   0.000000  92.808889      76.11  14.100000  93.702222      77.30  14.100000  0.893333  1.19 0.456056       12.648
+Wfisher      1          1668  35.011990  92.938426      83.21   0.000000  10.345113      10.00 -35.011990 82.593313 73.21 0.500000       89.654
+Wfisher      2          3334  37.792442  93.337762      81.70 100.000000   3.570051      10.00  62.207558 89.767711 71.70 0.000000       94.094
+Wfisher      3          5000   0.000000  92.808889      76.11 100.000000   0.000000      10.00 100.000000 92.808889 66.11 0.000000      100.000
+  SCRUB      1          1668  35.011990  92.938426      83.21  83.213429  93.261193      83.83  48.201439  0.322768  0.62 0.717382        9.388
+  SCRUB      2          3334  37.792442  93.337762      81.70  84.133173  93.166331      83.86  46.340732  0.171431  2.16 0.787429       10.810
+  SCRUB      3          5000   0.000000  92.808889      76.11  27.860000  91.262222      77.96  27.860000  1.546667  1.85 0.457922       13.770
+
+Results saved to saved_models_gpu0/results_class_hard_first.csv
+
+--- [2/3] Experiment FINISHED ---
+============================================================
+
+--- [3/3] Running Experiment ---
+  - Forget Set Definition: class
+  - Partition Ordering   : random
+  - Results will be saved to: saved_models_gpu0/results_class_random.csv
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+[LOAD] Original model from saved_models_gpu0/original_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+Defining forget set: all samples from class 0.
+Partitioning 5000 forget samples using 'memorization' method...
+Partition sizes: [1666, 1666, 1668]
+[INFO] Unlearning order: Random
+
+===== Running Method: FT =====
+[LOAD] Retrain from saved_models_gpu0/retrain_eb65c94bf8c8677d69becf7235fc60f3a44af51e_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+[UNLEARN] FT stage 1 (|forget_total|=1666)
+  > Applied specific params for FT: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+/root/miniconda3/envs/myenv/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:138: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/189]	Loss 0.2484 (0.2773)	Accuracy 90.234 (90.340)	Time 17.09
+train_accuracy 90.408
+one epoch duration:32.327526569366455
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/189]	Loss 0.3144 (0.2797)	Accuracy 90.234 (90.199)	Time 16.98
+train_accuracy 90.307
+one epoch duration:31.890607595443726
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/189]	Loss 0.2211 (0.2635)	Accuracy 91.797 (90.758)	Time 17.29
+train_accuracy 90.566
+one epoch duration:32.33941054344177
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/189]	Loss 0.3149 (0.2727)	Accuracy 90.234 (90.430)	Time 17.31
+train_accuracy 90.636
+one epoch duration:31.780751705169678
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/189]	Loss 0.3088 (0.2689)	Accuracy 89.453 (90.516)	Time 16.76
+train_accuracy 90.601
+one epoch duration:31.504664182662964
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/189]	Loss 0.2645 (0.2609)	Accuracy 89.844 (90.727)	Time 16.70
+train_accuracy 90.630
+one epoch duration:31.292415142059326
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/189]	Loss 0.3029 (0.2638)	Accuracy 90.234 (90.672)	Time 16.72
+train_accuracy 90.626
+one epoch duration:31.323989152908325
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/189]	Loss 0.3006 (0.2684)	Accuracy 90.234 (90.672)	Time 16.40
+train_accuracy 90.851
+one epoch duration:30.997612476348877
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/189]	Loss 0.2772 (0.2695)	Accuracy 92.578 (90.613)	Time 16.37
+train_accuracy 90.857
+one epoch duration:31.28311586380005
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/189]	Loss 0.2761 (0.2683)	Accuracy 91.016 (90.617)	Time 16.88
+train_accuracy 90.661
+one epoch duration:31.861292600631714
+        FT | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 99.82/92.82/83.90 | ΔF:+0.60 ΔR: 1.09 ΔT: 0.10 | MIA:0.4565 PredDiff:8.62%
+[LOAD] Retrain from saved_models_gpu0/retrain_3265bb8e47ab30b6eadbea506d6d63e72c54ea7d_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+[UNLEARN] FT stage 2 (|forget_total|=3332)
+  > Applied specific params for FT: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/183]	Loss 0.2565 (0.2687)	Accuracy 91.406 (90.668)	Time 16.78
+train_accuracy 90.437
+one epoch duration:30.58042287826538
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/183]	Loss 0.2668 (0.2692)	Accuracy 90.625 (90.512)	Time 16.80
+train_accuracy 90.312
+one epoch duration:30.593334674835205
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/183]	Loss 0.3297 (0.2722)	Accuracy 87.891 (90.645)	Time 16.68
+train_accuracy 90.533
+one epoch duration:30.40058398246765
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/183]	Loss 0.2666 (0.2644)	Accuracy 90.234 (90.711)	Time 16.65
+train_accuracy 90.747
+one epoch duration:30.540323972702026
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/183]	Loss 0.2330 (0.2631)	Accuracy 92.188 (90.969)	Time 16.83
+train_accuracy 90.985
+one epoch duration:30.9024600982666
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/183]	Loss 0.2811 (0.2638)	Accuracy 91.016 (90.730)	Time 16.74
+train_accuracy 90.713
+one epoch duration:30.460258722305298
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/183]	Loss 0.2932 (0.2571)	Accuracy 90.234 (90.930)	Time 16.70
+train_accuracy 90.807
+one epoch duration:30.742241144180298
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/183]	Loss 0.2215 (0.2646)	Accuracy 92.578 (90.715)	Time 16.76
+train_accuracy 90.848
+one epoch duration:30.66970682144165
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/183]	Loss 0.2812 (0.2627)	Accuracy 88.672 (91.023)	Time 16.74
+train_accuracy 90.951
+one epoch duration:30.612412929534912
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/183]	Loss 0.2191 (0.2621)	Accuracy 91.406 (90.859)	Time 16.70
+train_accuracy 90.651
+one epoch duration:30.45412278175354
+        FT | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 97.45/92.87/83.61 | ΔF:+14.38 ΔR: 1.05 ΔT: 0.48 | MIA:0.4580 PredDiff:9.48%
+[LOAD] Retrain from saved_models_gpu0/retrain_a62f7f023205747846b1034cd18248029bb5c0bd_resnet18_E30_lr0.1_m0.9_wd0.0005_s42.pth
+[UNLEARN] FT stage 3 (|forget_total|=5000)
+  > Applied specific params for FT: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/176]	Loss 0.2340 (0.2465)	Accuracy 91.406 (91.422)	Time 16.74
+train_accuracy 91.429
+one epoch duration:29.529993534088135
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/176]	Loss 0.1965 (0.2419)	Accuracy 92.969 (91.625)	Time 16.61
+train_accuracy 91.638
+one epoch duration:29.309398412704468
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/176]	Loss 0.3015 (0.2427)	Accuracy 88.672 (91.387)	Time 16.79
+train_accuracy 91.584
+one epoch duration:29.595011949539185
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/176]	Loss 0.2492 (0.2326)	Accuracy 91.016 (91.840)	Time 16.82
+train_accuracy 91.780
+one epoch duration:29.493921518325806
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/176]	Loss 0.3182 (0.2336)	Accuracy 88.672 (91.836)	Time 16.71
+train_accuracy 91.660
+one epoch duration:29.36633324623108
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/176]	Loss 0.1730 (0.2345)	Accuracy 94.141 (91.715)	Time 16.71
+train_accuracy 91.862
+one epoch duration:29.350497245788574
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/176]	Loss 0.2236 (0.2344)	Accuracy 91.797 (91.734)	Time 16.84
+train_accuracy 91.787
+one epoch duration:29.608404636383057
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/176]	Loss 0.2434 (0.2328)	Accuracy 92.188 (91.805)	Time 16.88
+train_accuracy 91.907
+one epoch duration:29.486082792282104
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/176]	Loss 0.2291 (0.2314)	Accuracy 92.969 (91.992)	Time 16.69
+train_accuracy 91.849
+one epoch duration:29.41117572784424
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/176]	Loss 0.1960 (0.2296)	Accuracy 92.578 (92.008)	Time 16.63
+train_accuracy 91.880
+one epoch duration:29.30053997039795
+        FT | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 57.54/93.83/80.84 | ΔF:+57.54 ΔR: 1.02 ΔT: 4.73 | MIA:0.4568 PredDiff:14.08%
+
+===== Running Method: FT_l1 =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] FT_l1 stage 1 (|forget_total|=1666)
+  > Applied specific params for FT_l1: {'unlearn_epochs': 10, 'unlearn_lr': 0.005, 'alpha': 1e-05, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0005
+Epoch: [0][99/189]	Loss 0.9690 (0.9321)	Accuracy 90.625 (90.734)	Time 17.01
+train_accuracy 90.504
+one epoch duration:32.14763164520264
+Epoch #1, Learning rate: 0.0005
+Epoch: [1][99/189]	Loss 0.7576 (0.7998)	Accuracy 91.406 (90.770)	Time 17.08
+train_accuracy 90.593
+one epoch duration:32.15017080307007
+Epoch #2, Learning rate: 0.0005
+Epoch: [2][99/189]	Loss 0.7180 (0.6684)	Accuracy 90.625 (90.559)	Time 17.27
+train_accuracy 90.460
+one epoch duration:32.38395547866821
+Epoch #3, Learning rate: 5e-05
+Epoch: [3][99/189]	Loss 0.4772 (0.5369)	Accuracy 89.844 (90.656)	Time 16.98
+train_accuracy 90.611
+one epoch duration:31.956143856048584
+Epoch #4, Learning rate: 5e-05
+Epoch: [4][99/189]	Loss 0.3958 (0.4080)	Accuracy 89.844 (90.418)	Time 16.67
+train_accuracy 90.624
+one epoch duration:31.957492113113403
+Epoch #5, Learning rate: 5e-05
+Epoch: [5][99/189]	Loss 0.2087 (0.2752)	Accuracy 92.578 (90.340)	Time 17.23
+train_accuracy 90.555
+one epoch duration:32.37703227996826
+Epoch #6, Learning rate: 5e-05
+Epoch: [6][99/189]	Loss 0.2537 (0.2684)	Accuracy 89.844 (90.500)	Time 17.17
+train_accuracy 90.576
+one epoch duration:32.272684812545776
+Epoch #7, Learning rate: 5e-05
+Epoch: [7][99/189]	Loss 0.2617 (0.2698)	Accuracy 90.234 (90.457)	Time 17.09
+train_accuracy 90.562
+one epoch duration:32.21199178695679
+Epoch #8, Learning rate: 5e-05
+Epoch: [8][99/189]	Loss 0.2285 (0.2699)	Accuracy 92.188 (90.539)	Time 16.90
+train_accuracy 90.634
+one epoch duration:31.875908613204956
+Epoch #9, Learning rate: 5e-05
+Epoch: [9][99/189]	Loss 0.2152 (0.2686)	Accuracy 92.578 (90.707)	Time 16.92
+train_accuracy 90.682
+one epoch duration:32.337807416915894
+     FT_l1 | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 99.94/92.65/83.86 | ΔF:+0.72 ΔR: 0.91 ΔT: 0.06 | MIA:0.4574 PredDiff:8.63%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] FT_l1 stage 2 (|forget_total|=3332)
+  > Applied specific params for FT_l1: {'unlearn_epochs': 10, 'unlearn_lr': 0.005, 'alpha': 1e-05, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0005
+Epoch: [0][99/183]	Loss 0.9843 (0.9426)	Accuracy 86.719 (90.312)	Time 16.92
+train_accuracy 90.242
+one epoch duration:30.90426993370056
+Epoch #1, Learning rate: 0.0005
+Epoch: [1][99/183]	Loss 0.8447 (0.8087)	Accuracy 89.062 (90.211)	Time 16.97
+train_accuracy 90.342
+one epoch duration:30.969212770462036
+Epoch #2, Learning rate: 0.0005
+Epoch: [2][99/183]	Loss 0.7303 (0.6657)	Accuracy 89.062 (90.719)	Time 16.95
+train_accuracy 90.529
+one epoch duration:30.797658681869507
+Epoch #3, Learning rate: 5e-05
+Epoch: [3][99/183]	Loss 0.5803 (0.5387)	Accuracy 89.453 (90.309)	Time 17.10
+train_accuracy 90.471
+one epoch duration:31.556785821914673
+Epoch #4, Learning rate: 5e-05
+Epoch: [4][99/183]	Loss 0.4085 (0.4072)	Accuracy 90.234 (90.242)	Time 17.12
+train_accuracy 90.407
+one epoch duration:31.111120223999023
+Epoch #5, Learning rate: 5e-05
+Epoch: [5][99/183]	Loss 0.3220 (0.2693)	Accuracy 87.891 (90.508)	Time 17.36
+train_accuracy 90.632
+one epoch duration:31.398960828781128
+Epoch #6, Learning rate: 5e-05
+Epoch: [6][99/183]	Loss 0.2075 (0.2732)	Accuracy 94.531 (90.504)	Time 17.26
+train_accuracy 90.602
+one epoch duration:31.386058807373047
+Epoch #7, Learning rate: 5e-05
+Epoch: [7][99/183]	Loss 0.2889 (0.2685)	Accuracy 89.844 (90.633)	Time 16.95
+train_accuracy 90.565
+one epoch duration:30.91678500175476
+Epoch #8, Learning rate: 5e-05
+Epoch: [8][99/183]	Loss 0.2193 (0.2643)	Accuracy 92.969 (90.672)	Time 16.86
+train_accuracy 90.591
+one epoch duration:30.756218671798706
+Epoch #9, Learning rate: 5e-05
+Epoch: [9][99/183]	Loss 0.2481 (0.2625)	Accuracy 91.797 (90.816)	Time 16.66
+train_accuracy 90.647
+one epoch duration:30.701266288757324
+     FT_l1 | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 97.93/92.62/83.68 | ΔF:+14.86 ΔR: 0.80 ΔT: 0.55 | MIA:0.4617 PredDiff:9.58%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] FT_l1 stage 3 (|forget_total|=5000)
+  > Applied specific params for FT_l1: {'unlearn_epochs': 10, 'unlearn_lr': 0.005, 'alpha': 1e-05, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0005
+Epoch: [0][99/176]	Loss 0.8813 (0.9173)	Accuracy 92.188 (90.891)	Time 17.19
+train_accuracy 90.862
+one epoch duration:30.050277948379517
+Epoch #1, Learning rate: 0.0005
+Epoch: [1][99/176]	Loss 0.8525 (0.7853)	Accuracy 89.844 (91.086)	Time 17.13
+train_accuracy 91.129
+one epoch duration:29.885839462280273
+Epoch #2, Learning rate: 0.0005
+Epoch: [2][99/176]	Loss 0.6899 (0.6412)	Accuracy 88.672 (91.301)	Time 16.87
+train_accuracy 91.296
+one epoch duration:29.589601278305054
+Epoch #3, Learning rate: 5e-05
+Epoch: [3][99/176]	Loss 0.5222 (0.5099)	Accuracy 92.188 (91.383)	Time 17.13
+train_accuracy 91.482
+one epoch duration:29.97910714149475
+Epoch #4, Learning rate: 5e-05
+Epoch: [4][99/176]	Loss 0.3898 (0.3777)	Accuracy 90.625 (91.336)	Time 17.11
+train_accuracy 91.431
+one epoch duration:29.874741077423096
+Epoch #5, Learning rate: 5e-05
+Epoch: [5][99/176]	Loss 0.2839 (0.2455)	Accuracy 91.016 (91.605)	Time 17.07
+train_accuracy 91.596
+one epoch duration:30.244733333587646
+Epoch #6, Learning rate: 5e-05
+Epoch: [6][99/176]	Loss 0.2353 (0.2421)	Accuracy 91.016 (91.602)	Time 17.45
+train_accuracy 91.533
+one epoch duration:30.151471853256226
+Epoch #7, Learning rate: 5e-05
+Epoch: [7][99/176]	Loss 0.3558 (0.2485)	Accuracy 89.062 (91.496)	Time 16.51
+train_accuracy 91.467
+one epoch duration:29.053590774536133
+Epoch #8, Learning rate: 5e-05
+Epoch: [8][99/176]	Loss 0.2487 (0.2495)	Accuracy 91.797 (91.219)	Time 16.54
+train_accuracy 91.436
+one epoch duration:29.618363857269287
+Epoch #9, Learning rate: 5e-05
+Epoch: [9][99/176]	Loss 0.2116 (0.2359)	Accuracy 91.797 (91.641)	Time 16.89
+train_accuracy 91.582
+one epoch duration:29.78235626220703
+     FT_l1 | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 68.34/93.34/81.68 | ΔF:+68.34 ΔR: 0.54 ΔT: 5.57 | MIA:0.4561 PredDiff:14.93%
+
+===== Running Method: GA =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] GA stage 1 (|forget_total|=1666)
+  > Applied specific params for GA: {'unlearn_epochs': 10, 'unlearn_lr': 0.0001, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 1e-05
+len(train_loader):  7
+train_accuracy 14.526
+one epoch duration:1.103498935699463
+Epoch #1, Learning rate: 1e-05
+len(train_loader):  7
+train_accuracy 14.586
+one epoch duration:1.0801091194152832
+Epoch #2, Learning rate: 1e-05
+len(train_loader):  7
+train_accuracy 14.646
+one epoch duration:1.0940349102020264
+Epoch #3, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 14.346
+one epoch duration:1.0943870544433594
+Epoch #4, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 15.066
+one epoch duration:1.08384108543396
+Epoch #5, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 14.286
+one epoch duration:1.1060891151428223
+Epoch #6, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 14.466
+one epoch duration:1.070756435394287
+Epoch #7, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 13.085
+one epoch duration:1.0705671310424805
+Epoch #8, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 13.745
+one epoch duration:1.0815353393554688
+Epoch #9, Learning rate: 1.0000000000000002e-06
+len(train_loader):  7
+train_accuracy 13.625
+one epoch duration:1.0939030647277832
+        GA | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 16.51/72.42/65.91 | ΔF:-82.71 ΔR:19.31 ΔT:17.89 | MIA:0.4039 PredDiff:29.72%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] GA stage 2 (|forget_total|=3332)
+  > Applied specific params for GA: {'unlearn_epochs': 10, 'unlearn_lr': 0.0001, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 1e-05
+len(train_loader):  14
+train_accuracy 14.616
+one epoch duration:2.191861391067505
+Epoch #1, Learning rate: 1e-05
+len(train_loader):  14
+train_accuracy 14.856
+one epoch duration:2.421618938446045
+Epoch #2, Learning rate: 1e-05
+len(train_loader):  14
+train_accuracy 14.106
+one epoch duration:2.3024425506591797
+Epoch #3, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 13.745
+one epoch duration:2.468355417251587
+Epoch #4, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 14.286
+one epoch duration:2.1818342208862305
+Epoch #5, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 14.256
+one epoch duration:2.1464338302612305
+Epoch #6, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 13.776
+one epoch duration:2.1590795516967773
+Epoch #7, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 13.235
+one epoch duration:2.1586358547210693
+Epoch #8, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 14.376
+one epoch duration:2.16402006149292
+Epoch #9, Learning rate: 1.0000000000000002e-06
+len(train_loader):  14
+train_accuracy 14.376
+one epoch duration:2.1569533348083496
+        GA | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 17.62/77.44/68.50 | ΔF:-65.46 ΔR:14.38 ΔT:14.63 | MIA:0.4239 PredDiff:26.44%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] GA stage 3 (|forget_total|=5000)
+  > Applied specific params for GA: {'unlearn_epochs': 10, 'unlearn_lr': 0.0001, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 1e-05
+len(train_loader):  20
+train_accuracy 15.600
+one epoch duration:3.1998443603515625
+Epoch #1, Learning rate: 1e-05
+len(train_loader):  20
+train_accuracy 15.300
+one epoch duration:3.2052102088928223
+Epoch #2, Learning rate: 1e-05
+len(train_loader):  20
+train_accuracy 14.660
+one epoch duration:3.2123987674713135
+Epoch #3, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.960
+one epoch duration:3.1803905963897705
+Epoch #4, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.500
+one epoch duration:3.1656479835510254
+Epoch #5, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.760
+one epoch duration:3.1382622718811035
+Epoch #6, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.200
+one epoch duration:3.2140071392059326
+Epoch #7, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.620
+one epoch duration:3.2009499073028564
+Epoch #8, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.500
+one epoch duration:3.200381278991699
+Epoch #9, Learning rate: 1.0000000000000002e-06
+len(train_loader):  20
+train_accuracy 14.540
+one epoch duration:3.1962881088256836
+        GA | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 16.26/82.81/70.91 | ΔF:+16.26 ΔR:10.00 ΔT: 5.20 | MIA:0.4154 PredDiff:22.39%
+
+===== Running Method: NG =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] NG stage 1 (|forget_total|=1666)
+  > Applied specific params for NG: {'unlearn_epochs': 5, 'unlearn_lr': 0.01, 'alpha': 0.9, 'decreasing_lr': '2,4', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [0][99/189]	Loss -0.4374 (-0.3388)	Accuracy 92.188 (90.535)	Time 20.93
+train_accuracy 90.417
+one epoch duration:38.8911075592041
+Epoch #1, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [1][99/189]	Loss -0.5077 (-0.4219)	Accuracy 91.406 (90.477)	Time 20.87
+train_accuracy 90.322
+one epoch duration:38.72215938568115
+Epoch #2, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [2][99/189]	Loss -0.5018 (-0.5058)	Accuracy 91.797 (90.195)	Time 20.91
+train_accuracy 90.102
+one epoch duration:38.89481973648071
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [3][99/189]	Loss -0.5099 (-0.5724)	Accuracy 84.766 (89.832)	Time 21.00
+train_accuracy 89.908
+one epoch duration:39.127387285232544
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+Epoch: [4][99/189]	Loss -0.6836 (-0.6580)	Accuracy 91.797 (89.633)	Time 21.35
+train_accuracy 89.722
+one epoch duration:39.562432527542114
+        NG | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 57.08/81.27/74.15 | ΔF:-42.14 ΔR:10.46 ΔT: 9.65 | MIA:0.4479 PredDiff:20.11%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] NG stage 2 (|forget_total|=3332)
+  > Applied specific params for NG: {'unlearn_epochs': 5, 'unlearn_lr': 0.01, 'alpha': 0.9, 'decreasing_lr': '2,4', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [0][99/183]	Loss -0.7096 (-0.7332)	Accuracy 89.453 (89.961)	Time 21.85
+train_accuracy 89.886
+one epoch duration:38.82787013053894
+Epoch #1, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [1][99/183]	Loss -0.8129 (-0.8175)	Accuracy 89.453 (89.926)	Time 21.61
+train_accuracy 89.685
+one epoch duration:38.38133120536804
+Epoch #2, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [2][99/183]	Loss -0.8303 (-0.8929)	Accuracy 87.891 (89.387)	Time 22.03
+train_accuracy 89.322
+one epoch duration:38.81891179084778
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [3][99/183]	Loss -0.9964 (-0.9723)	Accuracy 90.234 (89.633)	Time 22.11
+train_accuracy 89.545
+one epoch duration:38.87927269935608
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+Epoch: [4][99/183]	Loss -1.0256 (-1.0634)	Accuracy 87.500 (89.488)	Time 21.78
+train_accuracy 89.547
+one epoch duration:38.67150163650513
+        NG | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 34.06/83.75/74.14 | ΔF:-49.01 ΔR: 8.07 ΔT: 8.99 | MIA:0.4589 PredDiff:19.55%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] NG stage 3 (|forget_total|=5000)
+  > Applied specific params for NG: {'unlearn_epochs': 5, 'unlearn_lr': 0.01, 'alpha': 0.9, 'decreasing_lr': '2,4', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [0][99/176]	Loss -1.1093 (-1.1592)	Accuracy 88.672 (90.109)	Time 22.97
+train_accuracy 90.402
+one epoch duration:38.70264768600464
+Epoch #1, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [1][99/176]	Loss -1.3046 (-1.2799)	Accuracy 92.969 (90.594)	Time 23.02
+train_accuracy 90.427
+one epoch duration:38.756364822387695
+Epoch #2, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [2][99/176]	Loss -1.4585 (-1.3814)	Accuracy 93.359 (90.586)	Time 23.41
+train_accuracy 90.613
+one epoch duration:39.59119009971619
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [3][99/176]	Loss -1.5686 (-1.4936)	Accuracy 92.188 (90.438)	Time 23.13
+train_accuracy 90.340
+one epoch duration:38.765865325927734
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+Epoch: [4][99/176]	Loss -1.5966 (-1.6050)	Accuracy 91.016 (90.488)	Time 22.90
+train_accuracy 90.462
+one epoch duration:38.401055335998535
+        NG | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T:  2.84/87.99/73.14 | ΔF:+2.84 ΔR: 4.82 ΔT: 2.97 | MIA:0.4493 PredDiff:16.01%
+
+===== Running Method: RL =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] RL stage 1 (|forget_total|=1666)
+  > Applied specific params for RL: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/196]	Loss 0.3679 (0.4593)	Accuracy 89.844 (87.983)	Time 15.63
+Epoch: [0][199/196]	Loss 0.3545 (0.4324)	Accuracy 89.453 (87.502)	Time 16.84
+one epoch duration:233.89613151550293
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/196]	Loss 0.3550 (0.3848)	Accuracy 88.672 (87.529)	Time 15.60
+Epoch: [1][199/196]	Loss 0.4089 (0.3849)	Accuracy 87.891 (87.605)	Time 16.74
+one epoch duration:35.67195725440979
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/196]	Loss 0.3693 (0.3747)	Accuracy 87.109 (87.849)	Time 15.90
+Epoch: [2][199/196]	Loss 0.3216 (0.3790)	Accuracy 86.719 (87.702)	Time 16.98
+one epoch duration:35.659444093704224
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/196]	Loss 0.3956 (0.3734)	Accuracy 85.938 (87.958)	Time 15.63
+Epoch: [3][199/196]	Loss 0.4279 (0.3729)	Accuracy 85.156 (87.883)	Time 16.75
+one epoch duration:35.437129735946655
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/196]	Loss 0.3683 (0.3731)	Accuracy 86.719 (87.702)	Time 15.87
+Epoch: [4][199/196]	Loss 0.3258 (0.3729)	Accuracy 89.062 (87.806)	Time 17.18
+one epoch duration:36.34729552268982
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/196]	Loss 0.3321 (0.3669)	Accuracy 88.281 (87.857)	Time 15.62
+Epoch: [5][199/196]	Loss 0.3483 (0.3690)	Accuracy 89.453 (87.903)	Time 16.89
+one epoch duration:35.46331286430359
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/196]	Loss 0.3532 (0.3715)	Accuracy 88.281 (87.933)	Time 15.70
+Epoch: [6][199/196]	Loss 0.3129 (0.3698)	Accuracy 91.016 (87.988)	Time 17.28
+one epoch duration:36.05310559272766
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/196]	Loss 0.3315 (0.3667)	Accuracy 88.672 (88.227)	Time 15.65
+Epoch: [7][199/196]	Loss 0.3854 (0.3681)	Accuracy 87.500 (88.071)	Time 16.77
+one epoch duration:35.25712275505066
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/196]	Loss 0.3740 (0.3739)	Accuracy 88.281 (87.815)	Time 15.72
+Epoch: [8][199/196]	Loss 0.3122 (0.3699)	Accuracy 91.016 (87.976)	Time 16.83
+one epoch duration:35.82318353652954
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/196]	Loss 0.3597 (0.3701)	Accuracy 85.938 (88.050)	Time 15.63
+Epoch: [9][199/196]	Loss 0.3989 (0.3675)	Accuracy 87.500 (88.036)	Time 16.77
+one epoch duration:35.55087232589722
+        RL | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 94.84/92.66/83.57 | ΔF:-4.38 ΔR: 0.93 ΔT: 0.23 | MIA:0.8472 PredDiff:8.89%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] RL stage 2 (|forget_total|=3332)
+  > Applied specific params for RL: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/197]	Loss 0.4706 (0.4517)	Accuracy 83.594 (85.252)	Time 15.05
+Epoch: [0][199/197]	Loss 0.3802 (0.4502)	Accuracy 86.719 (85.072)	Time 17.24
+one epoch duration:36.93558931350708
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/197]	Loss 0.4921 (0.4411)	Accuracy 83.984 (85.006)	Time 14.59
+Epoch: [1][199/197]	Loss 0.3955 (0.4421)	Accuracy 87.500 (85.047)	Time 16.84
+one epoch duration:35.79669260978699
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/197]	Loss 0.3569 (0.4429)	Accuracy 88.672 (84.834)	Time 14.77
+Epoch: [2][199/197]	Loss 0.4245 (0.4423)	Accuracy 85.156 (85.009)	Time 16.81
+one epoch duration:35.847482204437256
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/197]	Loss 0.3464 (0.4334)	Accuracy 87.500 (85.111)	Time 14.52
+Epoch: [3][199/197]	Loss 0.4375 (0.4341)	Accuracy 85.547 (85.257)	Time 16.81
+one epoch duration:35.69555139541626
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/197]	Loss 0.4362 (0.4389)	Accuracy 85.156 (85.152)	Time 14.49
+Epoch: [4][199/197]	Loss 0.4397 (0.4359)	Accuracy 84.375 (85.121)	Time 16.99
+one epoch duration:35.425187826156616
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/197]	Loss 0.3588 (0.4304)	Accuracy 87.891 (85.406)	Time 14.49
+Epoch: [5][199/197]	Loss 0.4739 (0.4325)	Accuracy 81.250 (85.391)	Time 16.85
+one epoch duration:35.59636640548706
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/197]	Loss 0.4058 (0.4254)	Accuracy 86.719 (85.615)	Time 14.53
+Epoch: [6][199/197]	Loss 0.4204 (0.4274)	Accuracy 85.156 (85.444)	Time 16.85
+one epoch duration:35.80410170555115
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/197]	Loss 0.3982 (0.4326)	Accuracy 84.766 (85.106)	Time 14.40
+Epoch: [7][199/197]	Loss 0.3914 (0.4340)	Accuracy 86.328 (85.089)	Time 16.92
+one epoch duration:35.439276933670044
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/197]	Loss 0.3989 (0.4351)	Accuracy 87.891 (85.315)	Time 14.74
+Epoch: [8][199/197]	Loss 0.4047 (0.4350)	Accuracy 87.109 (85.251)	Time 17.29
+one epoch duration:36.424031496047974
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/197]	Loss 0.3762 (0.4283)	Accuracy 88.281 (85.447)	Time 14.56
+Epoch: [9][199/197]	Loss 0.4318 (0.4262)	Accuracy 84.375 (85.408)	Time 17.09
+one epoch duration:36.111998558044434
+        RL | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 68.76/92.72/81.79 | ΔF:-14.32 ΔR: 0.90 ΔT: 1.34 | MIA:0.8312 PredDiff:10.70%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] RL stage 3 (|forget_total|=5000)
+  > Applied specific params for RL: {'unlearn_epochs': 10, 'unlearn_lr': 0.01, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+Epoch: [0][99/196]	Loss 0.4080 (0.4981)	Accuracy 87.891 (83.096)	Time 13.54
+Epoch: [0][199/196]	Loss 0.4240 (0.4902)	Accuracy 85.938 (83.136)	Time 16.82
+one epoch duration:35.21162390708923
+Epoch #1, Learning rate: 0.001
+Epoch: [1][99/196]	Loss 0.4997 (0.4800)	Accuracy 82.422 (83.369)	Time 13.37
+Epoch: [1][199/196]	Loss 0.4639 (0.4813)	Accuracy 83.594 (83.262)	Time 16.78
+one epoch duration:35.28016185760498
+Epoch #2, Learning rate: 0.001
+Epoch: [2][99/196]	Loss 0.4776 (0.4802)	Accuracy 81.641 (83.232)	Time 13.38
+Epoch: [2][199/196]	Loss 0.4779 (0.4734)	Accuracy 82.812 (83.355)	Time 16.93
+one epoch duration:35.1869101524353
+Epoch #3, Learning rate: 0.0001
+Epoch: [3][99/196]	Loss 0.3814 (0.4680)	Accuracy 88.672 (83.721)	Time 13.29
+Epoch: [3][199/196]	Loss 0.4235 (0.4712)	Accuracy 85.547 (83.516)	Time 16.73
+one epoch duration:35.200666427612305
+Epoch #4, Learning rate: 0.0001
+Epoch: [4][99/196]	Loss 0.4944 (0.4715)	Accuracy 84.375 (83.379)	Time 13.38
+Epoch: [4][199/196]	Loss 0.4701 (0.4709)	Accuracy 82.031 (83.448)	Time 16.95
+one epoch duration:35.224524974823
+Epoch #5, Learning rate: 0.0001
+Epoch: [5][99/196]	Loss 0.4401 (0.4641)	Accuracy 85.547 (83.882)	Time 13.52
+Epoch: [5][199/196]	Loss 0.5296 (0.4707)	Accuracy 82.812 (83.587)	Time 16.88
+one epoch duration:35.56689667701721
+Epoch #6, Learning rate: 0.0001
+Epoch: [6][99/196]	Loss 0.4328 (0.4659)	Accuracy 83.203 (83.560)	Time 13.58
+Epoch: [6][199/196]	Loss 0.5657 (0.4673)	Accuracy 79.297 (83.440)	Time 17.05
+one epoch duration:35.64876341819763
+Epoch #7, Learning rate: 0.0001
+Epoch: [7][99/196]	Loss 0.4481 (0.4693)	Accuracy 83.984 (83.472)	Time 13.70
+Epoch: [7][199/196]	Loss 0.4732 (0.4669)	Accuracy 83.203 (83.537)	Time 17.06
+one epoch duration:35.91049242019653
+Epoch #8, Learning rate: 0.0001
+Epoch: [8][99/196]	Loss 0.5247 (0.4660)	Accuracy 83.203 (83.833)	Time 13.73
+Epoch: [8][199/196]	Loss 0.4648 (0.4655)	Accuracy 83.984 (83.778)	Time 17.27
+one epoch duration:36.1783185005188
+Epoch #9, Learning rate: 0.0001
+Epoch: [9][99/196]	Loss 0.5518 (0.4581)	Accuracy 82.031 (83.711)	Time 13.80
+Epoch: [9][199/196]	Loss 0.4641 (0.4629)	Accuracy 83.984 (83.568)	Time 16.78
+one epoch duration:35.58722996711731
+        RL | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T:  2.24/93.68/76.20 | ΔF:+2.24 ΔR: 0.87 ΔT: 0.09 | MIA:0.4551 PredDiff:12.73%
+
+===== Running Method: Wfisher =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] Wfisher stage 1 (|forget_total|=1666)
+  > Applied specific params for Wfisher: {'alpha': 10.0}
+   Wfisher | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 20.83/79.77/71.91 | ΔF:-78.39 ΔR:11.96 ΔT:11.89 | MIA:0.5943 PredDiff:22.84%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] Wfisher stage 2 (|forget_total|=3332)
+  > Applied specific params for Wfisher: {'alpha': 10.0}
+   Wfisher | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T:  0.00/10.71/10.00 | ΔF:-83.07 ΔR:81.11 ΔT:73.13 | MIA:0.5000 PredDiff:89.13%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] Wfisher stage 3 (|forget_total|=5000)
+  > Applied specific params for Wfisher: {'alpha': 10.0}
+   Wfisher | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T: 100.00/ 0.00/10.00 | ΔF:+100.00 ΔR:92.81 ΔT:66.11 | MIA:0.0000 PredDiff:100.00%
+
+===== Running Method: SCRUB =====
+[CACHE] Retrain (in-memory) for stage 1
+[UNLEARN] SCRUB stage 1 (|forget_total|=1666)
+  > Applied specific params for SCRUB: {'unlearn_epochs': 10, 'kd_T': 4.0, 'gamma': 1.0, 'beta': 1.0, 'msteps': 5, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+len(r_loader): 189, len(f_loader): 7
+/root/miniconda3/envs/myenv/lib/python3.10/site-packages/torch/nn/_reduction.py:42: UserWarning: size_average and reduce args will be deprecated, please use reduction='sum' instead.
+  warnings.warn(warning.format(ret))
+*** Maximize step ***
+Epoch: [0][6/7]	Time 0.098 (0.156)	Data 0.063 (0.110)	Loss -18.4134 (-15.8571)	Forget_Acc@1 10.769 (13.445)
+*** Minimize step ***
+Epoch: [0][188/189]	Time 0.149 (0.168)	Data 0.105 (0.122)	Loss 0.4036 (0.4496)	Retain_Acc@1 89.806 (89.962)
+Epoch: [0]	 train-acc:	89.96151776806462	 train-loss: 0.4496398784700235
+one epoch duration:32.88015866279602
+Epoch #1, Learning rate: 0.001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [1][6/7]	Time 0.097 (0.159)	Data 0.064 (0.114)	Loss -21.6612 (-19.0370)	Forget_Acc@1 10.769 (11.285)
+*** Minimize step ***
+Epoch: [1][188/189]	Time 0.141 (0.170)	Data 0.100 (0.123)	Loss 0.3537 (0.5075)	Retain_Acc@1 90.291 (89.949)
+Epoch: [1]	 train-acc:	89.94910414018536	 train-loss: 0.5075232269461373
+one epoch duration:33.1746723651886
+Epoch #2, Learning rate: 0.001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [2][6/7]	Time 0.096 (0.161)	Data 0.062 (0.117)	Loss -23.4428 (-20.5087)	Forget_Acc@1 9.231 (11.645)
+*** Minimize step ***
+Epoch: [2][188/189]	Time 0.147 (0.170)	Data 0.103 (0.123)	Loss 0.3900 (0.5292)	Retain_Acc@1 89.806 (89.976)
+Epoch: [2]	 train-acc:	89.97600032692588	 train-loss: 0.5291793691079548
+one epoch duration:33.191187620162964
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [3][6/7]	Time 0.096 (0.159)	Data 0.062 (0.115)	Loss -21.3310 (-20.4377)	Forget_Acc@1 10.000 (12.185)
+*** Minimize step ***
+Epoch: [3][188/189]	Time 0.151 (0.170)	Data 0.103 (0.123)	Loss 0.3876 (0.3696)	Retain_Acc@1 92.233 (90.514)
+Epoch: [3]	 train-acc:	90.51392394429814	 train-loss: 0.36957652867518614
+one epoch duration:33.16772532463074
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [4][6/7]	Time 0.095 (0.159)	Data 0.061 (0.114)	Loss -22.1176 (-21.9108)	Forget_Acc@1 10.000 (11.465)
+*** Minimize step ***
+Epoch: [4][188/189]	Time 0.145 (0.170)	Data 0.101 (0.123)	Loss 0.4153 (0.3781)	Retain_Acc@1 90.291 (90.504)
+Epoch: [4]	 train-acc:	90.50357925087349	 train-loss: 0.3781171468405511
+one epoch duration:33.1881959438324
+Epoch #5, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Maximize step ***
+Epoch: [5][6/7]	Time 0.095 (0.159)	Data 0.062 (0.113)	Loss -23.4241 (-22.4798)	Forget_Acc@1 13.846 (11.825)
+*** Minimize step ***
+Epoch: [5][188/189]	Time 0.147 (0.169)	Data 0.102 (0.122)	Loss 0.2950 (0.3859)	Retain_Acc@1 93.204 (90.477)
+Epoch: [5]	 train-acc:	90.47668306665851	 train-loss: 0.38586994467323427
+one epoch duration:33.111305952072144
+Epoch #6, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [6][188/189]	Time 0.147 (0.169)	Data 0.104 (0.122)	Loss 0.3789 (0.3669)	Retain_Acc@1 89.806 (90.485)
+Epoch: [6]	 train-acc:	90.48495882405007	 train-loss: 0.36691369782903127
+one epoch duration:31.897086143493652
+Epoch #7, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [7][188/189]	Time 0.147 (0.168)	Data 0.105 (0.122)	Loss 0.4783 (0.3580)	Retain_Acc@1 88.835 (90.497)
+Epoch: [7]	 train-acc:	90.49737245792754	 train-loss: 0.3580154588710153
+one epoch duration:31.774550199508667
+Epoch #8, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [8][188/189]	Time 0.146 (0.170)	Data 0.102 (0.124)	Loss 0.3546 (0.3522)	Retain_Acc@1 90.777 (90.504)
+Epoch: [8]	 train-acc:	90.50357924487528	 train-loss: 0.3522201419276199
+one epoch duration:32.0881404876709
+Epoch #9, Learning rate: 0.0001
+len(r_loader): 189, len(f_loader): 7
+*** Minimize step ***
+Epoch: [9][188/189]	Time 0.145 (0.170)	Data 0.104 (0.125)	Loss 0.3968 (0.3405)	Retain_Acc@1 87.864 (90.650)
+Epoch: [9]	 train-acc:	90.65047377394067	 train-loss: 0.34051839496705916
+one epoch duration:32.16657519340515
+     SCRUB | S1 | Ftot=1666 | Ret F/R/T: 99.22/91.73/83.80 | Unl F/R/T: 99.94/92.63/83.85 | ΔF:+0.72 ΔR: 0.90 ΔT: 0.05 | MIA:0.4553 PredDiff:8.69%
+[CACHE] Retrain (in-memory) for stage 2
+[UNLEARN] SCRUB stage 2 (|forget_total|=3332)
+  > Applied specific params for SCRUB: {'unlearn_epochs': 10, 'kd_T': 4.0, 'gamma': 1.0, 'beta': 1.0, 'msteps': 5, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [0][13/14]	Time 0.046 (0.165)	Data 0.015 (0.118)	Loss -41.2306 (-22.7624)	Forget_Acc@1 0.000 (8.343)
+*** Minimize step ***
+Epoch: [0][182/183]	Time 0.078 (0.169)	Data 0.045 (0.122)	Loss 0.4167 (0.9957)	Retain_Acc@1 90.789 (88.448)
+Epoch: [0]	 train-acc:	88.44818719595943	 train-loss: 0.9957275835501358
+one epoch duration:33.1570029258728
+Epoch #1, Learning rate: 0.001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [1][13/14]	Time 0.047 (0.159)	Data 0.016 (0.114)	Loss -45.5519 (-30.4931)	Forget_Acc@1 0.000 (6.723)
+*** Minimize step ***
+Epoch: [1][182/183]	Time 0.083 (0.171)	Data 0.048 (0.124)	Loss 0.7392 (1.4942)	Retain_Acc@1 88.158 (87.743)
+Epoch: [1]	 train-acc:	87.74320732974	 train-loss: 1.4942082901422762
+one epoch duration:33.55087447166443
+Epoch #2, Learning rate: 0.001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [2][13/14]	Time 0.045 (0.159)	Data 0.015 (0.113)	Loss -60.0329 (-41.1876)	Forget_Acc@1 25.000 (6.903)
+*** Minimize step ***
+Epoch: [2][182/183]	Time 0.074 (0.171)	Data 0.041 (0.124)	Loss 1.1065 (1.8539)	Retain_Acc@1 84.211 (86.953)
+Epoch: [2]	 train-acc:	86.95251564110235	 train-loss: 1.8538941149336825
+one epoch duration:33.44152021408081
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [3][13/14]	Time 0.051 (0.166)	Data 0.018 (0.120)	Loss -46.6086 (-45.1880)	Forget_Acc@1 0.000 (6.903)
+*** Minimize step ***
+Epoch: [3][182/183]	Time 0.078 (0.167)	Data 0.046 (0.121)	Loss 0.9639 (0.8978)	Retain_Acc@1 84.211 (88.523)
+Epoch: [3]	 train-acc:	88.52318505054781	 train-loss: 0.8977540183968519
+one epoch duration:32.88501334190369
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [4][13/14]	Time 0.043 (0.156)	Data 0.013 (0.113)	Loss -60.3252 (-53.4719)	Forget_Acc@1 25.000 (6.423)
+*** Minimize step ***
+Epoch: [4][182/183]	Time 0.078 (0.170)	Data 0.044 (0.123)	Loss 0.7653 (0.8527)	Retain_Acc@1 85.526 (88.808)
+Epoch: [4]	 train-acc:	88.80817690596152	 train-loss: 0.8526609764109747
+one epoch duration:33.228049516677856
+Epoch #5, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Maximize step ***
+Epoch: [5][13/14]	Time 0.047 (0.161)	Data 0.015 (0.114)	Loss -43.1575 (-59.0914)	Forget_Acc@1 0.000 (6.363)
+*** Minimize step ***
+Epoch: [5][182/183]	Time 0.075 (0.170)	Data 0.044 (0.123)	Loss 0.7495 (0.8939)	Retain_Acc@1 88.158 (88.540)
+Epoch: [5]	 train-acc:	88.54032741202337	 train-loss: 0.893905801373357
+one epoch duration:33.369385957717896
+Epoch #6, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [6][182/183]	Time 0.075 (0.170)	Data 0.043 (0.123)	Loss 0.8041 (0.7066)	Retain_Acc@1 90.789 (89.318)
+Epoch: [6]	 train-acc:	89.31816233952676	 train-loss: 0.7066183954009853
+one epoch duration:31.042468547821045
+Epoch #7, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [7][182/183]	Time 0.077 (0.170)	Data 0.042 (0.124)	Loss 0.8631 (0.6370)	Retain_Acc@1 81.579 (89.567)
+Epoch: [7]	 train-acc:	89.56672666756815	 train-loss: 0.6370001026982666
+one epoch duration:31.1944637298584
+Epoch #8, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [8][182/183]	Time 0.074 (0.165)	Data 0.041 (0.119)	Loss 0.7407 (0.5942)	Retain_Acc@1 89.474 (89.547)
+Epoch: [8]	 train-acc:	89.54744150494103	 train-loss: 0.594156180293944
+one epoch duration:30.196048974990845
+Epoch #9, Learning rate: 0.0001
+len(r_loader): 183, len(f_loader): 14
+*** Minimize step ***
+Epoch: [9][182/183]	Time 0.080 (0.168)	Data 0.045 (0.120)	Loss 0.4198 (0.5580)	Retain_Acc@1 94.737 (89.637)
+Epoch: [9]	 train-acc:	89.63743892573878	 train-loss: 0.5579663234514352
+one epoch duration:30.704508543014526
+     SCRUB | S2 | Ftot=3332 | Ret F/R/T: 83.07/91.82/83.13 | Unl F/R/T: 95.44/91.68/83.43 | ΔF:+12.36 ΔR: 0.14 ΔT: 0.30 | MIA:0.4517 PredDiff:10.05%
+[CACHE] Retrain (in-memory) for stage 3
+[UNLEARN] SCRUB stage 3 (|forget_total|=5000)
+  > Applied specific params for SCRUB: {'unlearn_epochs': 10, 'kd_T': 4.0, 'gamma': 1.0, 'beta': 1.0, 'msteps': 5, 'decreasing_lr': '5,8', 'warmup': 0, 'print_freq': 100}
+Epoch #0, Learning rate: 0.001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [0][19/20]	Time 0.101 (0.163)	Data 0.067 (0.117)	Loss -113.3894 (-68.8640)	Forget_Acc@1 0.000 (3.340)
+*** Minimize step ***
+Epoch: [0][175/176]	Time 0.145 (0.166)	Data 0.099 (0.119)	Loss 1.2865 (6.6719)	Retain_Acc@1 84.500 (76.202)
+Epoch: [0]	 train-acc:	76.20222222222222	 train-loss: 6.671909303898282
+one epoch duration:32.454506397247314
+Epoch #1, Learning rate: 0.001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [1][19/20]	Time 0.096 (0.160)	Data 0.064 (0.116)	Loss -139.9741 (-76.8815)	Forget_Acc@1 0.000 (0.040)
+*** Minimize step ***
+Epoch: [1][175/176]	Time 0.138 (0.169)	Data 0.096 (0.122)	Loss 2.0184 (7.0685)	Retain_Acc@1 82.500 (76.573)
+Epoch: [1]	 train-acc:	76.57333333333334	 train-loss: 7.068503666432699
+one epoch duration:32.87952756881714
+Epoch #2, Learning rate: 0.001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [2][19/20]	Time 0.101 (0.163)	Data 0.067 (0.117)	Loss -208.1421 (-121.2172)	Forget_Acc@1 0.000 (0.140)
+*** Minimize step ***
+Epoch: [2][175/176]	Time 0.147 (0.168)	Data 0.099 (0.121)	Loss 3.1386 (10.4817)	Retain_Acc@1 78.000 (68.178)
+Epoch: [2]	 train-acc:	68.17777777777778	 train-loss: 10.481718339326646
+one epoch duration:32.836047410964966
+Epoch #3, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [3][19/20]	Time 0.100 (0.165)	Data 0.065 (0.120)	Loss -163.1148 (-138.2684)	Forget_Acc@1 0.000 (0.060)
+*** Minimize step ***
+Epoch: [3][175/176]	Time 0.147 (0.168)	Data 0.104 (0.122)	Loss 3.9918 (7.2607)	Retain_Acc@1 79.500 (75.533)
+Epoch: [3]	 train-acc:	75.53333333333333	 train-loss: 7.2607188032362195
+one epoch duration:32.88093876838684
+Epoch #4, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [4][19/20]	Time 0.101 (0.164)	Data 0.067 (0.118)	Loss -177.5286 (-154.5364)	Forget_Acc@1 0.000 (0.000)
+*** Minimize step ***
+Epoch: [4][175/176]	Time 0.144 (0.169)	Data 0.101 (0.122)	Loss 3.6905 (5.5600)	Retain_Acc@1 77.000 (77.582)
+Epoch: [4]	 train-acc:	77.58222222222223	 train-loss: 5.560011157735189
+one epoch duration:33.10142159461975
+Epoch #5, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Maximize step ***
+Epoch: [5][19/20]	Time 0.099 (0.168)	Data 0.067 (0.122)	Loss -208.2807 (-178.3642)	Forget_Acc@1 0.000 (0.040)
+*** Minimize step ***
+Epoch: [5][175/176]	Time 0.142 (0.168)	Data 0.098 (0.121)	Loss 3.9379 (4.7238)	Retain_Acc@1 81.000 (78.951)
+Epoch: [5]	 train-acc:	78.95111111111112	 train-loss: 4.723849736913046
+one epoch duration:32.897249937057495
+Epoch #6, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [6][175/176]	Time 0.143 (0.170)	Data 0.098 (0.123)	Loss 2.9950 (3.4161)	Retain_Acc@1 79.000 (80.669)
+Epoch: [6]	 train-acc:	80.66888888888889	 train-loss: 3.416124547407362
+one epoch duration:29.884706258773804
+Epoch #7, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [7][175/176]	Time 0.140 (0.169)	Data 0.098 (0.122)	Loss 2.9347 (3.0668)	Retain_Acc@1 82.000 (81.189)
+Epoch: [7]	 train-acc:	81.18888888888888	 train-loss: 3.066750789006551
+one epoch duration:29.699690103530884
+Epoch #8, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [8][175/176]	Time 0.145 (0.169)	Data 0.099 (0.122)	Loss 2.7797 (2.8604)	Retain_Acc@1 82.000 (81.891)
+Epoch: [8]	 train-acc:	81.89111111111112	 train-loss: 2.8603577714708117
+one epoch duration:29.74132013320923
+Epoch #9, Learning rate: 0.0001
+len(r_loader): 176, len(f_loader): 20
+*** Minimize step ***
+Epoch: [9][175/176]	Time 0.137 (0.167)	Data 0.096 (0.121)	Loss 2.3901 (2.6830)	Retain_Acc@1 79.500 (81.829)
+Epoch: [9]	 train-acc:	81.82888888888888	 train-loss: 2.6829799377441406
+one epoch duration:29.367672204971313
+     SCRUB | S3 | Ftot=5000 | Ret F/R/T:  0.00/92.81/76.11 | Unl F/R/T:  5.70/84.39/72.22 | ΔF:+5.70 ΔR: 8.42 ΔT: 3.89 | MIA:0.4470 PredDiff:18.05%
+
+===== Full Results =====
+ method  stage  forget_total  Retrain_F  Retrain_R  Retrain_T  Unlearn_F  Unlearn_R  Unlearn_T         ΔF        ΔR    ΔT      MIA  PredDiff(%)
+     FT      1          1666  99.219688  91.732528      83.80  99.819928  92.818720      83.90   0.600240  1.086192  0.10 0.456532        8.616
+     FT      2          3332  83.073229  91.820948      83.13  97.448980  92.866632      83.61  14.375750  1.045684  0.48 0.457969        9.482
+     FT      3          5000   0.000000  92.808889      76.11  57.540000  93.826667      80.84  57.540000  1.017778  4.73 0.456822       14.082
+  FT_l1      1          1666  99.219688  91.732528      83.80  99.939976  92.646998      83.86   0.720288  0.914470  0.06 0.457370        8.634
+  FT_l1      2          3332  83.073229  91.820948      83.13  97.929172  92.618068      83.68  14.855942  0.797120  0.55 0.461719        9.580
+  FT_l1      3          5000   0.000000  92.808889      76.11  68.340000  93.344444      81.68  68.340000  0.535556  5.57 0.456133       14.928
+     GA      1          1666  99.219688  91.732528      83.80  16.506603  72.419001      65.91 -82.713085 19.313527 17.89 0.403874       29.716
+     GA      2          3332  83.073229  91.820948      83.13  17.617047  77.438502      68.50 -65.456182 14.382446 14.63 0.423868       26.438
+     GA      3          5000   0.000000  92.808889      76.11  16.260000  82.813333      70.91  16.260000  9.995556  5.20 0.415389       22.390
+     NG      1          1666  99.219688  91.732528      83.80  57.082833  81.274051      74.15 -42.136855 10.458476  9.65 0.447854       20.108
+     NG      2          3332  83.073229  91.820948      83.13  34.063625  83.749036      74.14 -49.009604  8.071912  8.99 0.458862       19.548
+     NG      3          5000   0.000000  92.808889      76.11   2.840000  87.993333      73.14   2.840000  4.815556  2.97 0.449256       16.010
+     RL      1          1666  99.219688  91.732528      83.80  94.837935  92.663549      83.57  -4.381753  0.931022  0.23 0.847186        8.890
+     RL      2          3332  83.073229  91.820948      83.13  68.757503  92.716637      81.79 -14.315726  0.895689  1.34 0.831213       10.702
+     RL      3          5000   0.000000  92.808889      76.11   2.240000  93.675556      76.20   2.240000  0.866667  0.09 0.455067       12.726
+Wfisher      1          1666  99.219688  91.732528      83.80  20.828331  79.767865      71.91 -78.391357 11.964663 11.89 0.594281       22.844
+Wfisher      2          3332  83.073229  91.820948      83.13   0.000000  10.713980      10.00 -83.073229 81.106968 73.13 0.500000       89.126
+Wfisher      3          5000   0.000000  92.808889      76.11 100.000000   0.000000      10.00 100.000000 92.808889 66.11 0.000000      100.000
+  SCRUB      1          1666  99.219688  91.732528      83.80  99.939976  92.630446      83.85   0.720288  0.897919  0.05 0.455332        8.686
+  SCRUB      2          3332  83.073229  91.820948      83.13  95.438175  91.679523      83.43  12.364946  0.141425  0.30 0.451745       10.048
+  SCRUB      3          5000   0.000000  92.808889      76.11   5.700000  84.393333      72.22   5.700000  8.415556  3.89 0.447044       18.048
+
+Results saved to saved_models_gpu0/results_class_random.csv
+
+--- [3/3] Experiment FINISHED ---
+============================================================
+All 3 experiments completed in 26438.15 seconds.
+============================================================

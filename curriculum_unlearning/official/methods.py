@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 from argparse import Namespace
 import copy
+from torch.utils.data import Dataset, DataLoader, ConcatDataset
 
 # unlearn_methods 디렉토리에서 get_unlearn_method 함수를 임포트
 from unlearn_methods import get_unlearn_method
