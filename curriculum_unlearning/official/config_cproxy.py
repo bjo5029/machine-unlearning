@@ -75,5 +75,9 @@ CONFIG = {
         "RL": { "unlearn_epochs": 10, "unlearn_lr": 0.01, "decreasing_lr": "5,8" },
         "Wfisher": { "alpha": 10.0 },
         "SCRUB": { "unlearn_epochs": 10, "kd_T": 4.0, "gamma": 1.0, "beta": 1.0, "msteps": 5, "decreasing_lr": "5,8" }
-    }
+    },
+
+    "score_methods_to_run": [
+        "c_proxy"
+    ]
 }
