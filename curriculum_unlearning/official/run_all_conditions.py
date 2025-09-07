@@ -1,4 +1,4 @@
-# run_all_conditions.py (버그 수정된 최종본)
+# run_all_conditions.py (KeyError 수정된 최종본)
 
 import os
 import time
@@ -12,7 +12,6 @@ def main(args):
     
     from run_experiment import run_experiment
 
-    # --- 실행할 조건 조합 정의 ---
     definitions = ['class']
     granularities = ["stage", "batch", "sample"]
     
@@ -27,7 +26,6 @@ def main(args):
     ]
 
     all_experiments = []
-    
     base_exp = { "forget_set_definition": "class" }
 
     for score in score_methods:
@@ -68,17 +66,16 @@ def main(args):
         run_config = config_module.CONFIG.copy()
         run_config.update(exp_params)
         
-        # ▼▼▼▼▼ [수정] 바로 이 부분의 키 이름을 수정했습니다. ▼▼▼▼▼
         fname_parts = [
             exp_params['forget_set_definition'],
-            exp_params['forget_partitioning_method'],  # 'score_method' -> 'forget_partitioning_method'
+            exp_params['forget_partitioning_method'],
             exp_params['unlearning_granularity'],
             exp_params['forget_partition_ordering']
         ]
-        # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
         
+        # [수정] 키 이름 'retain_ordering' -> 'retain_partition_ordering'
         if exp_params.get('use_retain_ordering'):
-            fname_parts.append(f"paired_{exp_params['retain_ordering']}")
+            fname_parts.append(f"paired_{exp_params['retain_partition_ordering']}")
         
         results_filename = f"results_{'_'.join(fname_parts)}.csv"
         run_config["results_csv_filename"] = results_filename

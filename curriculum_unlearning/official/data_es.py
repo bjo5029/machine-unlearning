@@ -1,4 +1,4 @@
-# data_es.py (최종본)
+# data_es.py (전체 데이터셋 중심점 사용 버전)
 
 import time, numpy as np, torch, hashlib
 from torchvision import datasets, transforms
@@ -108,11 +108,8 @@ def define_forget_set(train_dataset: Dataset, cfg: dict):
     else:
         raise ValueError(f"Unknown forget_set_definition: {definition}")
 
-def _partition_indices(indices: np.ndarray, dataset: Dataset, model, cfg: dict, score_source: str):
-    """
-    주어진 인덱스 리스트를 점수에 따라 분할하는 내부 헬퍼 함수.
-    score_source: 'forget' 또는 'retain'을 받아 해당 설정값을 읽음.
-    """
+# ----- global_mu 파라미터 추가 및 ES 계산 방식 변경 -----
+def _partition_indices(indices: np.ndarray, dataset: Dataset, model, cfg: dict, score_source: str, global_mu=None):
     method_key = f"{score_source}_partitioning_method"
     method = cfg.get(method_key, "memorization")
     device = cfg["device"]
@@ -126,8 +123,11 @@ def _partition_indices(indices: np.ndarray, dataset: Dataset, model, cfg: dict, 
     else:
         subset = Subset(dataset, indices)
         if method == 'es':
+            if global_mu is None:
+                raise ValueError("global_mu must be provided for 'es' partitioning method.")
             embs = _embed_all(model, subset, device, batch_size)
-            mu = embs.mean(0); scores = ((embs - mu)**2).sum(1).numpy()
+            # [수정] 각 셋의 중심(embs.mean(0)) 대신, 전달받은 전체 데이터셋의 중심(global_mu) 사용
+            scores = ((embs - global_mu.to(embs.device))**2).sum(1).numpy()
             sorted_sub_indices = np.argsort(scores)
             sorted_indices = indices[sorted_sub_indices]
         elif method == 'memorization':
@@ -148,16 +148,12 @@ def _partition_indices(indices: np.ndarray, dataset: Dataset, model, cfg: dict, 
     granularity = cfg.get("unlearning_granularity", "stage")
     if granularity == 'sample':
         partitions = [sorted_indices] if len(sorted_indices) > 0 else []
-    else: # 'stage' 또는 'batch'
+    else:
         third = len(sorted_indices) // 3
         if third == 0:
             partitions = [sorted_indices] if len(sorted_indices) > 0 else []
         else:
-            partitions = [
-                sorted_indices[:third],
-                sorted_indices[third: 2*third],
-                sorted_indices[2*third:]
-            ]
+            partitions = [sorted_indices[:third], sorted_indices[third: 2*third], sorted_indices[2*third:]]
 
     ordering_key = f"{score_source}_partition_ordering"
     ordering = cfg.get(ordering_key, "easy_first")
@@ -167,10 +163,9 @@ def _partition_indices(indices: np.ndarray, dataset: Dataset, model, cfg: dict, 
     print(f"Partition sizes for {score_source}: {[len(p) for p in partitions]}")
     return partitions
 
-def partition_forget_set(forget_indices: np.ndarray, train_eval_dataset: Dataset, model, cfg: dict):
-    """Forget Set을 분할합니다."""
-    return _partition_indices(forget_indices, train_eval_dataset, model, cfg, 'forget')
+def partition_forget_set(forget_indices: np.ndarray, train_eval_dataset: Dataset, model, cfg: dict, global_mu=None):
+    return _partition_indices(forget_indices, train_eval_dataset, model, cfg, 'forget', global_mu=global_mu)
 
-def partition_retain_set(retain_indices: np.ndarray, train_eval_dataset: Dataset, model, cfg: dict):
-    """Retain Set을 분할합니다."""
-    return _partition_indices(retain_indices, train_eval_dataset, model, cfg, 'retain')
+def partition_retain_set(retain_indices: np.ndarray, train_eval_dataset: Dataset, model, cfg: dict, global_mu=None):
+    return _partition_indices(retain_indices, train_eval_dataset, model, cfg, 'retain', global_mu=global_mu)
+# -----------------------------------------------

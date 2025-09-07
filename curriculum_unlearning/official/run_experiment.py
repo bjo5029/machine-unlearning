@@ -1,4 +1,4 @@
-# run_experiment.py (AttributeError 수정된 최종본)
+# run_experiment.py (es score 전체 데이터셋 중심점 사용 버전)
 
 import os, copy, numpy as np, pandas as pd, hashlib, time
 from torch.utils.data import Dataset, DataLoader, Subset
@@ -9,7 +9,8 @@ import importlib
 from seeds import set_seed
 from data_es import (
     load_cifar10_with_train_eval, split_retain_forget, build_loaders,
-    define_forget_set, partition_forget_set, partition_retain_set, hash_indices
+    define_forget_set, partition_forget_set, partition_retain_set, hash_indices,
+    _embed_all # [추가] _embed_all 함수 임포트
 )
 from model_train import get_model, train_model, evaluate_model
 from methods import (
@@ -65,7 +66,6 @@ def create_interleaved_loader(datasets, batch_size):
             self.indices = []
             for i, d in enumerate(self.datasets):
                 self.indices.extend([(i, j) for j in range(len(d))])
-            # [수정] .dataset 속성 추가
             if self.datasets:
                 self.dataset = self.datasets[0].dataset
                 
@@ -73,7 +73,6 @@ def create_interleaved_loader(datasets, batch_size):
         def __getitem__(self, idx):
             dataset_idx, sample_idx = self.indices[idx]
             return self.datasets[dataset_idx][sample_idx]
-
     interleaved_dataset = InterleavedDataset(datasets)
     return DataLoader(interleaved_dataset, batch_size=batch_size, shuffle=True)
 
@@ -89,12 +88,26 @@ def run_experiment(cfg):
     
     cfg["rewind_pth"] = original_cache_path(cfg["model_save_dir"], cfg)
 
+    # -----  [수정] ES 점수 계산을 위해 전체 데이터셋의 중심점을 미리 계산 -----
+    global_mu = None
+    # 'es' 방식이 사용될 경우에만 전체 임베딩 및 중심점 계산
+    if cfg.get("forget_partitioning_method") == 'es' or cfg.get("retain_partitioning_method") == 'es':
+        print("\n[INFO] Calculating global center for ES partitioning...")
+        t0 = time.time()
+        # 증강 없는 train_eval_ds 사용
+        all_embs = _embed_all(orig_model, train_eval_ds, device, bs)
+        global_mu = all_embs.mean(0)
+        print(f"Global center calculated in {time.time() - t0:.2f}s")
+    # -------------------------------------------------------------
+
     total_forget_indices = define_forget_set(train_ds, cfg)
-    forget_partitions = partition_forget_set(total_forget_indices, train_eval_ds, orig_model, cfg)
+    # [수정] 파티셔닝 함수에 global_mu 전달
+    forget_partitions = partition_forget_set(total_forget_indices, train_eval_ds, orig_model, cfg, global_mu=global_mu)
     
     if cfg.get("use_retain_ordering", False):
         initial_retain_idx, _ = split_retain_forget(len(train_ds), total_forget_indices)
-        retain_partitions = partition_retain_set(initial_retain_idx, train_eval_ds, orig_model, cfg)
+        # [수정] 파티셔닝 함수에 global_mu 전달
+        retain_partitions = partition_retain_set(initial_retain_idx, train_eval_ds, orig_model, cfg, global_mu=global_mu)
     else:
         retain_partitions = []
 
@@ -210,4 +223,3 @@ if __name__ == "__main__":
         print(f"An unexpected error occurred: {e}")
         import traceback
         traceback.print_exc()
-        
