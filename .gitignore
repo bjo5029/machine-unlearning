@@ -49,7 +49,7 @@ estimates_results.npz
 # Log Files 
 # ========================
 output_*.log
-
+logs/
 
 # ========================
 # Operating System Files

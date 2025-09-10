@@ -1,17 +1,17 @@
-# run_experiment.py (es score 전체 데이터셋 중심점 사용 버전)
-
-import os, copy, numpy as np, pandas as pd, hashlib, time
+import os
+import copy
+import numpy as np
+import pandas as pd
+import hashlib
+import time
+import torch
 from torch.utils.data import Dataset, DataLoader, Subset
 from scipy import stats
 import argparse
 import importlib
 
 from seeds import set_seed
-from data_es import (
-    load_cifar10_with_train_eval, split_retain_forget, build_loaders,
-    define_forget_set, partition_forget_set, partition_retain_set, hash_indices,
-    _embed_all # [추가] _embed_all 함수 임포트
-)
+from data_es import split_retain_forget, build_loaders
 from model_train import get_model, train_model, evaluate_model
 from methods import (
     unlearn_ft, unlearn_ft_l1, unlearn_ga, unlearn_neggrad_plus,
@@ -19,8 +19,11 @@ from methods import (
 )
 from metrics import calculate_prediction_diff, calculate_mia_score
 
+# --- Helper functions ---
 def _delta_metrics(rF, rR, rT, uF, uR, uT):
-    dF = uF - rF; dR = abs(uR - rR); dT = abs(uT - rT)
+    dF = uF - rF
+    dR = abs(uR - rR)
+    dT = abs(uT - rT)
     return dF, dR, dT
 
 def original_cache_path(save_dir, cfg):
@@ -54,62 +57,46 @@ def load_or_train_retrain(retain_loader, retain_idx_sorted, device, cfg):
         print(f"[LOAD] Retrain from {pth}")
         model.load_state_dict(torch.load(pth, map_location=device))
     else:
+        if retain_loader is None or len(retain_loader.dataset) == 0:
+            print("[SKIP] Retrain is skipped as retain_loader is empty.")
+            return None, None
         print(f"[TRAIN] Retrain on {len(retain_loader.dataset)} samples")
         train_model(model, retain_loader, cfg["epochs"], cfg["lr"], device, cfg["momentum"], cfg["weight_decay"])
-        torch.save(model.state_dict(), pth); print(f"[SAVE] {pth}")
+        torch.save(model.state_dict(), pth)
+        print(f"[SAVE] {pth}")
     return model, pth
 
-def create_interleaved_loader(datasets, batch_size):
-    class InterleavedDataset(Dataset):
-        def __init__(self, datasets):
-            self.datasets = datasets
-            self.indices = []
-            for i, d in enumerate(self.datasets):
-                self.indices.extend([(i, j) for j in range(len(d))])
-            if self.datasets:
-                self.dataset = self.datasets[0].dataset
-                
-        def __len__(self): return len(self.indices)
-        def __getitem__(self, idx):
-            dataset_idx, sample_idx = self.indices[idx]
-            return self.datasets[dataset_idx][sample_idx]
-    interleaved_dataset = InterleavedDataset(datasets)
-    return DataLoader(interleaved_dataset, batch_size=batch_size, shuffle=True)
+class SequentialCurriculumLoader:
+    def __init__(self, partition_datasets, batch_size):
+        self.partition_datasets = partition_datasets
+        self.partition_loaders = []
+        for ds in self.partition_datasets:
+            self.partition_loaders.append(DataLoader(ds, batch_size=batch_size, shuffle=True))
+        
+        if self.partition_datasets:
+            self.dataset = self.partition_datasets[0].dataset
 
-def run_experiment(cfg):
+        self.total_batches = sum(len(loader) for loader in self.partition_loaders)
+
+    def __iter__(self):
+        for loader in self.partition_loaders:
+            yield from loader
+
+    def __len__(self):
+        return self.total_batches
+
+# --- Main Experiment Function ---
+def run_experiment(cfg, train_ds, train_eval_ds, test_ds, orig_model):
     set_seed(cfg["seed"])
-    os.makedirs(cfg["model_save_dir"], exist_ok=True)
     device = cfg["device"]; bs = cfg["batch_size"]
 
-    train_ds, train_eval_ds, test_ds = load_cifar10_with_train_eval(cfg["data_root"])
     test_loader = DataLoader(test_ds, batch_size=bs, shuffle=False)
     full_train_eval_loader = DataLoader(train_eval_ds, batch_size=bs, shuffle=False)
-    orig_model = load_or_train_original(train_ds, bs, device, cfg)
     
-    cfg["rewind_pth"] = original_cache_path(cfg["model_save_dir"], cfg)
-
-    # -----  [수정] ES 점수 계산을 위해 전체 데이터셋의 중심점을 미리 계산 -----
-    global_mu = None
-    # 'es' 방식이 사용될 경우에만 전체 임베딩 및 중심점 계산
-    if cfg.get("forget_partitioning_method") == 'es' or cfg.get("retain_partitioning_method") == 'es':
-        print("\n[INFO] Calculating global center for ES partitioning...")
-        t0 = time.time()
-        # 증강 없는 train_eval_ds 사용
-        all_embs = _embed_all(orig_model, train_eval_ds, device, bs)
-        global_mu = all_embs.mean(0)
-        print(f"Global center calculated in {time.time() - t0:.2f}s")
-    # -------------------------------------------------------------
-
-    total_forget_indices = define_forget_set(train_ds, cfg)
-    # [수정] 파티셔닝 함수에 global_mu 전달
-    forget_partitions = partition_forget_set(total_forget_indices, train_eval_ds, orig_model, cfg, global_mu=global_mu)
+    forget_partitions = cfg['precomputed_forget_partitions']
+    retain_partitions = cfg.get('precomputed_retain_partitions', [])
     
-    if cfg.get("use_retain_ordering", False):
-        initial_retain_idx, _ = split_retain_forget(len(train_ds), total_forget_indices)
-        # [수정] 파티셔닝 함수에 global_mu 전달
-        retain_partitions = partition_retain_set(initial_retain_idx, train_eval_ds, orig_model, cfg, global_mu=global_mu)
-    else:
-        retain_partitions = []
+    total_forget_indices = np.concatenate(forget_partitions) if forget_partitions and len(forget_partitions[0]) > 0 else np.array([])
 
     unlearning_methods = {
         "FT": unlearn_ft, "FT_l1": unlearn_ft_l1, "GA": unlearn_ga,
@@ -125,7 +112,6 @@ def run_experiment(cfg):
         method_config = cfg.copy()
         if method_name in cfg.get("method_params", {}):
             method_config.update(cfg["method_params"][method_name])
-            print(f"  > Applied specific params for {method_name}: {cfg['method_params'][method_name]}")
         method_config['unlearn'] = method_name
 
         granularity = cfg.get("unlearning_granularity", "stage")
@@ -133,11 +119,11 @@ def run_experiment(cfg):
 
         if granularity == 'stage':
             cumulative_forget_indices = np.array([], dtype=np.int64)
-            num_stages = len(forget_partitions)
+            # ▼▼▼▼▼ [수정] 최종 Retain Set을 루프 시작 전에 미리 정의 ▼▼▼▼▼
+            final_retain_idx, _ = split_retain_forget(len(train_ds), total_forget_indices)
             
-            for stage_idx in range(num_stages):
+            for stage_idx, S_forget_stage in enumerate(forget_partitions):
                 stage = stage_idx + 1
-                S_forget_stage = forget_partitions[stage_idx]
                 
                 if is_paired_method and stage_idx < len(retain_partitions):
                     S_retain_stage = retain_partitions[stage_idx]
@@ -145,11 +131,14 @@ def run_experiment(cfg):
                     r_train_unl, f_train_unl, _, _ = build_loaders(train_ds, train_eval_ds, S_retain_stage, S_forget_stage, bs)
                     loaders_for_unlearning = {"retain": r_train_unl, "forget": f_train_unl, "test": test_loader}
                 else:
-                    cumulative_indices_for_unlearn = np.unique(np.concatenate([cumulative_forget_indices, S_forget_stage]))
-                    retain_idx_unl, forget_idx_unl = split_retain_forget(len(train_ds), cumulative_indices_for_unlearn)
+                    # ▼▼▼▼▼ [수정] 기본 방식: Forget은 해당 스테이지 파티션만, Retain은 미리 정의한 최종 Set 사용 ▼▼▼▼▼
+                    forget_idx_unl = S_forget_stage
+                    retain_idx_unl = final_retain_idx
+                    
+                    print(f"\n[UNLEARN] Stage {stage}: |Forget|={len(forget_idx_unl)}, |Retain|={len(retain_idx_unl)} (fixed)")
                     r_train_unl, f_train_unl, _, _ = build_loaders(train_ds, train_eval_ds, retain_idx_unl, forget_idx_unl, bs)
                     loaders_for_unlearning = {"retain": r_train_unl, "forget": f_train_unl, "test": test_loader}
-                    print(f"\n[UNLEARN] Stage {stage}: |Forget Total|={len(cumulative_indices_for_unlearn)}")
+                    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
                 model_u = unlearn_fn(model_u, loaders_for_unlearning, method_config)
                 
@@ -158,23 +147,34 @@ def run_experiment(cfg):
                 r_train_eval, _, r_eval, f_eval = build_loaders(train_ds, train_eval_ds, eval_retain_idx, eval_forget_idx, bs, shuffle_train=False)
                 
                 retr_model, _ = load_or_train_retrain(r_train_eval, np.sort(eval_retain_idx), device, cfg)
-
-                rF = evaluate_model(retr_model, f_eval, device); rR = evaluate_model(retr_model, r_eval, device); rT = evaluate_model(retr_model, test_loader, device)
-                uF = evaluate_model(model_u, f_eval, device); uR = evaluate_model(model_u, r_eval, device); uT = evaluate_model(model_u, test_loader, device)
-                dF, dR, dT = _delta_metrics(rF, rR, rT, uF, uR, uT); mia = calculate_mia_score(model_u, r_train_eval, r_eval, f_eval, test_loader, device); pdiff = calculate_prediction_diff(model_u, retr_model, full_train_eval_loader, device)
-                print(f"  (Eval) {method_name:>10} | S{stage} | Ftot={len(cumulative_forget_indices):>4d} | ΔF:{dF:+5.2f} ΔR:{dR:5.2f} ΔT:{dT:5.2f} | MIA:{mia:.4f} PredDiff:{pdiff:.2f}%")
                 
-                all_results.append({"method": method_name, "stage": stage, "forget_total": len(cumulative_forget_indices), "Retrain_F": rF, "Retrain_R": rR, "Retrain_T": rT, "Unlearn_F": uF, "Unlearn_R": uR, "Unlearn_T": uT, "ΔF": dF, "ΔR": dR, "ΔT": dT, "MIA": mia, "PredDiff(%)": pdiff})
+                if retr_model is not None:
+                    rF = evaluate_model(retr_model, f_eval, device); rR = evaluate_model(retr_model, r_eval, device); rT = evaluate_model(retr_model, test_loader, device)
+                    uF = evaluate_model(model_u, f_eval, device); uR = evaluate_model(model_u, r_eval, device); uT = evaluate_model(model_u, test_loader, device)
+                    dF, dR, dT = _delta_metrics(rF, rR, rT, uF, uR, uT); mia = calculate_mia_score(model_u, r_train_eval, r_eval, f_eval, test_loader, device); pdiff = calculate_prediction_diff(model_u, retr_model, full_train_eval_loader, device)
+                    print(f"  (Eval) {method_name:>10} | S{stage} | Ftot={len(cumulative_forget_indices):>4d} | ΔF:{dF:+5.2f} ΔR:{dR:5.2f} ΔT:{dT:5.2f} | MIA:{mia:.4f} PredDiff:{pdiff:.2f}%")
+                    all_results.append({"method": method_name, "stage": stage, "forget_total": len(cumulative_forget_indices), "Retain_F": rF, "Retain_R": rR, "Retrain_T": rT, "Unlearn_F": uF, "Unlearn_R": uR, "Unlearn_T": uT, "ΔF": dF, "ΔR": dR, "ΔT": dT, "MIA": mia, "PredDiff(%)": pdiff})
 
         elif granularity in ['batch', 'sample']:
             print(f"[UNLEARN MODE] {granularity.capitalize()}-wise curriculum for {method_name}")
-            full_retain_idx, _ = split_retain_forget(len(train_ds), total_forget_indices)
-            retain_loader = DataLoader(Subset(train_ds, full_retain_idx), batch_size=bs, shuffle=True)
             
+            if cfg.get("use_retain_ordering", False):
+                print("[INFO] Applying sequential curriculum to Retain Set.")
+                if granularity == 'batch':
+                    retain_subset_datasets = [Subset(train_ds, p) for p in retain_partitions]
+                    retain_loader = SequentialCurriculumLoader(retain_subset_datasets, bs)
+                else: 
+                    sorted_retain_indices = retain_partitions[0]
+                    retain_loader = DataLoader(Subset(train_ds, sorted_retain_indices), batch_size=bs, shuffle=False)
+            else:
+                print("[INFO] Using randomly shuffled Retain Set.")
+                full_retain_idx, _ = split_retain_forget(len(train_ds), total_forget_indices)
+                retain_loader = DataLoader(Subset(train_ds, full_retain_idx), batch_size=bs, shuffle=True)
+
             if granularity == 'batch':
                 forget_subset_datasets = [Subset(train_ds, p) for p in forget_partitions]
-                forget_loader = create_interleaved_loader(forget_subset_datasets, bs)
-            else:
+                forget_loader = SequentialCurriculumLoader(forget_subset_datasets, bs)
+            else: 
                 sorted_forget_indices = forget_partitions[0]
                 forget_loader = DataLoader(Subset(train_ds, sorted_forget_indices), batch_size=bs, shuffle=False)
 
@@ -189,37 +189,41 @@ def run_experiment(cfg):
             uF = evaluate_model(model_u, f_eval, device); uR = evaluate_model(model_u, r_eval, device); uT = evaluate_model(model_u, test_loader, device)
             dF, dR, dT = _delta_metrics(rF, rR, rT, uF, uR, uT); mia = calculate_mia_score(model_u, r_train_eval, r_eval, f_eval, test_loader, device); pdiff = calculate_prediction_diff(model_u, retr_model, full_train_eval_loader, device)
             print(f"  (Final Eval) {method_name:>10} | Ftot={len(final_forget_idx):>4d} | ΔF:{dF:+5.2f} ΔR:{dR:5.2f} ΔT:{dT:5.2f} | MIA:{mia:.4f} PredDiff:{pdiff:.2f}%")
-            all_results.append({"method": method_name, "stage": "final", "forget_total": len(final_forget_idx), "Retrain_F": rF, "Retrain_R": rR, "Retrain_T": rT, "Unlearn_F": uF, "Unlearn_R": uR, "Unlearn_T": uT, "ΔF": dF, "ΔR": dR, "ΔT": dT, "MIA": mia, "PredDiff(%)": pdiff})
+            all_results.append({"method": method_name, "stage": "final", "forget_total": len(final_forget_idx), "Retain_F": rF, "Retrain_R": rR, "Retrain_T": rT, "Unlearn_F": uF, "Unlearn_R": uR, "Unlearn_T": uT, "ΔF": dF, "ΔR": dR, "ΔT": dT, "MIA": mia, "PredDiff(%)": pdiff})
 
     df = pd.DataFrame(all_results)
     print("\n===== Full Results =====")
     print(df.to_string(index=False))
     
-    default_csv_name = "experiment_results.csv"
-    csv_filename = cfg.get("results_csv_filename", default_csv_name)
+    csv_filename = cfg.get("results_csv_filename", "experiment_results.csv")
     csv_path = os.path.join(cfg["model_save_dir"], csv_filename)
     
     df.to_csv(csv_path, index=False)
     print(f"\nResults saved to {csv_path}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run a single unlearning experiment.")
-    parser.add_argument('--config_module', type=str, default='config', 
-                        help='The name of the configuration file to use (e.g., config)')
-    args = parser.parse_args()
+    from data_es import define_forget_set, partition_forget_set, partition_retain_set, load_cifar10_with_train_eval, _embed_all, split_retain_forget
+    from model_train import load_or_train_original
 
-    print(f"Attempting to run a single experiment using configuration from '{args.config_module}.py'")
+    print("This script is now intended to be run via run_all_conditions.py for full experiments.")
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--config_module', type=str, default='config')
+    args = parser.parse_args()
+    config_module = importlib.import_module(args.config_module)
+    CONFIG = config_module.CONFIG
     
-    try:
-        config_module = importlib.import_module(args.config_module)
-        CONFIG = config_module.CONFIG
-        print("Configuration loaded successfully.")
-        run_experiment(CONFIG)
-    except ImportError:
-        print(f"Error: Could not import configuration module '{args.config_module}'. Please ensure the file exists.")
-    except AttributeError:
-        print(f"Error: The configuration file '{args.config_module}.py' does not contain a 'CONFIG' dictionary.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        import traceback
-        traceback.print_exc()
+    train_ds, train_eval_ds, test_ds = load_cifar10_with_train_eval(CONFIG["data_root"])
+    orig_model = load_or_train_original(train_ds, CONFIG['batch_size'], CONFIG['device'], CONFIG)
+    
+    global_mu = None
+    if CONFIG.get("forget_partitioning_method") == 'es' or CONFIG.get("retain_partitioning_method") == 'es':
+        all_embs = _embed_all(orig_model, train_eval_ds, CONFIG['device'], CONFIG['batch_size'])
+        global_mu = all_embs.mean(0)
+    
+    total_forget_indices = define_forget_set(train_ds, CONFIG)
+    CONFIG['precomputed_forget_partitions'] = partition_forget_set(total_forget_indices, train_eval_ds, orig_model, CONFIG, global_mu=global_mu)
+    if CONFIG.get("use_retain_ordering", False):
+        initial_retain_idx, _ = split_retain_forget(len(train_ds), total_forget_indices)
+        CONFIG['precomputed_retain_partitions'] = partition_retain_set(initial_retain_idx, train_eval_ds, orig_model, CONFIG, global_mu=global_mu)
+
+    run_experiment(CONFIG, train_ds, train_eval_ds, test_ds, orig_model)

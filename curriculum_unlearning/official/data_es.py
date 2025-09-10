@@ -1,5 +1,3 @@
-# data_es.py (전체 데이터셋 중심점 사용 버전)
-
 import time, numpy as np, torch, hashlib
 from torchvision import datasets, transforms
 from torch.utils.data import Subset, DataLoader, Dataset
@@ -108,44 +106,33 @@ def define_forget_set(train_dataset: Dataset, cfg: dict):
     else:
         raise ValueError(f"Unknown forget_set_definition: {definition}")
 
-# ----- global_mu 파라미터 추가 및 ES 계산 방식 변경 -----
-def _partition_indices(indices: np.ndarray, dataset: Dataset, model, cfg: dict, score_source: str, global_mu=None):
-    method_key = f"{score_source}_partitioning_method"
-    method = cfg.get(method_key, "memorization")
-    device = cfg["device"]
-    batch_size = cfg["batch_size"]
-
-    print(f"Partitioning {len(indices)} {score_source} samples using '{method}' method...")
-
+def _get_sorted_indices(indices: np.ndarray, dataset: Dataset, model, cfg: dict, method: str, global_mu=None):
+    """주어진 인덱스에 대해 특정 방법(method)으로 점수를 매기고 정렬된 인덱스를 반환"""
+    device = cfg["device"]; batch_size = cfg["batch_size"]
+    print(f"  - Scoring {len(indices)} samples using '{method}'...")
     if method == 'random':
         np.random.shuffle(indices)
-        sorted_indices = indices
+        return indices
+    subset = Subset(dataset, indices)
+    if method == 'es':
+        if global_mu is None: raise ValueError("global_mu is required for 'es' method.")
+        embs = _embed_all(model, subset, device, batch_size)
+        scores = ((embs - global_mu.to(embs.device))**2).sum(1).numpy()
+    elif method == 'memorization':
+        npz_path = cfg.get("memorization_score_path", "estimates_results.npz")
+        scores_all = _load_memorization_scores(npz_path)
+        if len(scores_all) < np.max(indices) + 1: raise ValueError("Score vector length doesn't match.")
+        scores = scores_all[indices]
+    elif method == 'c_proxy':
+        scores = _c_proxy_scores_ce(model, subset, device, batch_size)
     else:
-        subset = Subset(dataset, indices)
-        if method == 'es':
-            if global_mu is None:
-                raise ValueError("global_mu must be provided for 'es' partitioning method.")
-            embs = _embed_all(model, subset, device, batch_size)
-            # [수정] 각 셋의 중심(embs.mean(0)) 대신, 전달받은 전체 데이터셋의 중심(global_mu) 사용
-            scores = ((embs - global_mu.to(embs.device))**2).sum(1).numpy()
-            sorted_sub_indices = np.argsort(scores)
-            sorted_indices = indices[sorted_sub_indices]
-        elif method == 'memorization':
-            npz_path = cfg.get("memorization_score_path", "estimates_results.npz")
-            scores_all = _load_memorization_scores(npz_path)
-            if scores_all.shape[0] < np.max(indices) + 1:
-                raise ValueError(f"Score vector length({scores_all.shape[0]}) < max index({np.max(indices)})")
-            scores_subset = scores_all[indices]
-            sorted_sub_indices = np.argsort(scores_subset)
-            sorted_indices = indices[sorted_sub_indices]
-        elif method == 'c_proxy':
-            c_scores = _c_proxy_scores_ce(model, subset, device, batch_size)
-            sorted_sub_indices = np.argsort(c_scores)
-            sorted_indices = indices[sorted_sub_indices]
-        else:
-            raise ValueError(f"Unknown partitioning method: {method}")
+        raise ValueError(f"Unknown partitioning method: {method}")
+    return indices[np.argsort(scores)]
 
-    granularity = cfg.get("unlearning_granularity", "stage")
+def _partition_indices(sorted_indices: np.ndarray, ordering: str, granularity: str):
+    """미리 정렬된 인덱스를 받아 파티션으로 분할"""
+    if ordering == "hard_first":
+        sorted_indices = sorted_indices[::-1]
     if granularity == 'sample':
         partitions = [sorted_indices] if len(sorted_indices) > 0 else []
     else:
@@ -154,18 +141,5 @@ def _partition_indices(indices: np.ndarray, dataset: Dataset, model, cfg: dict, 
             partitions = [sorted_indices] if len(sorted_indices) > 0 else []
         else:
             partitions = [sorted_indices[:third], sorted_indices[third: 2*third], sorted_indices[2*third:]]
-
-    ordering_key = f"{score_source}_partition_ordering"
-    ordering = cfg.get(ordering_key, "easy_first")
-    if ordering == "hard_first":
-        partitions.reverse()
-
-    print(f"Partition sizes for {score_source}: {[len(p) for p in partitions]}")
+    print(f"    Partition sizes: {[len(p) for p in partitions]}")
     return partitions
-
-def partition_forget_set(forget_indices: np.ndarray, train_eval_dataset: Dataset, model, cfg: dict, global_mu=None):
-    return _partition_indices(forget_indices, train_eval_dataset, model, cfg, 'forget', global_mu=global_mu)
-
-def partition_retain_set(retain_indices: np.ndarray, train_eval_dataset: Dataset, model, cfg: dict, global_mu=None):
-    return _partition_indices(retain_indices, train_eval_dataset, model, cfg, 'retain', global_mu=global_mu)
-# -----------------------------------------------
