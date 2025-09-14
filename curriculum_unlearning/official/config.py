@@ -10,9 +10,9 @@ CONFIG = {
     "device": "cuda" if torch.cuda.is_available() else "cpu",
     "dataset": "cifar10",
     "arch": "resnet18",
-    "batch_size": 256,
+    "batch_size": 128,
     "num_classes": 10,
-    "epochs": 30, # 최종 실험 시에는 30으로 변경
+    "epochs": 250, # 최종 실험 시에는 30으로 변경
     "lr": 0.1,
     "momentum": 0.9,
     "weight_decay": 5e-4,

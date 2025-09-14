@@ -118,9 +118,9 @@ def save_group(root: Path, keyword: str, out_file: str):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default="saved_models", help="CSV 루트 디렉토리")
-    ap.add_argument("--out_stage",  default="merged_stage.txt")
-    ap.add_argument("--out_batch",  default="merged_batch.txt")
-    ap.add_argument("--out_sample", default="merged_sample.txt")
+    ap.add_argument("--out_stage",  default="saved_models/summary/merged_stage.txt")
+    ap.add_argument("--out_batch",  default="saved_models/summary/merged_batch.txt")
+    ap.add_argument("--out_sample", default="saved_models/summary/merged_sample.txt")
     args = ap.parse_args()
 
     root = Path(args.root)
