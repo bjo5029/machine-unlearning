@@ -5,7 +5,7 @@ import importlib
 import argparse
 import copy
 
-from run_experiment import run_experiment, load_or_train_original
+from run_experiment import run_experiment, load_or_train_original, original_cache_path
 from data_es import (
     _embed_all, load_cifar10_with_train_eval, define_forget_set,
     split_retain_forget, _get_sorted_indices, _partition_indices
@@ -40,11 +40,11 @@ def main(args):
     print("\n[INFO] Pre-scoring and sorting all data combinations... (Once per method for this GPU)")
     sorted_indices_cache = {}
     definitions_to_score = ['class', 'random']
-    methods_to_score = ["memorization", "es", "c_proxy", "random"]
+    all_possible_methods = ["memorization", "es", "c_proxy", "random"]
     for definition in definitions_to_score:
         total_forget_indices = forget_indices_cache[definition]
         initial_retain_idx, _ = split_retain_forget(len(train_ds), total_forget_indices)
-        for method in methods_to_score:
+        for method in all_possible_methods:
             if method not in methods_to_run: continue # 이 GPU가 담당하는 메소드만 점수 계산
             sorted_indices_cache[(definition, method, 'forget')] = _get_sorted_indices(total_forget_indices, train_eval_ds, orig_model, run_config_base, method, global_mu)
             sorted_indices_cache[(definition, method, 'retain')] = _get_sorted_indices(initial_retain_idx, train_eval_ds, orig_model, run_config_base, method, global_mu)
@@ -61,10 +61,8 @@ def main(args):
         for method in methods_to_run:
             base_exp = {'forget_set_definition': definition, 'forget_partitioning_method': method}
             if method == 'random':
-                # 랜덤 페어링 베이스라인 (stage에서만)
                 all_experiments.append({'retain_partitioning_method': 'random', 'unlearning_granularity': 'stage', 'use_retain_ordering': True, **base_exp})
-            else: # 점수 기반 메소드
-                # 페어링 실험 (모든 단위)
+            elif method in score_methods:
                 for granularity in granularities:
                     for f_order, r_order in pairing_orders:
                         exp = {'retain_partitioning_method': method, 'unlearning_granularity': granularity, 'use_retain_ordering': True, 'forget_partition_ordering': f_order, 'retain_partition_ordering': r_order, **base_exp}
@@ -78,6 +76,7 @@ def main(args):
     # --- 실험 실행 루프 ---
     for i, exp_params in enumerate(all_experiments, 1):
         run_config = copy.deepcopy(run_config_base); run_config.update(exp_params)
+        run_config['rewind_pth'] = original_cache_path(run_config['model_save_dir'], run_config)
         
         f_def = run_config['forget_set_definition']
         f_met = run_config['forget_partitioning_method']
@@ -87,21 +86,17 @@ def main(args):
         sorted_f_indices = sorted_indices_cache[(f_def, f_met, 'forget')]
         run_config['precomputed_forget_partitions'] = _partition_indices(sorted_f_indices, f_ord, f_gran)
         
-        if run_config.get('use_retain_ordering'):
-            r_met = run_config['retain_partitioning_method']
-            r_ord = run_config.get('retain_partition_ordering', 'N/A')
-            sorted_r_indices = sorted_indices_cache[(f_def, r_met, 'retain')]
-            run_config['precomputed_retain_partitions'] = _partition_indices(sorted_r_indices, r_ord, f_gran)
+        r_met = run_config['retain_partitioning_method']
+        r_ord = run_config.get('retain_partition_ordering', 'N/A')
+        sorted_r_indices = sorted_indices_cache[(f_def, r_met, 'retain')]
+        run_config['precomputed_retain_partitions'] = _partition_indices(sorted_r_indices, r_ord, f_gran)
             
         fname_parts = [exp_params['forget_set_definition'], exp_params['forget_partitioning_method'], exp_params['unlearning_granularity']]
         if exp_params['forget_partitioning_method'] != 'random':
             fname_parts.append(exp_params.get('forget_partition_ordering','N/A'))
-
-        if exp_params.get('use_retain_ordering'):
-            fname_parts.append("paired")
-            if exp_params['forget_partitioning_method'] != 'random':
-                 fname_parts.append(exp_params.get('retain_partition_ordering', 'N/A'))
-
+        fname_parts.append("paired")
+        if exp_params['forget_partitioning_method'] != 'random':
+             fname_parts.append(exp_params.get('retain_partition_ordering', 'N/A'))
         results_filename = f"results_{'_'.join(fname_parts)}.csv"; run_config["results_csv_filename"] = results_filename
         
         print(f"\n--- [{i}/{total_conditions}] Running Experiment ---")
@@ -110,12 +105,13 @@ def main(args):
         
         try:
             run_experiment(run_config, train_ds, train_eval_ds, test_ds, orig_model)
-            print(f"\n--- [{i}/{total_conditions}] Experiment FINISHED ---")
         except Exception as e:
             print(f"\n--- [{i}/{total_conditions}] Experiment FAILED ---")
             import traceback; traceback.print_exc()
-        print("="*60)
-            
+        finally:
+             print(f"\n--- [{i}/{total_conditions}] Experiment FINISHED ---")
+             print("="*60)
+
     end_time = time.time()
     print(f"All experiments in this process completed in {end_time - start_time:.2f} seconds.")
 

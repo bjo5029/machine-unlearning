@@ -16,7 +16,7 @@ def get_transforms():
         transforms.Normalize((0.4914,0.4822,0.4465),(0.2023,0.1994,0.2010)),
     ])
     return tf_train, tf_eval
-
+ 
 def load_cifar10_with_train_eval(data_root):
     tf_train, tf_eval = get_transforms()
     train = datasets.CIFAR10(root=data_root, train=True, download=True, transform=tf_train)

@@ -74,7 +74,11 @@ class SequentialCurriculumLoader:
             self.partition_loaders.append(DataLoader(ds, batch_size=batch_size, shuffle=True))
         
         if self.partition_datasets:
-            self.dataset = self.partition_datasets[0].dataset
+            all_indices = np.concatenate([ds.indices for ds in self.partition_datasets])
+            original_full_dataset = self.partition_datasets[0].dataset
+            self.dataset = Subset(original_full_dataset, all_indices)
+        else:
+            self.dataset = None # 파티션이 비어있을 경우를 대비
 
         self.total_batches = sum(len(loader) for loader in self.partition_loaders)
 
