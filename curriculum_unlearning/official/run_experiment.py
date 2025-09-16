@@ -109,83 +109,113 @@ def run_experiment(cfg, train_ds, train_eval_ds, test_ds, orig_model):
     }
     all_results = []
 
+    # 1. 벤치마크가 될 재학습 모델을 미리 로드하고, 목표 정확도를 계산합니다.
+    #    (batch/sample 단위는 루프 밖에서 한 번만 수행)
+    final_retain_idx, final_forget_idx = split_retain_forget(len(train_ds), total_forget_indices)
+    r_train_eval_final, _, r_eval_final, f_eval_final = build_loaders(train_ds, train_eval_ds, final_retain_idx, final_forget_idx, bs, shuffle_train=False)
+    
+    retr_model, _ = load_or_train_retrain(r_train_eval_final, np.sort(final_retain_idx), device, cfg)
+    if not retr_model:
+        print("Retrain model could not be loaded or trained. Skipping all methods.")
+        return
+
+    # 목표 정확도 (Retrain Accuracies)
+    rF = evaluate_model(retr_model, f_eval_final, device)
+    rR = evaluate_model(retr_model, r_eval_final, device)
+    rT = evaluate_model(retr_model, test_loader, device)
+    print(f"\n[Benchmark] Retrain Accuracies -> Forget: {rF:.2f}%, Retain: {rR:.2f}%, Test: {rT:.2f}%")
+
     for method_name, unlearn_fn in unlearning_methods.items():
         print(f"\n===== Running Method: {method_name} =====")
-                
-        # 1. 이 실험 조합과 언러닝 방법을 위한 고유한 모델 파일 경로를 생성합니다.
-        unlearned_model_fname = f"unlearned_{method_name}_{os.path.basename(cfg['results_csv_filename']).replace('.csv', '.pth')}"
-        unlearned_model_path = os.path.join(cfg["model_save_dir"], unlearned_model_fname)
+        
+        granularity = cfg.get("unlearning_granularity", "stage")
+        if granularity not in ['batch', 'sample']:
+            print(f"Skipping method {method_name} for unsupported granularity '{granularity}' in this mode.")
+            continue
 
+        # --- 2. 최적 에폭 탐색을 위한 변수 초기화 ---
+        best_model_state = None
+        best_epoch = -1
+        min_metric = float('inf')
+        
+        method_config_base = cfg.copy()
+        if method_name in cfg.get("method_params", {}):
+            method_config_base.update(cfg["method_params"][method_name])
+        
+        method_config_base['unlearn'] = method_name
+        
+        max_epochs = method_config_base.get("unlearn_epochs", 1)
         model_u = copy.deepcopy(orig_model)
 
-        # 2. 이미 저장된 언러닝 모델이 있는지 확인하고, 있다면 불러옵니다.
-        if os.path.exists(unlearned_model_path) and not cfg.get('retrain_all', False):
-            print(f"[LOAD] Cached unlearned model from {unlearned_model_path}")
-            model_u.load_state_dict(torch.load(unlearned_model_path, map_location=device))
-        
-        # 3. 저장된 모델이 없다면, 언러닝을 직접 실행하고 그 결과를 파일로 저장합니다.
-        else:
-            print(f"[UNLEARN] Running unlearning process for {method_name}")
-            
-            method_config = cfg.copy()
-            if method_name in cfg.get("method_params", {}):
-                method_config.update(cfg["method_params"][method_name])
-            method_config['unlearn'] = method_name
+        # --- 3. 매 에폭마다 언러닝 & 평가를 반복하는 루프 ---
+        print(f"[Find Best Epoch] Running up to {max_epochs} epochs to find the best model state...")
+        for epoch in range(max_epochs):
+            # 한 에폭만 학습하도록 설정 변경
+            single_epoch_config = method_config_base.copy()
+            single_epoch_config['unlearn_epochs'] = 1
 
-            granularity = cfg.get("unlearning_granularity", "stage")
-            
-            # --- 기존 언러닝 실행 로직 ---
-            if granularity == 'stage':
-                # (주: 현재 stage 방식은 사용하지 않으므로 이 부분은 참고용입니다.)
-                # (만약 stage 방식을 다시 사용하려면, 이 캐싱 로직은 stage의 루프 구조에 맞게 재설계가 필요할 수 있습니다.)
-                cumulative_forget_indices = np.array([], dtype=np.int64)
-                final_retain_idx, _ = split_retain_forget(len(train_ds), total_forget_indices)
-                
-                for stage_idx, S_forget_stage in enumerate(forget_partitions):
-                    # ... (기존 stage 로직, model_u가 루프마다 업데이트 됨) ...
-                    pass
-
-            elif granularity in ['batch', 'sample']:
-                if cfg.get("use_retain_ordering", False):
-                    print("[INFO] Applying sequential curriculum to Retain Set.")
-                    if granularity == 'batch':
-                        retain_subset_datasets = [Subset(train_ds, p) for p in retain_partitions]
-                        retain_loader = SequentialCurriculumLoader(retain_subset_datasets, bs)
-                    else: 
-                        sorted_retain_indices = retain_partitions[0]
-                        retain_loader = DataLoader(Subset(train_ds, sorted_retain_indices), batch_size=bs, shuffle=False)
-                else:
-                    print("[INFO] Using randomly shuffled Retain Set.")
-                    full_retain_idx, _ = split_retain_forget(len(train_ds), total_forget_indices)
-                    retain_loader = DataLoader(Subset(train_ds, full_retain_idx), batch_size=bs, shuffle=True)
-
+            # 데이터 로더 준비 (매 에폭 동일한 로더 사용)
+            if cfg.get("use_retain_ordering", False):
                 if granularity == 'batch':
-                    forget_subset_datasets = [Subset(train_ds, p) for p in forget_partitions]
-                    forget_loader = SequentialCurriculumLoader(forget_subset_datasets, bs)
+                    retain_subset_datasets = [Subset(train_ds, p) for p in retain_partitions]
+                    retain_loader = SequentialCurriculumLoader(retain_subset_datasets, bs)
                 else: 
-                    sorted_forget_indices = forget_partitions[0]
-                    forget_loader = DataLoader(Subset(train_ds, sorted_forget_indices), batch_size=bs, shuffle=False)
+                    sorted_retain_indices = retain_partitions[0]
+                    retain_loader = DataLoader(Subset(train_ds, sorted_retain_indices), batch_size=bs, shuffle=False)
+            else:
+                full_retain_idx, _ = split_retain_forget(len(train_ds), total_forget_indices)
+                retain_loader = DataLoader(Subset(train_ds, full_retain_idx), batch_size=bs, shuffle=True)
 
-                loaders = {"retain": retain_loader, "forget": forget_loader, "test": test_loader}
-                model_u = unlearn_fn(model_u, loaders, method_config)
+            if granularity == 'batch':
+                forget_subset_datasets = [Subset(train_ds, p) for p in forget_partitions]
+                forget_loader = SequentialCurriculumLoader(forget_subset_datasets, bs)
+            else: 
+                sorted_forget_indices = forget_partitions[0]
+                forget_loader = DataLoader(Subset(train_ds, sorted_forget_indices), batch_size=bs, shuffle=False)
             
-            # 4. 언러닝이 끝난 최종 모델 상태를 파일로 저장합니다.
-            print(f"[SAVE] Caching unlearned model to {unlearned_model_path}")
-            torch.save(model_u.state_dict(), unlearned_model_path)
+            loaders = {"retain": retain_loader, "forget": forget_loader, "test": test_loader}
+            
+            # 딱 1 에폭만 언러닝 수행
+            model_u = unlearn_fn(model_u, loaders, single_epoch_config)
 
-        # --- 이후 성능 평가 로직은 동일하게 진행 ---
-        # (주의: stage 방식의 경우, 평가 로직이 stage 루프 내부에 있어 위 캐싱 로직과 호환되지 않을 수 있습니다.)
-        if cfg.get("unlearning_granularity", "stage") in ['batch', 'sample']:
-            final_retain_idx, final_forget_idx = split_retain_forget(len(train_ds), total_forget_indices)
-            r_train_eval, _, r_eval, f_eval = build_loaders(train_ds, train_eval_ds, final_retain_idx, final_forget_idx, bs, shuffle_train=False)
-            retr_model, _ = load_or_train_retrain(r_train_eval, np.sort(final_retain_idx), device, cfg)
+            # 성능 평가
+            uF = evaluate_model(model_u, f_eval_final, device)
+            uR = evaluate_model(model_u, r_eval_final, device)
+            uT = evaluate_model(model_u, test_loader, device)
+
+            # 제안하신 평가지표 계산 (Retrain과의 총 정확도 차이)
+            current_metric = abs(uF - rF) + abs(uR - rR) + abs(uT - rT)
             
-            if retr_model:
-                rF = evaluate_model(retr_model, f_eval, device); rR = evaluate_model(retr_model, r_eval, device); rT = evaluate_model(retr_model, test_loader, device)
-                uF = evaluate_model(model_u, f_eval, device); uR = evaluate_model(model_u, r_eval, device); uT = evaluate_model(model_u, test_loader, device)
-                dF, dR, dT = _delta_metrics(rF, rR, rT, uF, uR, uT); mia = calculate_mia_score(model_u, r_train_eval, r_eval, f_eval, test_loader, device); pdiff = calculate_prediction_diff(model_u, retr_model, full_train_eval_loader, device)
-                print(f"  (Final Eval) {method_name:>10} | Ftot={len(final_forget_idx):>4d} | ΔF:{dF:+5.2f} ΔR:{dR:5.2f} ΔT:{dT:5.2f} | MIA:{mia:.4f} PredDiff:{pdiff:.2f}%")
-                all_results.append({"method": method_name, "stage": "final", "forget_total": len(final_forget_idx), "Retain_F": rF, "Retrain_R": rR, "Retrain_T": rT, "Unlearn_F": uF, "Unlearn_R": uR, "Unlearn_T": uT, "ΔF": dF, "ΔR": dR, "ΔT": dT, "MIA": mia, "PredDiff(%)": pdiff})
+            print(f"  Epoch [{epoch+1}/{max_epochs}] | Accs (F/R/T): {uF:.2f}/{uR:.2f}/{uT:.2f} | Metric (lower is better): {current_metric:.4f}")
+
+            # 최고 성능 모델 갱신
+            if current_metric < min_metric:
+                min_metric = current_metric
+                best_epoch = epoch + 1
+                best_model_state = copy.deepcopy(model_u.state_dict())
+        
+        # 4. 가장 성능이 좋았던 모델의 상태로 복원
+        if best_model_state:
+            print(f"  > Best model found at epoch {best_epoch} with metric {min_metric:.4f}. Loading this model for final evaluation.")
+            model_u.load_state_dict(best_model_state)
+        else:
+            print("  > No best model found, using model from last epoch.")
+
+        # 5. 최종 선택된 모델로 나머지 상세 지표 계산
+        uF = evaluate_model(model_u, f_eval_final, device)
+        uR = evaluate_model(model_u, r_eval_final, device)
+        uT = evaluate_model(model_u, test_loader, device)
+        dF, dR, dT = _delta_metrics(rF, rR, rT, uF, uR, uT)
+        mia = calculate_mia_score(model_u, r_train_eval_final, r_eval_final, f_eval_final, test_loader, device)
+        pdiff = calculate_prediction_diff(model_u, retr_model, full_train_eval_loader, device)
+        
+        print(f"  (Final Eval) {method_name:>10} | Best Epoch: {best_epoch} | ΔF:{dF:+5.2f} ΔR:{dR:5.2f} ΔT:{dT:5.2f} | MIA:{mia:.4f} PredDiff:{pdiff:.2f}%")
+        all_results.append({
+            "method": method_name, "stage": f"final(best_ep{best_epoch})", "forget_total": len(final_forget_idx), 
+            "Retain_F": rF, "Retrain_R": rR, "Retrain_T": rT, 
+            "Unlearn_F": uF, "Unlearn_R": uR, "Unlearn_T": uT, 
+            "ΔF": dF, "ΔR": dR, "ΔT": dT, "MIA": mia, "PredDiff(%)": pdiff
+        })
 
     df = pd.DataFrame(all_results)
     if not df.empty:
