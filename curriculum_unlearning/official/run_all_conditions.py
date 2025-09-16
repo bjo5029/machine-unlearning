@@ -4,12 +4,39 @@ import time
 import importlib
 import argparse
 import copy
+import numpy as np
 
 from run_experiment import run_experiment, load_or_train_original, original_cache_path
 from data_es import (
     _embed_all, load_cifar10_with_train_eval, define_forget_set,
     split_retain_forget, _get_sorted_indices, _partition_indices
 )
+
+def upsample_indices(target_indices, reference_len):
+    """
+    target_indices 배열의 길이를 reference_len에 맞게 늘립니다.
+    (예: [1,2,3]을 길이 7에 맞추면 -> [1,1,1,2,2,3,3])
+    """
+    n_target = len(target_indices)
+    
+    # 늘릴 필요가 없는 경우 원본을 그대로 반환
+    if n_target == 0 or n_target >= reference_len:
+        return target_indices
+    
+    # 각 인덱스를 몇 번 반복할지 계산
+    base_repeats = reference_len // n_target
+    remainder = reference_len % n_target
+    
+    # 모든 인덱스에 기본 반복 횟수를 할당
+    repeats = np.full(n_target, base_repeats, dtype=int)
+    
+    # 나머지(remainder)를 앞쪽 인덱스에 1씩 분배
+    repeats[:remainder] += 1
+    
+    # np.repeat을 사용하여 최종적으로 늘려진 인덱스 배열 생성
+    upsampled = np.repeat(target_indices, repeats)
+    
+    return upsampled
 
 def main(args):
     print(f"Loading configuration from: {args.config_module}.py")
@@ -53,15 +80,32 @@ def main(args):
     # --- 실험 조합 생성 ---
     all_experiments = []
     definitions = ['class', 'random']
-    granularities = ['stage', 'batch', 'sample']
-    score_methods = ['memorization', 'es', 'c_proxy']
+    granularities = [
+        # 'stage', 
+        'batch', 
+        'sample'
+        ]
+    score_methods = [
+        'memorization',
+        # 'es', 
+        # 'c_proxy'
+        ]
     pairing_orders = [('easy_first', 'easy_first'), ('easy_first', 'hard_first'), ('hard_first', 'easy_first'), ('hard_first', 'hard_first')]
     
     for definition in definitions:
         for method in methods_to_run:
             base_exp = {'forget_set_definition': definition, 'forget_partitioning_method': method}
+
             if method == 'random':
-                all_experiments.append({'retain_partitioning_method': 'random', 'unlearning_granularity': 'stage', 'use_retain_ordering': True, **base_exp})
+                # [수정] 랜덤 방식은 'sample' 단위 실험만 생성하도록 고정
+                exp = {
+                    'retain_partitioning_method': 'random',
+                    'unlearning_granularity': 'sample', # 'sample'로 고정
+                    'use_retain_ordering': True,
+                    **base_exp
+                }
+                all_experiments.append(exp)
+
             elif method in score_methods:
                 for granularity in granularities:
                     for f_order, r_order in pairing_orders:
@@ -82,13 +126,19 @@ def main(args):
         f_met = run_config['forget_partitioning_method']
         f_ord = run_config.get('forget_partition_ordering', 'N/A')
         f_gran = run_config['unlearning_granularity']
-        
-        sorted_f_indices = sorted_indices_cache[(f_def, f_met, 'forget')]
+                
+        # 1. 원본 Retain 및 Forget 인덱스를 모두 가져옵니다.
+        sorted_r_indices = sorted_indices_cache[(f_def, run_config['retain_partitioning_method'], 'retain')]
+        original_sorted_f_indices = sorted_indices_cache[(f_def, f_met, 'forget')]
+
+        # 2. 페어링 실험인 경우에만 Forget 인덱스를 upsampling 합니다.
+        print(f"  [INFO] Upsampling forget indices from {len(original_sorted_f_indices)} to {len(sorted_r_indices)} to match retain set length for pairing.")
+        sorted_f_indices = upsample_indices(original_sorted_f_indices, len(sorted_r_indices))
+            
+        # 3. (필요시 upsampling된) 인덱스들로 파티션을 생성합니다.
         run_config['precomputed_forget_partitions'] = _partition_indices(sorted_f_indices, f_ord, f_gran)
         
-        r_met = run_config['retain_partitioning_method']
         r_ord = run_config.get('retain_partition_ordering', 'N/A')
-        sorted_r_indices = sorted_indices_cache[(f_def, r_met, 'retain')]
         run_config['precomputed_retain_partitions'] = _partition_indices(sorted_r_indices, r_ord, f_gran)
             
         fname_parts = [exp_params['forget_set_definition'], exp_params['forget_partitioning_method'], exp_params['unlearning_granularity']]
@@ -100,6 +150,11 @@ def main(args):
         results_filename = f"results_{'_'.join(fname_parts)}.csv"; run_config["results_csv_filename"] = results_filename
         
         print(f"\n--- [{i}/{total_conditions}] Running Experiment ---")
+
+        f_order_title = exp_params.get('forget_partition_ordering', 'random')
+        r_order_title = exp_params.get('retain_partition_ordering', 'random')
+        print(f"  > Pairing Order | F: {f_order_title}, R: {r_order_title}")
+
         for key, val in exp_params.items():
             print(f"  - {key}: {val}")
         

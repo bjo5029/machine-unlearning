@@ -1,3 +1,5 @@
+# train_original_model.py (수정본)
+
 import os
 import argparse
 import importlib
@@ -104,6 +106,11 @@ def main():
     )
     criterion = torch.nn.CrossEntropyLoss()
 
+    # --- [추가] ---
+    # Cosine Annealing 스케줄러를 추가합니다.
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=CONFIG["epochs"])
+    # ---
+
     # W&B init
     wandb_run_cfg = {
         "arch": CONFIG["arch"],
@@ -121,8 +128,8 @@ def main():
         project=args.project,
         entity=args.entity,
         name=args.run_name,
-        mode=args.mode,          # "online" | "offline" | "disabled"
-        resume=args.resume,      # "allow" | "never" | "must"
+        mode=args.mode,
+        resume=args.resume,
         config=wandb_run_cfg,
     )
     wandb.watch(model, log="all", log_graph=False)
@@ -149,8 +156,15 @@ def main():
             test_metrics = evaluate(model, test_loader, device, "test")
             elapsed = time.time() - t0
 
-            # LR (handles schedulers if later added)
-            current_lr = optimizer.param_groups[0]["lr"]
+            # --- [추가] ---
+            # 매 에폭이 끝날 때마다 스케줄러를 업데이트합니다.
+            scheduler.step()
+            # ---
+
+            # --- [수정] ---
+            # 스케줄러가 적용된 현재 학습률을 기록합니다.
+            current_lr = scheduler.get_last_lr()[0]
+            # ---
 
             wandb.log({
                 "epoch": epoch,
@@ -178,3 +192,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
