@@ -103,7 +103,8 @@ def run_experiment(cfg, train_ds, train_eval_ds, test_ds, orig_model):
     total_forget_indices = np.concatenate(forget_partitions) if forget_partitions and len(forget_partitions[0]) > 0 else np.array([])
 
     unlearning_methods = {
-        "FT": unlearn_ft, "FT_l1": unlearn_ft_l1, "GA": unlearn_ga,
+        "FT": unlearn_ft, "FT_l1": unlearn_ft_l1, 
+        "GA": unlearn_ga,
         "NG": unlearn_neggrad_plus, "RL": unlearn_rl, "Wfisher": unlearn_wfisher,
         "SCRUB": unlearn_scrub,
     }

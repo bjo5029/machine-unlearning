@@ -5,6 +5,7 @@ import importlib
 import argparse
 import copy
 import numpy as np
+from seeds import set_seed
 
 from run_experiment import run_experiment, load_or_train_original, original_cache_path
 from data_es import (
@@ -43,6 +44,8 @@ def main(args):
     config_module = importlib.import_module(args.config_module)
     run_config_base = config_module.CONFIG
     
+    set_seed(run_config_base['seed'])
+    
     # --- 사전 계산 단계 ---
     device = run_config_base['device']; bs = run_config_base['batch_size']
     train_ds, train_eval_ds, test_ds = load_cifar10_with_train_eval(run_config_base["data_root"])
@@ -79,18 +82,26 @@ def main(args):
     
     # --- 실험 조합 생성 ---
     all_experiments = []
-    definitions = ['class', 'random']
+    definitions = [
+        'class', 
+        'random'
+        ]
     granularities = [
-        # 'stage', 
+        'stage', 
         'batch', 
         'sample'
         ]
     score_methods = [
         'memorization',
-        # 'es', 
-        # 'c_proxy'
+        'es', 
+        'c_proxy'
         ]
-    pairing_orders = [('easy_first', 'easy_first'), ('easy_first', 'hard_first'), ('hard_first', 'easy_first'), ('hard_first', 'hard_first')]
+    pairing_orders = [
+        ('easy_first', 'easy_first'), 
+        ('easy_first', 'hard_first'), 
+        ('hard_first', 'easy_first'), 
+        ('hard_first', 'hard_first')
+    ]
     
     for definition in definitions:
         for method in methods_to_run:

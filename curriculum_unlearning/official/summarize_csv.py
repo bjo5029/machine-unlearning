@@ -1,14 +1,4 @@
-# merge_results_split_fixed.py
-# saved_models 아래 results_*.csv를 읽어
-# - stage, batch, sample 각각 별도 텍스트(merged_stage.txt, merged_batch.txt, merged_sample.txt)로 저장
-# - stage 파일만 stage==3 필터 적용
-# - method에 'wfisher' 포함(대소문자 무관) 제거
-# - 표 형태 간격 정렬 (method, forget, retain, test, mia)
-# - 섹션 첫 줄 'retrain' 행 값은 다음 컬럼에서 채움:
-#     forget <- Retain_F
-#     retain <- Retrain_R
-#     test   <- Retrain_T
-#   (요청 사항에 따라 기존 fine-tune/Unlearn_*가 아닌 위 3개 컬럼을 사용)
+# summarize_csv.py (최종 수정본)
 
 from pathlib import Path
 import pandas as pd
@@ -28,13 +18,13 @@ def pick_col(df: pd.DataFrame, candidates: list[str]) -> Optional[str]:
             return lower_map[name.lower()]
     return None
 
-def fmt(x):
+def fmt(x, precision=4):
     try:
-        return f"{float(x):.4f}"
-    except Exception:
+        return f"{float(x):.{precision}f}"
+    except (ValueError, TypeError):
         return "NA"
 
-def process_file(path: Path, is_stage: bool) -> list[str]:
+def process_file(path: Path) -> list[str]:
     try:
         df = pd.read_csv(path)
     except Exception as e:
@@ -42,76 +32,122 @@ def process_file(path: Path, is_stage: bool) -> list[str]:
 
     df = normalize_columns(df)
 
-    # 필요한 컬럼 매핑
     col_method = pick_col(df, ["method"])
     col_stage  = pick_col(df, ["stage"])
-    # retrain 행에 사용할 3개 컬럼
-    col_retF   = pick_col(df, ["Retain_F","retain_f","Retain F"])
-    col_retR   = pick_col(df, ["Retrain_R","retrain_r","Retrain R"])
-    col_retT   = pick_col(df, ["Retrain_T","retrain_t","Retrain T"])
-    # 일반 표시에 사용할 unlearn F/R/T (없어도 동작)
-    col_uF     = pick_col(df, ["Unlearn_F","unlearn_f","Unlearn f"])
-    col_uR     = pick_col(df, ["Unlearn_R","unlearn_r","Unlearn r"])
-    col_uT     = pick_col(df, ["Unlearn_T","unlearn_t","Unlearn t"])
-    col_mia    = pick_col(df, ["MIA","mia"])
-
-    # stage 파일만 stage==3 필터
-    if is_stage and col_stage:
-        df[col_stage] = pd.to_numeric(df[col_stage], errors="coerce")
-        df = df[df[col_stage] == 3]
-
-    # wfisher 제거
-    if col_method:
-        df = df[~df[col_method].astype(str).str.contains("wfisher", case=False, na=False)]
+    col_retF   = pick_col(df, ["Retain_F"])
+    col_retR   = pick_col(df, ["Retrain_R"])
+    col_retT   = pick_col(df, ["Retrain_T"])
+    col_uF     = pick_col(df, ["Unlearn_F"])
+    col_uR     = pick_col(df, ["Unlearn_R"])
+    col_uT     = pick_col(df, ["Unlearn_T"])
+    col_dF     = pick_col(df, ["ΔF"])
+    col_dR     = pick_col(df, ["ΔR"])
+    col_dT     = pick_col(df, ["ΔT"])
+    col_mia    = pick_col(df, ["MIA"])
+    col_pdiff  = pick_col(df, ["PredDiff(%)"])
 
     if df.empty:
         return [f"=== {path.stem} ===", "(no rows after filters)", ""]
 
-    # 숫자 변환
-    for c in [col_retF, col_retR, col_retT, col_uF, col_uR, col_uT, col_mia]:
+    num_cols = [col_retF, col_retR, col_retT, col_uF, col_uR, col_uT, col_dF, col_dR, col_dT, col_mia, col_pdiff]
+    for c in num_cols:
         if c:
             df[c] = pd.to_numeric(df[c], errors="coerce")
 
     lines = [f"=== {path.stem} ==="]
-
     rows = []
 
-    # retrain 첫 줄(요청한 3개 컬럼 사용)
-    first = df.iloc[0]
-    rows.append((
-        "retrain",
-        fmt(first[col_retF]) if col_retF else "NA",  # forget  <- Retain_F
-        fmt(first[col_retR]) if col_retR else "NA",  # retain  <- Retrain_R
-        fmt(first[col_retT]) if col_retT else "NA",  # test    <- Retrain_T
-        fmt(first[col_mia])  if col_mia  else "NA"
-    ))
+    rF_val, rR_val, rT_val = None, None, None
+    if not df.empty:
+        first_row = df.iloc[0]
+        # 벤치마크 값 저장
+        if col_retF and pd.notna(first_row[col_retF]): rF_val = first_row[col_retF]
+        if col_retR and pd.notna(first_row[col_retR]): rR_val = first_row[col_retR]
+        if col_retT and pd.notna(first_row[col_retT]): rT_val = first_row[col_retT]
+        
+        rows.append((
+            "Retrain (Benchmark)",
+            fmt(rF_val, 2), fmt(rR_val, 2), fmt(rT_val, 2),
+            "----", "----", "----"
+        ))
 
-    # 나머지 행들: 기본적으로 Unlearn_F/R/T를 표에 사용(없으면 NA)
     for _, row in df.iterrows():
-        m = str(row[col_method]) if col_method else "(method)"
-        f = fmt(row[col_uF]) if col_uF else "NA"
-        r = fmt(row[col_uR]) if col_uR else "NA"
-        t = fmt(row[col_uT]) if col_uT else "NA"
-        mia = fmt(row[col_mia]) if col_mia else "NA"
-        rows.append((m, f, r, t, mia))
+        method_name = str(row[col_method]) if col_method else "NA"
+        stage_str = str(row[col_stage]) if col_stage and pd.notna(row[col_stage]) else ""
+        
+        epoch_info = ""
+        match = re.search(r'\(best_ep(\d+)\)', stage_str)
+        if match:
+            epoch_num = match.group(1)
+            epoch_info = f" (ep{epoch_num})"
+        
+        formatted_method_name = f"{method_name}{epoch_info}"
+        
+        def format_with_delta(val_col, delta_col, is_abs_delta=False):
+            val_str = fmt(row[val_col], 2) if val_col else "NA"
+            if val_col and delta_col and pd.notna(row[val_col]) and pd.notna(row[delta_col]):
+                delta_val = row[delta_col]
+                if is_abs_delta:
+                    val_str = f"{row[val_col]:.2f} (-{delta_val:.2f})"
+                else:
+                    val_str = f"{row[val_col]:.2f} ({delta_val:+.2f})"
+            return val_str
 
-    # 열 너비 계산 및 표 렌더링
-    col_names = ["method","forget","retain","test","mia"]
+        forget_str = format_with_delta(col_uF, col_dF, is_abs_delta=False)
+        retain_str = format_with_delta(col_uR, col_dR, is_abs_delta=True)
+        test_str = format_with_delta(col_uT, col_dT, is_abs_delta=True)
+        
+        # ▼▼▼▼▼ [추가] TotalAccDiff 계산 로직 ▼▼▼▼▼
+        total_acc_diff_str = "NA"
+        if all(c and pd.notna(row[c]) for c in [col_uF, col_uR, col_uT]) and all(v is not None for v in [rF_val, rR_val, rT_val]):
+            uF_val, uR_val, uT_val = row[col_uF], row[col_uR], row[col_uT]
+            total_acc_diff = abs(uF_val - rF_val) + abs(uR_val - rR_val) + abs(uT_val - rT_val)
+            total_acc_diff_str = fmt(total_acc_diff, 2)
+        # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+        rows.append((
+            formatted_method_name,
+            forget_str,
+            retain_str,
+            test_str,
+            total_acc_diff_str, # 새로 추가된 값
+            fmt(row[col_mia], 4) if col_mia else "NA",
+            f"{row[col_pdiff]:.2f}%" if col_pdiff and pd.notna(row[col_pdiff]) else "NA"
+        ))
+
+    # ▼▼▼▼▼ [수정] 컬럼 이름에 TotalAccDiff 추가 ▼▼▼▼▼
+    col_names = ["Method", "ForgetAcc", "RetainAcc", "TestAcc", "TotalAccDiff", "MIA", "PredDiff"]
+    if not rows:
+        return lines + ["(No data to display)",""]
+        
     widths = [max(len(str(r[i])) for r in rows + [tuple(col_names)]) for i in range(len(col_names))]
-    header = " | ".join(col_names[i].ljust(widths[i]) for i in range(len(col_names)))
+    header = " | ".join(col_names[i].center(widths[i]) for i in range(len(col_names)))
     lines.append(header)
     lines.append("-" * len(header))
     for r in rows:
-        lines.append(" | ".join(str(r[i]).ljust(widths[i]) for i in range(len(r))))
+        line_items = []
+        for i, item in enumerate(r):
+            if i == 0:
+                line_items.append(str(item).ljust(widths[i]))
+            else:
+                line_items.append(str(item).rjust(widths[i]))
+        lines.append(" | ".join(line_items))
     lines.append("")
     return lines
 
-def save_group(root: Path, keyword: str, out_file: str):
-    paths = sorted(p for p in root.rglob("results_*.csv") if keyword in p.stem.lower())
-    is_stage = (keyword == "stage")
+def save_group(root: Path, keyword: str, part_index: int, out_file: str):
+    paths = []
+    for p in root.rglob("results_*.csv"):
+        parts = p.stem.lower().split('_')
+        if len(parts) > part_index and parts[part_index] == keyword:
+            paths.append(p)
+    
+    paths = sorted(paths)
     lines_all: list[str] = []
     for p in paths:
-        lines_all.extend(process_file(p, is_stage=is_stage))
+        lines_all.extend(process_file(p))
+    
+    Path(out_file).parent.mkdir(parents=True, exist_ok=True)
     Path(out_file).write_text("\n".join(lines_all), encoding="utf-8")
     print(f"Saved -> {Path(out_file).resolve()}")
 
@@ -121,12 +157,19 @@ def main():
     ap.add_argument("--out_stage",  default="saved_models/summary/merged_stage.txt")
     ap.add_argument("--out_batch",  default="saved_models/summary/merged_batch.txt")
     ap.add_argument("--out_sample", default="saved_models/summary/merged_sample.txt")
+    ap.add_argument("--out_random", default="saved_models/summary/merged_random.txt")
     args = ap.parse_args()
 
     root = Path(args.root)
-    save_group(root, "stage",  args.out_stage)
-    save_group(root, "batch",  args.out_batch)
-    save_group(root, "sample", args.out_sample)
+    if not root.exists():
+        print(f"Error: Root directory not found at '{root.resolve()}'")
+        return
+    
+    save_group(root, "stage",  3, args.out_stage)
+    save_group(root, "batch",  3, args.out_batch)
+    save_group(root, "sample", 3, args.out_sample)
+    save_group(root, "random", 2, args.out_random)
 
 if __name__ == "__main__":
     main()
+    
