@@ -106,7 +106,7 @@ def define_forget_set(train_dataset: Dataset, cfg: dict):
         forget_indices = np.where(targets == class_id)[0]
         return forget_indices
 
-    # ▼▼▼▼▼ [추가] 새로운 'class_random_sample' 방식 로직 ▼▼▼▼▼
+    # 'class_random_sample' 방식 
     elif definition == 'class_random_sample':
         num_classes_to_forget = cfg["num_forget_classes"]
         percent_per_class = cfg["percent_to_forget_per_class"]
@@ -135,7 +135,6 @@ def define_forget_set(train_dataset: Dataset, cfg: dict):
         print(f"  - Total forget samples: {len(final_forget_indices)}")
         
         return np.sort(final_forget_indices)
-    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
     else:
         raise ValueError(f"Unknown forget_set_definition: {definition}")
