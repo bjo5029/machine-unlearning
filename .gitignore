@@ -50,6 +50,7 @@ estimates_results.npz
 # ========================
 output_*.log
 logs/
+wandb/
 
 # ========================
 # Operating System Files

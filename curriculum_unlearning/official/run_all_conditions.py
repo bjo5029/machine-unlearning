@@ -63,13 +63,14 @@ def main(args):
     print("\n[INFO] Pre-defining 'class' and 'random' forget sets... (Once each)")
     forget_indices_cache = {
         'class': define_forget_set(train_ds, {'forget_set_definition': 'class', **run_config_base}),
-        'random': define_forget_set(train_ds, {'forget_set_definition': 'random', **run_config_base})
+        'random': define_forget_set(train_ds, {'forget_set_definition': 'random', **run_config_base}),
+        'class_random_sample': define_forget_set(train_ds, {'forget_set_definition': 'class_random_sample', **run_config_base})
     }
     print("Forget sets pre-defined.")
 
     print("\n[INFO] Pre-scoring and sorting all data combinations... (Once per method for this GPU)")
     sorted_indices_cache = {}
-    definitions_to_score = ['class', 'random']
+    definitions_to_score = ['class', 'random', 'class_random_sample']
     all_possible_methods = ["memorization", "es", "c_proxy", "random"]
     for definition in definitions_to_score:
         total_forget_indices = forget_indices_cache[definition]
@@ -83,18 +84,19 @@ def main(args):
     # --- 실험 조합 생성 ---
     all_experiments = []
     definitions = [
-        'class', 
-        'random'
+        # 'class', 
+        # 'random'
+        'class_random_sample'  
         ]
     granularities = [
-        'stage', 
-        'batch', 
+        # 'stage', 
+        # 'batch', 
         'sample'
         ]
     score_methods = [
         'memorization',
-        'es', 
-        'c_proxy'
+        # 'es', 
+        # 'c_proxy'
         ]
     pairing_orders = [
         ('easy_first', 'easy_first'), 

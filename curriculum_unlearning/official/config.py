@@ -30,10 +30,13 @@ CONFIG = {
     "num_to_forget": 5000,
     "forget_class": 0,
 
+    "num_forget_classes": 5,          # 랜덤으로 선택할 클래스 개수
+    "percent_to_forget_per_class": 0.2, # 각 클래스에서 랜덤으로 추출할 샘플 비율 (10%)
+
     # ===================== GPU별 실행 분배용 ==================================
     # 이 리스트에 포함된 partitioning_method만 해당 GPU에서 실행됩니다.
     # "methods_to_run_on_this_gpu": ["memorization", "es", "c_proxy", "random"],
-    "methods_to_run_on_this_gpu": ["memorization"],
+    "methods_to_run_on_this_gpu": ["memorization", "random"],
 
 
     # ===================== 각 메소드별 상세 파라미터 ===========================

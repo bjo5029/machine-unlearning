@@ -92,17 +92,51 @@ def hash_indices(indices: np.ndarray) -> str:
 
 def define_forget_set(train_dataset: Dataset, cfg: dict):
     definition = cfg["forget_set_definition"]
+    
     if definition == 'random':
         print(f"Defining forget set: {cfg['num_to_forget']} random samples.")
         total_size = len(train_dataset)
         forget_indices = np.random.choice(total_size, cfg['num_to_forget'], replace=False)
         return np.sort(forget_indices)
+        
     elif definition == 'class':
         class_id = cfg["forget_class"]
         print(f"Defining forget set: all samples from class {class_id}.")
         targets = np.array(train_dataset.targets)
         forget_indices = np.where(targets == class_id)[0]
         return forget_indices
+
+    # ▼▼▼▼▼ [추가] 새로운 'class_random_sample' 방식 로직 ▼▼▼▼▼
+    elif definition == 'class_random_sample':
+        num_classes_to_forget = cfg["num_forget_classes"]
+        percent_per_class = cfg["percent_to_forget_per_class"]
+        
+        print(f"Defining forget set: {percent_per_class*100}% of samples from {num_classes_to_forget} random classes.")
+        
+        targets = np.array(train_dataset.targets)
+        all_class_ids = np.unique(targets)
+        
+        # 1. 지정된 개수만큼 클래스를 무작위로 선택
+        forget_class_ids = np.random.choice(all_class_ids, num_classes_to_forget, replace=False)
+        print(f"  - Selected forget classes: {forget_class_ids}")
+        
+        all_forget_indices = []
+        # 2. 선택된 각 클래스에 대해 10%씩 샘플링
+        for class_id in forget_class_ids:
+            # 현재 클래스에 해당하는 모든 인덱스를 찾음
+            class_indices = np.where(targets == class_id)[0]
+            # 그 중 10%를 무작위로 추출
+            num_to_sample = int(len(class_indices) * percent_per_class)
+            sub_forget_indices = np.random.choice(class_indices, num_to_sample, replace=False)
+            all_forget_indices.append(sub_forget_indices)
+            
+        # 3. 모든 인덱스를 하나로 합침
+        final_forget_indices = np.concatenate(all_forget_indices)
+        print(f"  - Total forget samples: {len(final_forget_indices)}")
+        
+        return np.sort(final_forget_indices)
+    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
     else:
         raise ValueError(f"Unknown forget_set_definition: {definition}")
 
